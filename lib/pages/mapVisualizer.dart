@@ -31,11 +31,33 @@ class MapVisualizerState extends State<MapVisualizer> {
         _mapController = controller;
         await addGJson(_mapController);
       },
-      //onStyleLoadedCallback: () => setState(() => canInteractWithMap = true),
     );
   }
 
   Future<void> addGJson(MapLibreMapController? controller) async {
+
+    String js = await rootBundle.loadString("assets/json/test.json");
+
+    Map<String, dynamic> jsD = json.decode(js);
+
+    print(js);
+
+    await controller!.addGeoJsonSource("buildings-source", jsD);
+
+    await controller!.addFillExtrusionLayer("buildings-source", "buildings-3d", 
+      FillExtrusionLayerProperties(
+        // fillExtrusionHeight can be an expression, here we read the 'height' property
+        fillExtrusionHeight: ['get', 'height'],
+        fillExtrusionBase: 0,
+        fillExtrusionColor: '#aaaaaa',
+        fillExtrusionOpacity: 0.9,
+        // optional: vertical gradient for nicer look
+        fillExtrusionVerticalGradient: true,
+      ),
+      // optional: show above other layers
+      belowLayerId: null,
+    );
+
     await controller!.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
