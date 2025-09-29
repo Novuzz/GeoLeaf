@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/pages/mapPage.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:geo_leaf/imagePicker.dart';
 import 'package:geo_leaf/pages/mapVisualizer.dart';
 
-const _nullIsland = CameraPosition(target: LatLng(0, 0), zoom: 4.0);
 void main() {
   runApp(MyApp());
 }
@@ -15,10 +15,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home:  MapLibre());
-    /*MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(child: Column(children: [Imagepicker(), MapVisualizer()])),
+        body: Builder(
+          builder: (context) => Column(
+            children: [
+              Imagepicker(),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => Mappage()),
+                  );
+                },
+                child: Text("Open Map"),
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.green,
           title: Center(
@@ -32,7 +46,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-    );*/
+    );
   }
 }
 
@@ -48,11 +62,6 @@ class _MapLibreState extends State<MapLibre> {
   bool canInteractWithMap = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MapVisualizer()
-    );
+    return Scaffold(body: MapVisualizer());
   }
-  void _moveCameraToNullIsland() => mapController.future.then(
-      (c) => c.animateCamera(CameraUpdate.newCameraPosition(_nullIsland)));
 }
-

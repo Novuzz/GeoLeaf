@@ -36,18 +36,16 @@ class MapVisualizerState extends State<MapVisualizer> {
 
   Future<void> addGJson(MapLibreMapController? controller) async {
 
-    String js = await rootBundle.loadString("assets/json/test.json");
+    String js = await rootBundle.loadString("assets/json/newCoords.json");
 
     Map<String, dynamic> jsD = json.decode(js);
-
-    print(js);
 
     await controller!.addGeoJsonSource("buildings-source", jsD);
 
     await controller!.addFillExtrusionLayer("buildings-source", "buildings-3d", 
       FillExtrusionLayerProperties(
         // fillExtrusionHeight can be an expression, here we read the 'height' property
-        fillExtrusionHeight: ['get', 'height'],
+        fillExtrusionHeight: 70,
         fillExtrusionBase: 0,
         fillExtrusionColor: '#aaaaaa',
         fillExtrusionOpacity: 0.9,
