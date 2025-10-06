@@ -30,18 +30,15 @@ class MapVisualizerState extends State<MapVisualizer> {
       styleString: "https://tiles.openfreemap.org/styles/bright",
       onMapCreated: (controller) async {
         _mapController = controller;
-        await addGJson(_mapController);
+        //await addGJson(_mapController);
       },
       onStyleLoadedCallback: () async {
-        await _mapController?.addSymbol(
-          SymbolOptions(
-            geometry: LatLng(-23.548177519867036, -46.65227339052233),
-            iconImage: "iconHolder",
-            iconSize: 0.2,
-            
-          ),
-          
-        );
+        if (_mapController != null) {
+          await addGJson(_mapController);
+        }
+        /*
+         
+         */
       },
     );
   }
@@ -56,6 +53,15 @@ class MapVisualizerState extends State<MapVisualizer> {
     await controller.addImage("iconHolder", byteData.buffer.asUint8List());
 
     /*
+    */
+    /*
+    await _mapController?.addSymbol(
+      SymbolOptions(
+        geometry: LatLng(-23.548177519867036, -46.65227339052233),
+        iconImage: "iconHolder",
+        iconSize: 0.2,
+      ),
+    );
     */
     await controller.addFillExtrusionLayer(
       "buildings-source",
@@ -73,6 +79,32 @@ class MapVisualizerState extends State<MapVisualizer> {
       belowLayerId: null,
     );
 
+    final data = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {"name": "My Pin"},
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-46.65227339052233, -23.548177519867036],
+          },
+        },
+      ],
+    };
+
+    await controller.addGeoJsonSource("marker-source", data);
+
+    await controller!.addCircleLayer(
+      "marker-source",
+      "marker-layer",
+      CircleLayerProperties(
+        circleColor: "#ff0000",
+        circleRadius: 8.0,
+        circleStrokeWidth: 2.0,
+        circleStrokeColor: "#ffffff",
+      ),
+    );
     await controller!.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
