@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
@@ -31,23 +32,39 @@ class MapVisualizerState extends State<MapVisualizer> {
         _mapController = controller;
         await addGJson(_mapController);
       },
+      onStyleLoadedCallback: () async {
+        await _mapController?.addSymbol(
+          SymbolOptions(
+            geometry: LatLng(-23.548177519867036, -46.65227339052233),
+            iconImage: "iconHolder",
+            iconSize: 0.2,
+            
+          ),
+          
+        );
+      },
     );
   }
 
   Future<void> addGJson(MapLibreMapController? controller) async {
-
     String js = await rootBundle.loadString("assets/json/newCoords.json");
 
-    Map<String, dynamic> jsD = json.decode(js);
+    Map<String, dynamic> jsD = await json.decode(js);
 
     await controller!.addGeoJsonSource("buildings-source", jsD);
+    final byteData = await rootBundle.load("assets/icon.png");
+    await controller.addImage("iconHolder", byteData.buffer.asUint8List());
 
-    await controller!.addFillExtrusionLayer("buildings-source", "buildings-3d", 
+    /*
+    */
+    await controller.addFillExtrusionLayer(
+      "buildings-source",
+      "buildings-3d",
       FillExtrusionLayerProperties(
         // fillExtrusionHeight can be an expression, here we read the 'height' property
         fillExtrusionHeight: 70,
         fillExtrusionBase: 0,
-        fillExtrusionColor: '#aaaaaa',
+        fillExtrusionColor: '#a83232',
         fillExtrusionOpacity: 0.9,
         // optional: vertical gradient for nicer look
         fillExtrusionVerticalGradient: true,
