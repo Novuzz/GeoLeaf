@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class MapVisualizerState extends State<MapVisualizer> {
   }
 
   Future<void> addGJson(MapLibreMapController? controller) async {
-    String js = await rootBundle.loadString("assets/json/newCoords.json");
+    String js = await rootBundle.loadString("assets/json/map.geojson");
 
     Map<String, dynamic> jsD = await json.decode(js);
 
@@ -68,9 +69,9 @@ class MapVisualizerState extends State<MapVisualizer> {
       "buildings-3d",
       FillExtrusionLayerProperties(
         // fillExtrusionHeight can be an expression, here we read the 'height' property
-        fillExtrusionHeight: 70,
+        fillExtrusionHeight: ['get', 'height'] ?? 0,
         fillExtrusionBase: 0,
-        fillExtrusionColor: '#a83232',
+        fillExtrusionColor: ['get', 'color'] ?? '#BFD738',
         fillExtrusionOpacity: 0.9,
         // optional: vertical gradient for nicer look
         fillExtrusionVerticalGradient: true,
@@ -79,27 +80,59 @@ class MapVisualizerState extends State<MapVisualizer> {
       belowLayerId: null,
     );
 
-    final data = {
+    Map<String, Object> data = {
       "type": "FeatureCollection",
       "features": [
-        {
-          "type": "Feature",
-          "properties": {"name": "My Pin"},
-          "geometry": {
-            "type": "Point",
-            "coordinates": [-46.65227339052233, -23.548177519867036],
-          },
-        },
+       
       ],
     };
+/*
 
+ */
+   for (var points in jsD['features']) {
+      var localPoints = points['geometry']['coordinates'][0];
+      double x = 0.0;
+      double y = 0.0;
+      int n = localPoints.length;
+      for(var p in localPoints)
+      {
+        x += (p[0] as double);
+        y += (p[1] as double);
+      }
+      x /= n;
+      y /= n;
+      var color = points['properties']['color'];
+      (data["features"] as List).add({
+        "type": "Feature",
+        "properties": 
+        {
+          "color": color
+        },
+        "geometry": {
+          "coordinates": [x, y],
+          "type": "Point",
+        },
+      });
+    
+    }
+    /*
+    (data["features"] as List).add({
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [-46.651471612718495, -23.546917037871992],
+        "type": "Point",
+      },
+    });
+*/
+    print(data["features"]);
     await controller.addGeoJsonSource("marker-source", data);
 
     await controller!.addCircleLayer(
       "marker-source",
       "marker-layer",
       CircleLayerProperties(
-        circleColor: "#ff0000",
+        circleColor: ['get', 'color'] ?? "#ff0000",
         circleRadius: 8.0,
         circleStrokeWidth: 2.0,
         circleStrokeColor: "#ffffff",
