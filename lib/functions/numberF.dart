@@ -3,8 +3,14 @@ List<double> getCenter(List<dynamic> points) {
   double y = 0.0;
   int n = points.length;
   for (var p in points) {
-    x += (p[0] as double);
-    y += (p[1] as double);
+    if(p is List)
+    {
+      x += (p[0] as double);
+      y += (p[1] as double);
+
+    }
+
+    
   }
   x /= n;
   y /= n;

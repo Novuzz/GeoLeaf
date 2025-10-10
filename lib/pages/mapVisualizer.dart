@@ -31,7 +31,7 @@ class MapVisualizerState extends State<MapVisualizer> {
     return MapLibreMap(
       initialCameraPosition: MapVisualizer._nullIsland,
       styleString: "https://demotiles.maplibre.org/style.json",
-      onMapCreated: (controller)  {
+      onMapCreated: (controller) {
         _mapController = controller;
       },
       onStyleLoadedCallback: () async {
@@ -43,22 +43,35 @@ class MapVisualizerState extends State<MapVisualizer> {
   }
 
   Future<void> addGJson(MapLibreMapController? controller) async {
-    String js = await rootBundle.loadString("assets/json/map.geojson");
+    String js = await rootBundle.loadString("assets/json/mapRuas.geojson");
+    String ln = await rootBundle.loadString("assets/json/lines.json");
 
     Map<String, dynamic> jsD = await json.decode(js);
+    Map<String, dynamic> lines = await json.decode(ln);
 
     await controller!.addGeoJsonSource("buildings-source", jsD);
+    await controller!.addGeoJsonSource("lines-source", lines);
 
     await controller.addFillExtrusionLayer(
       "buildings-source",
       "buildings-3d",
       FillExtrusionLayerProperties(
-        fillExtrusionHeight: ['get', 'height'] ?? 0,
+        fillExtrusionHeight: ['get', 'height'] ?? 0.1,
         fillExtrusionBase: 0,
         fillExtrusionColor: ['get', 'color'] ?? '#BFD738',
         fillExtrusionOpacity: 0.9,
         fillExtrusionVerticalGradient: true,
       ),
+    );
+
+    await controller.addLineLayer(
+      "lines-source",
+      "lines",
+      LineLayerProperties(
+        lineColor: '#F5F2F9',
+        lineWidth: 12
+      ),
+      belowLayerId: 'buildings-3d'
     );
 
     Map<String, Object> data = {"type": "FeatureCollection", "features": [
@@ -69,16 +82,17 @@ class MapVisualizerState extends State<MapVisualizer> {
 
  */
     for (var points in jsD['features']) {
-      var localPoints = points['geometry']['coordinates'][0];
-      final center = getCenter(localPoints );
       var properties = points['properties'];
+      if (properties['exclude'] != null) continue;
+      var localPoints = points['geometry']['coordinates'][0];
+      final center = getCenter(localPoints);
       (data["features"] as List).add({
         "type": "Feature",
-        "properties": {"name": properties['name'], "color": properties['color']},
-        "geometry": {
-          "coordinates": center,
-          "type": "Point",
+        "properties": {
+          "name": properties['name'],
+          "color": properties['color'],
         },
+        "geometry": {"coordinates": center, "type": "Point"},
       });
     }
     await controller.addGeoJsonSource("marker-source", data);
@@ -109,7 +123,7 @@ class MapVisualizerState extends State<MapVisualizer> {
         textAllowOverlap: true,
         textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
       ),
-      minzoom: 18
+      minzoom: 18,
     );
     /*
     */

@@ -1,0 +1,1548 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L01",
+        "number": 1,
+        "name": "Centro Histórico e Cultural Mackenzie",
+        "type": "Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.652262821973835, -23.545804285523353],
+            [-46.65209116060931, -23.54594259806632],
+            [-46.65197448453184, -23.54581535053089],
+            [-46.65214547534415, -23.54568134091733]
+          ]
+        ]
+      },
+      "id": 0
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L02",
+        "number": 2,
+        "name": "Biblioteca Central",
+        "type": "Biblioteca;Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.652054280238026, -23.545972719445263],
+            [-46.65196894716056, -23.546044118454265],
+            [-46.6518435538982, -23.545913797407255],
+            [-46.651934251393314, -23.545843013050057]
+          ]
+        ]
+      },
+      "id": 1
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L03",
+        "number": 3,
+        "name": "Faculdade de Direito (FDIR)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65193894524542, -23.546085213516296],
+            [-46.65176996608972, -23.54622106688062],
+            [-46.65163786730531, -23.546078451580485],
+            [-46.65180818756541, -23.545946901123365]
+          ]
+        ]
+      },
+      "id": 2
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L04",
+        "number": 4,
+        "name": "Escola de Engenharia (EE)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65173107405338, -23.546252417638765],
+            [-46.651597634164546, -23.546362452587513],
+            [-46.65146218261911, -23.546218607999137],
+            [-46.651597634164546, -23.54611287597913]
+          ]
+        ]
+      },
+      "id": 3
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L05",
+        "number": 5,
+        "name": "Escola de Engenharia (EE)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65148833414612, -23.546344010986406],
+            [-46.651336789347766, -23.546465110812626],
+            [-46.65125536990379, -23.546379212502952],
+            [-46.651406526763346, -23.54626102373149]
+          ]
+        ]
+      },
+      "id": 4
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L06",
+        "number": 6,
+        "name": "Escola de Engenharia (EE)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65195302683787, -23.54683148321773],
+            [-46.651798799830694, -23.54695258259494],
+            [-46.651336789347766, -23.546465110812626],
+            [-46.65148833414612, -23.546344010986406]
+          ]
+        ]
+      },
+      "id": 5
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L07",
+        "number": 7,
+        "name": "Lanchonete",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.652093132633304, -23.546763292137697],
+            [-46.65201400747309, -23.546819846204794],
+            [-46.651655262043334, -23.54640675506766],
+            [-46.65173908106899, -23.546346512501735]
+          ]
+        ]
+      },
+      "id": 6
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L09",
+        "number": 9,
+        "name": "Faculdade de Arquitetura e Urbanismo (FAU)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65269063431411, -23.54627208870216],
+            [-46.652303150539524, -23.54656469410026],
+            [-46.65217632077276, -23.546420236271093],
+            [-46.652563229395135, -23.54613008817859]
+          ]
+        ]
+      },
+      "id": 7
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L10",
+        "number": 10,
+        "name": "Chamberlain",
+        "type": "Lanchonete;Laboratório de computadores",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65212062527371, -23.546563508553753],
+            [-46.651997914220175, -23.54665264280565],
+            [-46.651869838748986, -23.5464989630233],
+            [-46.65199053814592, -23.546411058107047]
+          ]
+        ]
+      },
+      "id": 8
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L11",
+        "number": 11,
+        "name": "Capela",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65271142145094, -23.5464983056734],
+            [-46.652584687084165, -23.546596046036253],
+            [-46.6525115968938, -23.546513058940373],
+            [-46.65263766070837, -23.54641531851583]
+          ]
+        ]
+      },
+      "id": 9
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L12",
+        "number": 12,
+        "name": "Centro Mackenzie de Liberdade Econômica (CMLE)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65293145796929, -23.546543793649377],
+            [-46.65281478188558, -23.54663292791463],
+            [-46.652737668382, -23.546548096684273],
+            [-46.652853673913484, -23.546457118202458]
+          ]
+        ]
+      },
+      "id": 10
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L13",
+        "number": 13,
+        "name": "Atendimento Financeiro ao Aluno",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 20,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.653069591731, -23.546695014506454],
+            [-46.652991137123, -23.546755871630975],
+            [-46.652918269682345, -23.54667934044507],
+            [-46.65299873594696, -23.546619098004037]
+          ]
+        ]
+      },
+      "id": 11
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L14",
+        "number": 14,
+        "name": "Pró-Reitoria de Controle Acadêmico (PRCA)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 20,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65291067085839, -23.546867135593928],
+            [-46.65281679354967, -23.546762018813727],
+            [-46.652861625165585, -23.54672636641226],
+            [-46.65286833068763, -23.54670177767294],
+            [-46.65290061257531, -23.546694399787878],
+            [-46.65291469417161, -23.54668087597855],
+            [-46.65301451106836, -23.546785379367854]
+          ]
+        ]
+      },
+      "id": 12
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L16",
+        "number": 16,
+        "name": "Centro de Educação, Filosofia e Teologia (CEFT)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 20,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65289010648972, -23.54687973857071],
+            [-46.65274526721341, -23.546986699408457],
+            [-46.65270771628993, -23.54694243976202],
+            [-46.652852025115024, -23.54683592906602]
+          ]
+        ]
+      },
+      "id": 13
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L17",
+        "number": 17,
+        "name": "Colégio Presbiteriano Mackenzie",
+        "type": "Colégio",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 20,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65285791998388, -23.546828102273075],
+            [-46.65269779810784, -23.5469435046568],
+            [-46.652625015609225, -23.54686037369932],
+            [-46.652784159241314, -23.546745730041994]
+          ]
+        ]
+      },
+      "id": 14
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L18",
+        "number": 18,
+        "name": "Colégio Presbiteriano Mackenzie",
+        "type": "Colégio;Quadras",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 60,
+        "color": "#FD7E14"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65327924152165, -23.546946539271374],
+            [-46.65284070037949, -23.547263733065087],
+            [-46.65278571509867, -23.547212096918262],
+            [-46.65267574453703, -23.54729938658321],
+            [-46.652718659878154, -23.54734856383372],
+            [-46.65264087582236, -23.547411264801433],
+            [-46.65247726108431, -23.5472440621544],
+            [-46.652768280741334, -23.547028911376636],
+            [-46.65274548196636, -23.5469994049568],
+            [-46.65309551021745, -23.546733846880308]
+          ]
+        ]
+      },
+      "id": 15
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L19",
+        "number": 19,
+        "name": "Auditório Ruy Barbosa/Colégio Presbiteriano Mackenzie",
+        "type": "Auditório;Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 50,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65273216890988, -23.547014711667952],
+            [-46.65239957501613, -23.547258139405194],
+            [-46.65209380321058, -23.546906521417835],
+            [-46.652422373791104, -23.546665551904432]
+          ]
+        ]
+      },
+      "id": 16
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L20",
+        "number": 20,
+        "name": "Ginásio de Esportes",
+        "type": "Quadras",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 20,
+        "color": "#BFD738"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65221986699802, -23.547175767445886],
+            [-46.65210587312315, -23.547263057134952],
+            [-46.65190604856601, -23.5470491358221],
+            [-46.65202004244088, -23.54695815768701]
+          ]
+        ]
+      },
+      "id": 17
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L23",
+        "number": 23,
+        "name": "Laboratórios Faculdade de Arquitetura e Urbanismo(FAU)",
+        "type": "",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65148628284918, -23.546690755368687],
+            [-46.651295846022045, -23.546846893800208],
+            [-46.651572784082774, -23.547140728609865],
+            [-46.65154059757658, -23.547166546699184],
+            [-46.65121672086056, -23.546832140566348],
+            [-46.65144403805811, -23.546645880901362]
+          ]
+        ]
+      },
+      "id": 18
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L24",
+        "number": 24,
+        "name": "Escola de Engenharia (EE)",
+        "type": "",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65171360004764, -23.547025161858333],
+            [-46.65157948960661, -23.547132737294298],
+            [-46.65130791596353, -23.54684812323496],
+            [-46.65144202640457, -23.54674054756612]
+          ]
+        ]
+      },
+      "id": 19
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L25",
+        "number": 25,
+        "name": "Centro de Educação, Filosofia e Teologia (CEFT)",
+        "type": "",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65173773992995, -23.54704667695755],
+            [-46.65183228779353, -23.547149334644526],
+            [-46.65155132641692, -23.547369402948558],
+            [-46.65145007303394, -23.547269819012982]
+          ]
+        ]
+      },
+      "id": 20
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L28",
+        "number": 28,
+        "name": "Laboratórios de EE/Programas de Pós-Graduação CCBS e CCL",
+        "type": "Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65188315176447, -23.54729078057059],
+            [-46.65196227692468, -23.547223776532793],
+            [-46.652091693500275, -23.54735409628136],
+            [-46.65198306404304, -23.547446918287648],
+            [-46.651940819254115, -23.5474032735114],
+            [-46.651801344395444, -23.547512692782245],
+            [-46.65164510573164, -23.547360243436113],
+            [-46.65181944930498, -23.54722439124889]
+          ]
+        ]
+      },
+      "id": 21
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L29",
+        "number": 29,
+        "name": "Quadras Poliesportivas",
+        "type": "Quadras",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65202764479828, -23.547636982493927],
+            [-46.651898228222684, -23.547925283122517],
+            [-46.651564293224524, -23.547793119799827],
+            [-46.65170712084179, -23.54751403960208]
+          ]
+        ]
+      },
+      "id": 22
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L30",
+        "number": 30,
+        "name": "MACKGRAPHE",
+        "type": "",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 60,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.651681639839666, -23.547547234192248],
+            [-46.65143487662817, -23.547751933990515],
+            [-46.6512940606651, -23.5477408691447],
+            [-46.651219629370324, -23.547680627190047],
+            [-46.651552223264076, -23.547410152767792]
+          ]
+        ]
+      },
+      "id": 23
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L31",
+        "number": 31,
+        "name": "Faculdade de Computação e Informática",
+        "type": "",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65155132641692, -23.547369402948558],
+            [-46.65133339693178, -23.547543367301895],
+            [-46.65123214354881, -23.547439480492514],
+            [-46.65145007303394, -23.547269819012982]
+          ]
+        ]
+      },
+      "id": 24
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L33",
+        "number": 33,
+        "name": "Laboratórios da Escola de Engenharia (EE)",
+        "type": "Laboratório de computadores",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 40,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65133339693178, -23.547543367301895],
+            [-46.651136254575995, -23.547696431150595],
+            [-46.651038353954036, -23.54759070031902],
+            [-46.65123214354881, -23.547439480492514]
+          ]
+        ]
+      },
+      "id": 25
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L35",
+        "number": 35,
+        "name": "Achados e Perdidos/Almoxorifado/Serviços de Apoio/Segurança/Superintendência de Infraestrutura (SUINF)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#EA1725"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65114331096162, -23.547919396932194],
+            [-46.651069550219056, -23.548113646048442],
+            [-46.65090861768982, -23.548059551386693],
+            [-46.650985060641204, -23.5478653021905]
+          ]
+        ]
+      },
+      "id": 26
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L37",
+        "number": 37,
+        "name": "Laboratórios da Escola de Engenharia (EE)",
+        "type": "Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 45,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65109602144368, -23.5476558600276],
+            [-46.65103567174523, -23.547703193003194],
+            [-46.65097733370337, -23.547638033318087],
+            [-46.651038353954036, -23.54759070031902]
+          ]
+        ]
+      },
+      "id": 27
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L38",
+        "number": 38,
+        "name": "Centro de Ciências Biológicas e da Saúde (CCBS)",
+        "type": "Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#EA1725"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65090290238476, -23.547635574464188],
+            [-46.65075672200195, -23.54774437882747],
+            [-46.650537451430864, -23.547511402141758],
+            [-46.650671561871896, -23.547409359452836]
+          ]
+        ]
+      },
+      "id": 28
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L40",
+        "number": 40,
+        "name": "Universidade Presbiteriana Mackenzie (UPM)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#EA1725"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65088313670329, -23.548114875472834],
+            [-46.65054786060072, -23.548000539003517],
+            [-46.65081608148277, -23.547758342068057],
+            [-46.65084290357098, -23.5477817011828],
+            [-46.650895206642986, -23.547737441803985],
+            [-46.65101590603991, -23.54777678347478]
+          ]
+        ]
+      },
+      "id": 29
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L41",
+        "number": 41,
+        "name": "Edifício João Calvino",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 70,
+        "color": "#EA1725"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.650563576407876, -23.547749743598054],
+            [-46.65038453896687, -23.547897274793783],
+            [-46.65047238130574, -23.54799378469163],
+            [-46.65030541380269, -23.548124103675455],
+            [-46.65022762975235, -23.54804173225759],
+            [-46.6501364346386, -23.5481148829979],
+            [-46.650026464058946, -23.548003620090334],
+            [-46.650119670823415, -23.54792309273298],
+            [-46.65009418983963, -23.547896660078642],
+            [-46.649921857922905, -23.548036199845072],
+            [-46.64983334503183, -23.54800054652676],
+            [-46.650184714397035, -23.54771531962938],
+            [-46.65026383956607, -23.54779646182617],
+            [-46.650457629153365, -23.54764339809496]
+          ]
+        ]
+      },
+      "id": 30
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L43",
+        "number": 43,
+        "name": "Colégio Presbiteriano Mackenzie",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#FD7E14"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65341405980558, -23.547166651932113],
+            [-46.653286377754206, -23.547109006100744],
+            [-46.65338052577435, -23.546971213049957],
+            [-46.65350190214656, -23.54703633199774]
+          ]
+        ]
+      },
+      "id": 31
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L44",
+        "number": 44,
+        "name": "Colégio Presbiteriano Mackenzie",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#FD7E14"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.653226723698914, -23.54746310438777],
+            [-46.6528538966639, -23.547266395446762],
+            [-46.6531569862679, -23.547053703573145],
+            [-46.65340911390309, -23.547170499731312]
+          ]
+        ]
+      },
+      "id": 32
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L45",
+        "number": 45,
+        "name": "Centro de Ciências Sociais e Aplicadas (CCSA)",
+        "type": "Colégio;Biblioteca;Lanchonete",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 60,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.652340468423695, -23.54728278926686],
+            [-46.65235656167662, -23.547271724381567],
+            [-46.65261807703662, -23.54754465794704],
+            [-46.65260332488811, -23.54755695223846],
+            [-46.652699884389136, -23.54766022424261],
+            [-46.65259527823299, -23.547748743034912],
+            [-46.65262880584324, -23.547775790432524],
+            [-46.652587231606525, -23.547806526104875],
+            [-46.652380701527335, -23.54761227653484],
+            [-46.65233242178071, -23.547649159389074],
+            [-46.652081635243846, -23.547376226038132],
+            [-46.652266707664616, -23.54721271164592]
+          ]
+        ]
+      },
+      "id": 33
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L46",
+        "number": 46,
+        "name": "Colégio Presbiteriano Mackenzie",
+        "type": "Colégio;Auditório",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#FD7E14"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.653136484672146, -23.547600298555484],
+            [-46.653099604300856, -23.54758308655285],
+            [-46.65302287580797, -23.547714522580048],
+            [-46.653052380105, -23.54773665227518],
+            [-46.65292899849925, -23.54793950764027],
+            [-46.65275197271709, -23.54783992413651],
+            [-46.65296386722148, -23.54750613443492],
+            [-46.65272515063073, -23.547386879713596],
+            [-46.6527653837612, -23.547303893116876],
+            [-46.65318783165043, -23.547530108309132]
+          ]
+        ]
+      },
+      "id": 34
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L48",
+        "number": 48,
+        "name": "Colégio Presbiteriano Mackenzie",
+        "type": "Colégio",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65287892184668, -23.54800139011416],
+            [-46.652799126134276, -23.54813170909193],
+            [-46.65272000097081, -23.548088064542952],
+            [-46.65275621078989, -23.548020446199104],
+            [-46.65273877643255, -23.548010610800738],
+            [-46.65264825188811, -23.548163674104494],
+            [-46.65266501569324, -23.5481735094914],
+            [-46.65270256661348, -23.548111423599106],
+            [-46.652785715086914, -23.548153224005027],
+            [-46.65270658992671, -23.54827001918642],
+            [-46.65261807703563, -23.548219612857704],
+            [-46.65256979727686, -23.54830567243164],
+            [-46.652443733462285, -23.548245430735793],
+            [-46.65266367458558, -23.547890127111046]
+          ]
+        ]
+      },
+      "id": 35
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L49",
+        "number": 49,
+        "name": "Universidade Presbiteriana Mackenzie (UPM)",
+        "type": "null",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 30,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.652687143908224, -23.54829645176857],
+            [-46.652582537764225, -23.548479635544087],
+            [-46.65237332547622, -23.54838128187084],
+            [-46.652422275787195, -23.5482909193687],
+            [-46.65255102181058, -23.548351161043705],
+            [-46.652605336539196, -23.548252807274338]
+          ]
+        ]
+      },
+      "id": 36
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L50",
+        "number": 50,
+        "name": "Chancelaria/Centro Histórico e Cultural Mackenzie (CHCM)/Instituto Presbiteriano Mackenzie (IPM)",
+        "type": "Colégio",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 20,
+        "color": "#007BC7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65256376225441, -23.548510371050988],
+            [-46.65226536651113, -23.54837882302661],
+            [-46.65220635791708, -23.54849561800758],
+            [-46.65175641736662, -23.54830075474309],
+            [-46.651830848659515, -23.54814092976782],
+            [-46.652578514402926, -23.548485167935116]
+          ]
+        ]
+      },
+      "id": 37
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "L52",
+        "number": 52,
+        "name": "Quadras Esportivas",
+        "type": "Quadras",
+        "address": "null",
+        "extra": "-",
+        "active": "true",
+        "height": 0.2,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65233778613472, -23.548341325663294],
+            [-46.651845600816145, -23.548110194171308],
+            [-46.651958253586606, -23.54785324432293],
+            [-46.65200519224097, -23.54783480292693],
+            [-46.65208163519236, -23.54766391253435],
+            [-46.65257382051092, -23.54789135653311]
+          ]
+        ]
+      },
+      "id": 38
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E117",
+        "number": 117,
+        "name": "Graduação/Pós-Graduação",
+        "type": "null",
+        "address": "Rua Maria Antônia, 117",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65020267450779, -23.54755218455885],
+            [-46.65006655240785, -23.547657915422857],
+            [-46.649813083676605, -23.547351787458158],
+            [-46.649941159147794, -23.54724912992937]
+          ]
+        ]
+      },
+      "id": 39
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E143",
+        "number": 143,
+        "name": "Centro de Comunicação e Letras",
+        "type": "null",
+        "address": "Rua Piauí, 143",
+        "extra": "-",
+        "active": "true",
+        "height": 60,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65347112810513, -23.548139055973365],
+            [-46.65336987472215, -23.548271218948283],
+            [-46.653086901686834, -23.54802041653807],
+            [-46.65316401519043, -23.547882720893963]
+          ]
+        ]
+      },
+      "id": 40
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E181",
+        "number": 181,
+        "name": "Clínicas - CCBS",
+        "type": "null",
+        "address": "Rua Piauí, 181",
+        "extra": "-",
+        "active": "true",
+        "height": 60,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.6536062482577, -23.547873383422456],
+            [-46.653507677083546, -23.547982187589493],
+            [-46.65324415006445, -23.547754743746836],
+            [-46.65331791080701, -23.547631800965913]
+          ]
+        ]
+      },
+      "id": 41
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E40",
+        "number": 40,
+        "name": "Pós-Graduação Lato Sensu",
+        "type": "null",
+        "address": "Rua Maria Borba, 40",
+        "extra": "-",
+        "active": "true",
+        "height": 70,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.648017997423466, -23.546974865216207],
+            [-46.648369366778965, -23.546963800304997],
+            [-46.648372048987774, -23.547102726344864],
+            [-46.64801665631906, -23.547112561811158]
+          ]
+        ]
+      },
+      "id": 42
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E44",
+        "number": 44,
+        "name": "Centro Presbiteriano de Pós-Graduação Andrew Jumper",
+        "type": "null",
+        "address": "Rua Maria Borba, 44",
+        "extra": "-",
+        "active": "true",
+        "height": 70,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.64837387449815, -23.54697390471799],
+            [-46.64848853892522, -23.54696775754515],
+            [-46.648483845059786, -23.547075333028094],
+            [-46.648376556706964, -23.54708148019588]
+          ]
+        ]
+      },
+      "id": 43
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E85",
+        "number": 85,
+        "name": "Diretórios",
+        "type": "null",
+        "address": "Rua Piauí, 85",
+        "extra": "-",
+        "active": "true",
+        "height": 60,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.653190320466614, -23.548555663571893],
+            [-46.65311924193258, -23.548672458396567],
+            [-46.65278195417368, -23.54849480728045],
+            [-46.65286845540815, -23.548357726844]
+          ]
+        ]
+      },
+      "id": 44
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E993",
+        "number": 993,
+        "name": "Juízado Especial Cível",
+        "type": "null",
+        "address": "Rua da Consolação, 993",
+        "extra": "-",
+        "active": "true",
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65084190849983, -23.548923197521354],
+            [-46.650518702336946, -23.548823614762707],
+            [-46.650604533019205, -23.548612154827563],
+            [-46.65092237476445, -23.548710508328078]
+          ]
+        ]
+      },
+      "id": 45
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E101",
+        "number": 101,
+        "name": "Instituto Presbiteriano Mackenzie (IPM)",
+        "type": "null",
+        "address": "Rua Maria Antônia, 101",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#672E92"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65006156175216, -23.547668694428687],
+            [-46.64995360284713, -23.547751066081492],
+            [-46.64968471141053, -23.54748243594816],
+            [-46.64981882185156, -23.547373631367538]
+          ]
+        ]
+      },
+      "id": 46
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E249",
+        "number": 249,
+        "name": "Instituto Presbiteriano Mackenzie (IPM)",
+        "type": "null",
+        "address": "Rua Maria Antônia, 249",
+        "extra": "-",
+        "active": "true",
+        "height": 10
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.6509573594402, -23.546669324516724],
+            [-46.65080581464184, -23.5467934976339],
+            [-46.65070456125886, -23.546688380794805],
+            [-46.65085878826605, -23.54655621622873]
+          ]
+        ]
+      },
+      "id": 47
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "E139",
+        "number": 139,
+        "name": "Alfabetização e Educação de Jovens Adultos",
+        "type": "null",
+        "address": "Rua Maria Antônia, 139",
+        "extra": "-",
+        "active": "true",
+        "height": 10,
+        "color": "#00B7C5"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-46.65043518089622, -23.547280141717422],
+            [-46.65027424836698, -23.54740185539666],
+            [-46.650010050798166, -23.547312106937024],
+            [-46.6499497010997, -23.54724571762608],
+            [-46.65019914652001, -23.54705761439639]
+          ]
+        ]
+      },
+      "id": 48
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P01",
+        "number": 1,
+        "name": "Portaria 1",
+        "type": "Portaria",
+        "address": "Rua Itambé, 185",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.65337643096551, -23.546933465384154]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P02",
+        "number": 2,
+        "name": "Portaria 2",
+        "type": "Portaria",
+        "address": "Rua Itambé, 43",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.65301602237434, -23.5465065943881]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P03",
+        "number": 3,
+        "name": "Portaria 3",
+        "type": "Portaria",
+        "address": "Rua Maria Antônia, 307",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.65126068877794, -23.54619317777458]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P04",
+        "number": 4,
+        "name": "Portaria 4",
+        "type": "Portaria",
+        "address": "Rua Itambé, 45",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.652379818473115, -23.545780773359912]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P05",
+        "number": 5,
+        "name": "Portaria 5",
+        "type": "Portaria",
+        "address": "Rua Piauí, 192",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.65313714143619, -23.547698539527257]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P06",
+        "number": 6,
+        "name": "Portaria 6",
+        "type": "Portaria",
+        "address": "Rua Piauí, 130",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.65293986434115, -23.548009670249076]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "P07",
+        "number": 7,
+        "name": "Portaria 7",
+        "type": "Portaria",
+        "address": "Rua da Consolação, 930",
+        "extra": "-",
+        "active": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-46.65032191564272, -23.548147361075422]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {"exclude": false, "height": 0.1, "color": "#F5F2F9" },
+      "geometry": {
+        "coordinates": [
+          [
+            [-46.652934627698954, -23.548001394005922],
+            [-46.652925191381115, -23.54801943531794],
+            [-46.65265581125493, -23.547883116434008],
+            [-46.65236247052911, -23.548384097400614],
+            [-46.65182115715385, -23.54813107357424],
+            [-46.65203729130141, -23.54763577449475],
+            [-46.65170500392142, -23.547503765916787],
+            [-46.651683609416665, -23.547542789479706],
+            [-46.65155496758345, -23.547403462981464],
+            [-46.65116364201489, -23.547722113879217],
+            [-46.651201068684855, -23.547752313370708],
+            [-46.65116078364977, -23.547820157633026],
+            [-46.65086099576121, -23.547715732186532],
+            [-46.65049090662524, -23.548014522181717],
+            [-46.65038135563847, -23.54790106186597],
+            [-46.65048854121548, -23.547938831979593],
+            [-46.65093032131912, -23.547619983866312],
+            [-46.65103307914646, -23.547717221291123],
+            [-46.651095978089614, -23.54766504045419],
+            [-46.65113795712949, -23.547702095045835],
+            [-46.65183873728466, -23.547152247232802],
+            [-46.65144336233848, -23.546730765836415],
+            [-46.65149226783325, -23.546688570172364],
+            [-46.65116238484964, -23.546335559221674],
+            [-46.65134701145314, -23.546190687240497],
+            [-46.65140538479514, -23.54625575415359],
+            [-46.651246644071364, -23.546380673012436],
+            [-46.65179787905839, -23.546961162427365],
+            [-46.65192689188254, -23.54686040271956],
+            [-46.65201262109093, -23.546950656745054],
+            [-46.65189187334738, -23.547047366307666],
+            [-46.652147399977224, -23.54730672724692],
+            [-46.65209979925672, -23.54734916031296],
+            [-46.6519596597191, -23.547215615446973],
+            [-46.651880494994174, -23.547282282470803],
+            [-46.65181469497725, -23.547215834473292],
+            [-46.65163432697028, -23.5473574946612],
+            [-46.65180103431658, -23.547517897849488],
+            [-46.65194038967698, -23.547416157919727],
+            [-46.65198299704758, -23.547452414994382],
+            [-46.652074750484275, -23.54737806299609],
+            [-46.652084993781074, -23.54738993020301],
+            [-46.65190239728395, -23.547550884622723],
+            [-46.652043479093265, -23.54760567268214],
+            [-46.652135389856795, -23.547509024688722],
+            [-46.65231004500373, -23.547676739450026],
+            [-46.65238036106027, -23.547622985697302],
+            [-46.652585258209115, -23.547816320005268],
+            [-46.65261164527328, -23.54779494711437],
+            [-46.652658849390605, -23.547829586292835],
+            [-46.65277479623205, -23.547680996240885],
+            [-46.651957593704026, -23.546836731111625],
+            [-46.65195602994888, -23.546831797093304],
+            [-46.65138976564401, -23.54623016709452],
+            [-46.652124531103965, -23.545643394588396],
+            [-46.65230494027179, -23.545842637245173],
+            [-46.65238110809622, -23.545788477700157],
+            [-46.65240159177256, -23.545812899553866],
+            [-46.6519221481318, -23.54617195291155],
+            [-46.6518960299679, -23.546216912712353],
+            [-46.651913945221395, -23.546254979626198],
+            [-46.65211720810663, -23.54647026693766],
+            [-46.652287399951916, -23.546653899981365],
+            [-46.65242438572665, -23.546559964929287],
+            [-46.65244641818887, -23.546580736121],
+            [-46.65251458690531, -23.546524148145963],
+            [-46.6525887464345, -23.54660807380715],
+            [-46.652621530156466, -23.546584156723824],
+            [-46.652637140475576, -23.54660492394261],
+            [-46.65262673993084, -23.546613111586595],
+            [-46.65269209866199, -23.546690173326866],
+            [-46.65273204424838, -23.54665936402317],
+            [-46.65271967345106, -23.546645153865953],
+            [-46.652779293980046, -23.54659881832275],
+            [-46.65281336261316, -23.546638897769725],
+            [-46.652989963597435, -23.54651336426045],
+            [-46.65303925102194, -23.546566198920075],
+            [-46.65291139231752, -23.546673674527256],
+            [-46.65289591250766, -23.546655577998152],
+            [-46.65261234378977, -23.546864396199467],
+            [-46.65241287680553, -23.546653421173176],
+            [-46.65207197583328, -23.546913426671708],
+            [-46.65239949428624, -23.547266092539644],
+            [-46.652447791930086, -23.547228397652376],
+            [-46.65263620732017, -23.547422134943474],
+            [-46.65269554616259, -23.547374306519956],
+            [-46.652951985396044, -23.54751304175261],
+            [-46.65274270505708, -23.547843358814504],
+            [-46.65271657491522, -23.547877479895973],
+            [-46.652934627698954, -23.548001394005922]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 57
+    }
+  ]
+}
