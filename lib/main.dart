@@ -2,16 +2,40 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/pages/mapPage.dart';
+import 'package:geo_leaf/provider/mapProvider.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:geo_leaf/imagePicker.dart';
 import 'package:geo_leaf/pages/mapVisualizer.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => MapProvider())],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  OverlayEntry? entry;
+
+  MyApp({super.key});
+
+  void test(BuildContext context) {
+    entry = OverlayEntry(
+      builder: (ctx) => Positioned(
+        left: 40,
+        right: 30,
+        child: ElevatedButton(
+          onPressed: () => print("press"),
+          child: Text("data"),
+        ),
+      ),
+    );
+    final overlay = Overlay.of(context);
+    overlay.insert(entry!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +54,10 @@ class MyApp extends StatelessWidget {
                 },
                 child: Text("Open Map"),
               ),
+              ElevatedButton(
+                onPressed: () => test(context),
+                child: Text("Test"),
+              ),
             ],
           ),
         ),
@@ -47,21 +75,5 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class MapLibre extends StatefulWidget {
-  const MapLibre({super.key});
-
-  @override
-  State<MapLibre> createState() => _MapLibreState();
-}
-
-class _MapLibreState extends State<MapLibre> {
-  final Completer<MapLibreMapController> mapController = Completer();
-  bool canInteractWithMap = false;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: MapVisualizer());
   }
 }
