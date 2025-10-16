@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/pages/addSymbol.dart';
-import 'package:geo_leaf/provider/mapProvider.dart';
+import 'package:geo_leaf/widgets/AddSymbol.dart';
+import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:geo_leaf/functions/numberF.dart';
 import 'package:provider/provider.dart';
 
 class MapVisualizer extends StatefulWidget {
-
   static const CameraPosition _nullIsland = CameraPosition(
     target: LatLng(-33.852, 151.211),
     zoom: 2,
@@ -20,46 +19,48 @@ class MapVisualizer extends StatefulWidget {
   State<MapVisualizer> createState() => MapVisualizerState();
   OverlayEntry? entry;
 
-
-
-
   void addWindow(BuildContext context) {
     entry = OverlayEntry(
-      builder: (ctx) => Positioned(left: 40, right: 30, top: 50, child: Addsymbol()),
+      builder: (ctx) =>
+          Positioned(left: 40, right: 30, top: 50, child: Addsymbol(map: this)),
     );
     final overlay = Overlay.of(context);
     overlay.insert(entry!);
   }
 
-  void removeWindow(BuildContext context)
-  {
+  void removeWindow() {
     entry?.remove();
     entry = null;
   }
-
-
 }
 
 class MapVisualizerState extends State<MapVisualizer> {
-  MapLibreMapController? _mapController;
   bool canInteractWithMap = false;
-
-
 
   @override
   Widget build(BuildContext context) {
-
     var mapPr = Provider.of<MapProvider>(context);
-    
+
+    mapPr.context = context;
+
     return MapLibreMap(
+      compassEnabled: false,
+
+      scrollGesturesEnabled: mapPr.scrollEnabled,
+
       initialCameraPosition: MapVisualizer._nullIsland,
       styleString: mapPr.style,
       onMapCreated: (controller) {
-        _mapController = controller;
+        mapPr.mapController = controller;
       },
       onMapLongClick: (point, coordinates) async {
-        print(coordinates);
-        await _mapController!.animateCamera(
+        mapPr.lastPosition = CameraPosition(
+          target: LatLng(-23.548177519867036, -46.65227339052233),
+          zoom: 17.0,
+          tilt: 60.0, // pitch to see the extrusion
+          bearing: 30.0, // rotate a bit
+        );
+        await mapPr.mapController!.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: coordinates,
@@ -69,11 +70,14 @@ class MapVisualizerState extends State<MapVisualizer> {
             ),
           ),
         );
+        //mapPr.scrollEnabled = false;
+        mapPr.setScroll(false);
+        mapPr.addPoint(coordinates);
         widget.addWindow(context);
       },
       onStyleLoadedCallback: () async {
-        if (_mapController != null) {
-          await addGJson(_mapController);
+        if (mapPr.mapController != null) {
+          await addGJson(mapPr.mapController);
         }
       },
     );
@@ -87,8 +91,14 @@ class MapVisualizerState extends State<MapVisualizer> {
     Map<String, dynamic> lines = await json.decode(ln);
 
     await controller!.addGeoJsonSource("buildings-source", jsD);
-    await controller!.addGeoJsonSource("lines-source", lines);
+    await controller.addGeoJsonSource("lines-source", lines);
 
+    await controller.addGeoJsonSource("plants-source", {
+      'type': 'FeatureCollection',
+      'features': [
+        
+      ],
+    });
     await controller.addFillExtrusionLayer(
       "buildings-source",
       "buildings-3d",
@@ -109,7 +119,7 @@ class MapVisualizerState extends State<MapVisualizer> {
     );
 
     Map<String, Object> data = {"type": "FeatureCollection", "features": [
-       
+        
       ],
     };
     /*
@@ -130,7 +140,6 @@ class MapVisualizerState extends State<MapVisualizer> {
       });
     }
     await controller.addGeoJsonSource("marker-source", data);
-
     await controller.addCircleLayer(
       "marker-source",
       "marker-layer",
@@ -159,6 +168,33 @@ class MapVisualizerState extends State<MapVisualizer> {
         textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
       ),
       minzoom: 18,
+    );
+
+    await controller.addCircleLayer(
+      "plants-source",
+      "plants-layer",
+      CircleLayerProperties(
+        circleColor: "#50C878",
+        circleRadius: 8.0,
+        circleStrokeWidth: 2.0,
+        circleStrokeColor: "#ffffff",
+      ),
+    );
+    await controller.addSymbolLayer(
+      "plants-source",
+      "plants-text",
+      SymbolLayerProperties(
+        textField: ['get', 'name'],
+
+        textSize: 14,
+        textColor: '#ffffff',
+        textHaloColor: ['get', 'color'],
+        textHaloWidth: 1.5,
+        textAnchor: 'top',
+        textOffset: [0, 1.5],
+        textAllowOverlap: true,
+        textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
+      ),
     );
     /*
     */

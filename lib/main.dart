@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/pages/mapPage.dart';
-import 'package:geo_leaf/provider/mapProvider.dart';
+import 'package:geo_leaf/screen/MapScreen.dart';
+import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
-import 'package:geo_leaf/imagePicker.dart';
-import 'package:geo_leaf/pages/mapVisualizer.dart';
+import 'package:geo_leaf/widgets/ImagePicker.dart';
+import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:provider/provider.dart';
 
 void main() {

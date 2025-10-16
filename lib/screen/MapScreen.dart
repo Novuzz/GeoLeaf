@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/pages/mapVisualizer.dart';
-import 'package:geo_leaf/provider/mapProvider.dart';
+import 'package:geo_leaf/widgets/MapVisualizer.dart';
+import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:provider/provider.dart';
 
 class Mappage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _MappageState extends State<Mappage> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            map.removeWindow(context);
+            map.removeWindow();
             Navigator.pop(context);
           },
         ),
