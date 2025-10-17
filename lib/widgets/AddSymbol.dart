@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
@@ -35,7 +36,7 @@ class Addsymbol extends StatelessWidget {
             TextField(onChanged: (value) => name = value),
             FloatingActionButton(
               onPressed: () async {
-                mapPr.savePoint(name);
+                mapPr.savePoint(Plant(name: name, createdTime: DateTime(2025), editedTime: DateTime(2025), author: null));
                 await _exit(mapPr);
               },
             ),

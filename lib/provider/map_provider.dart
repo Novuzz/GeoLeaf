@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/models/Plant.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+import 'dart:developer' as logDev;
 
 class MapProvider with ChangeNotifier {
   String style = "https://demotiles.maplibre.org/style.json";
@@ -11,46 +13,41 @@ class MapProvider with ChangeNotifier {
 
   int selectedId = 0;
 
-
-
   Map<String, dynamic> plantsSource = {
     'type': 'FeatureCollection',
     'features': [],
   };
 
-  void setScroll(bool scroll)
-  {
+  void setScroll(bool scroll) {
     scrollEnabled = scroll;
     notifyListeners();
   }
 
-  void  addPoint(LatLng coords) async{
+  void addPoint(LatLng coords) async {
     final template = {
-          "type": "Feature",
-          "properties": {"name": "plant"},
-          "geometry": {
-            "coordinates": [coords.longitude, coords.latitude],
-            "type": "Point",
-          },
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "coordinates": [coords.longitude, coords.latitude],
+        "type": "Point",
+      },
     };
     final features = (plantsSource['features'] as List);
     features.add(template);
     selectedId = features.length - 1;
-
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
+    notifyListeners();
   }
 
-  void savePoint(String name) async
-  {
+  void savePoint(Plant plant) async {
     final features = plantsSource['features'] as List;
-    features[selectedId]['properties']['name'] = name;
+    final json = plant.toProperties();
+    features[selectedId]['properties'] = json;//['name'] = plant.name;
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
-
+    print("test");
   }
 
-  void removePoint() async
-  {
-
+  void removePoint() async {
     final features = plantsSource['features'] as List;
     features.removeLast();
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
