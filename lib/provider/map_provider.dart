@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
-import 'dart:developer' as logDev;
 
 class MapProvider with ChangeNotifier {
   String style = "https://demotiles.maplibre.org/style.json";

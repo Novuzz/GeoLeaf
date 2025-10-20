@@ -5,13 +5,20 @@ import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:provider/provider.dart';
 
-class Addsymbol extends StatelessWidget {
-  MapVisualizer map;
-  String name = "";
+class Addsymbol extends StatefulWidget {
+
+  final MapVisualizer map;
   Addsymbol({super.key, required this.map});
+  @override
+  State<Addsymbol> createState() => _AddsymbolState();
+}
+
+class _AddsymbolState extends State<Addsymbol> {
+
+  String name = "";
 
   Future<void> _exit(MapProvider mapPr) async {
-    map.removeWindow();
+    widget.map.removeWindow();
     await mapPr.mapController!.animateCamera(
       CameraUpdate.newCameraPosition(mapPr.lastPosition!),
     );

@@ -1,79 +1,26 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/screen/MapScreen.dart';
+import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
-import 'package:maplibre_gl/maplibre_gl.dart';
-import 'package:geo_leaf/widgets/ImagePicker.dart';
-import 'package:geo_leaf/widgets/MapVisualizer.dart';
+import 'package:geo_leaf/screen/SplashScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => MapProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => MapProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+      ],
       child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  OverlayEntry? entry;
-
   MyApp({super.key});
-
-  void test(BuildContext context) {
-    entry = OverlayEntry(
-      builder: (ctx) => Positioned(
-        left: 40,
-        right: 30,
-        child: ElevatedButton(
-          onPressed: () => print("press"),
-          child: Text("data"),
-        ),
-      ),
-    );
-    final overlay = Overlay.of(context);
-    overlay.insert(entry!);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Builder(
-          builder: (context) => Column(
-            children: [
-              Imagepicker(),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => Mappage()),
-                  );
-                },
-                child: Text("Open Map"),
-              ),
-              ElevatedButton(
-                onPressed: () => test(context),
-                child: Text("Test"),
-              ),
-            ],
-          ),
-        ),
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Center(
-            child: Text(
-              "Geoleaf",
-              style: TextStyle(
-                color: Colors.white,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    return MaterialApp(home: SplashScreen());
   }
 }
