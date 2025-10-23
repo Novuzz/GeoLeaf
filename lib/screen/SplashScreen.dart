@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/screen/HomeScreen.dart';
 import 'package:geo_leaf/screen/LoginScreen.dart';
+import 'package:geo_leaf/widgets/SplashWidget.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,8 +19,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    Future.delayed(const Duration(seconds: 2), _delayInit);
+    _controller = AnimationController(vsync: this);
+    Future.delayed(const Duration(seconds: 4), _delayInit);
   }
 
   void _delayInit() {
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SvgPicture.asset("assets/images/splash/GEOLEAFLOGO.svg"),
+      body: SplashWidget(),
       backgroundColor: Colors.white,
     );
   }

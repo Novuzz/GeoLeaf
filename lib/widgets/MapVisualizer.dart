@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/widgets/AddSymbol.dart';
@@ -37,48 +38,91 @@ class MapVisualizer extends StatefulWidget {
 class MapVisualizerState extends State<MapVisualizer> {
   bool canInteractWithMap = false;
 
+  final GlobalKey _mapKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     var mapPr = Provider.of<MapProvider>(context);
 
     mapPr.context = context;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Listener(
+          behavior: HitTestBehavior.translucent,
+          onPointerUp: (PointerUpEvent event) async {
+            if (mapPr.mapController == null) return;
 
-    return MapLibreMap(
-      compassEnabled: false,
+            try {
+              final mapContext = _mapKey.currentContext;
+              if (mapContext == null) return;
 
-      scrollGesturesEnabled: mapPr.scrollEnabled,
+              final renderObj = mapContext.findRenderObject();
+              if (renderObj == null || renderObj is! RenderBox) return;
 
-      initialCameraPosition: MapVisualizer._nullIsland,
-      styleString: mapPr.style,
-      onMapCreated: (controller) {
-        mapPr.mapController = controller;
-      },
-      onMapLongClick: (point, coordinates) async {
-        mapPr.lastPosition = CameraPosition(
-          target: LatLng(-23.548177519867036, -46.65227339052233),
-          zoom: 17.0,
-          tilt: 60.0, // pitch to see the extrusion
-          bearing: 30.0, // rotate a bit
-        );
-        await mapPr.mapController!.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: coordinates,
-              zoom: 20.0,
-              tilt: 0.0,
-              bearing: 30.0,
-            ),
+              final box = renderObj as RenderBox;
+              final local = box.globalToLocal(event.position);
+              final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+              final point = Point<double>(
+                local.dx * pixelRatio,
+                local.dy * pixelRatio,
+              );
+
+              final features = await mapPr.mapController!.queryRenderedFeatures(
+                point,
+                ["plants-layer"]
+                , null
+              );
+
+              if (features.isNotEmpty) {
+                final f = features.first;
+                debugPrint("✅ Hit circle id");
+              } else {
+                debugPrint("❌ No feature hit — maybe wrong layer id?");
+              }
+            } catch (e, st) {
+              debugPrint('❌ Error in tap handler: $e\n$st');
+            }
+          },
+          child: MapLibreMap(
+            key: _mapKey,
+            compassEnabled: false,
+
+            scrollGesturesEnabled: mapPr.scrollEnabled,
+
+            initialCameraPosition: MapVisualizer._nullIsland,
+            styleString: mapPr.style,
+
+            onMapLongClick: (point, coordinates) async {
+              mapPr.lastPosition = CameraPosition(
+                target: LatLng(-23.548177519867036, -46.65227339052233),
+                zoom: 17.0,
+                tilt: 60.0, // pitch to see the extrusion
+                bearing: 30.0, // rotate a bit
+              );
+              await mapPr.mapController!.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: coordinates,
+                    zoom: 20.0,
+                    tilt: 0.0,
+                    bearing: 30.0,
+                  ),
+                ),
+              );
+              //mapPr.scrollEnabled = false;
+              mapPr.setScroll(false);
+              mapPr.addPoint(coordinates);
+              widget.addWindow(context);
+            },
+            onStyleLoadedCallback: () async {
+              if (mapPr.mapController != null) {
+                await addGJson(mapPr.mapController);
+              }
+            },
+            onMapCreated: (controller) async {
+              mapPr.mapController = controller;
+            },
           ),
         );
-        //mapPr.scrollEnabled = false;
-        mapPr.setScroll(false);
-        mapPr.addPoint(coordinates);
-        widget.addWindow(context);
-      },
-      onStyleLoadedCallback: () async {
-        if (mapPr.mapController != null) {
-          await addGJson(mapPr.mapController);
-        }
       },
     );
   }
@@ -95,9 +139,7 @@ class MapVisualizerState extends State<MapVisualizer> {
 
     await controller.addGeoJsonSource("plants-source", {
       'type': 'FeatureCollection',
-      'features': [
-        
-      ],
+      'features': [],
     });
     await controller.addFillExtrusionLayer(
       "buildings-source",
@@ -179,6 +221,8 @@ class MapVisualizerState extends State<MapVisualizer> {
         circleStrokeWidth: 2.0,
         circleStrokeColor: "#ffffff",
       ),
+      minzoom: 0,
+      enableInteraction: true,
     );
     await controller.addSymbolLayer(
       "plants-source",
@@ -195,9 +239,10 @@ class MapVisualizerState extends State<MapVisualizer> {
         textAllowOverlap: true,
         textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
       ),
+      minzoom: 0,
+      enableInteraction: true,
     );
-    /*
-    */
+
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
