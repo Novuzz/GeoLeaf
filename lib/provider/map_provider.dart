@@ -42,6 +42,7 @@ class MapProvider with ChangeNotifier {
     final features = plantsSource['features'] as List;
     final json = plant.toProperties();
     features[selectedId]['properties'] = json;//['name'] = plant.name;
+    features[selectedId]['id'] = json['id'];//['name'] = plant.name;
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
     print("test");
   }

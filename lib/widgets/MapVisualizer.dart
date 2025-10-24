@@ -20,10 +20,10 @@ class MapVisualizer extends StatefulWidget {
   State<MapVisualizer> createState() => MapVisualizerState();
   OverlayEntry? entry;
 
-  void addWindow(BuildContext context) {
+  void addWindow(BuildContext context, {String? edited}) {
     entry = OverlayEntry(
       builder: (ctx) =>
-          Positioned(left: 40, right: 30, top: 50, child: Addsymbol(map: this)),
+          Positioned(left: 40, right: 30, top: 50, child: Addsymbol(map: this, id: edited,)),
     );
     final overlay = Overlay.of(context);
     overlay.insert(entry!);
@@ -54,12 +54,12 @@ class MapVisualizerState extends State<MapVisualizer> {
             try {
               final mapContext = _mapKey.currentContext;
               if (mapContext == null) return;
-
               final renderObj = mapContext.findRenderObject();
-              if (renderObj == null || renderObj is! RenderBox) return;
+              if (renderObj == null) return;
 
-              final box = renderObj as RenderBox;
-              final local = box.globalToLocal(event.position);
+              final local = (renderObj as RenderBox).globalToLocal(
+                event.position,
+              );
               final pixelRatio = MediaQuery.of(context).devicePixelRatio;
               final point = Point<double>(
                 local.dx * pixelRatio,
@@ -68,19 +68,27 @@ class MapVisualizerState extends State<MapVisualizer> {
 
               final features = await mapPr.mapController!.queryRenderedFeatures(
                 point,
-                ["plants-layer"]
-                , null
+                ["plants-layer"],
+                null,
               );
 
               if (features.isNotEmpty) {
                 final f = features.first;
-                debugPrint("✅ Hit circle id");
-              } else {
-                debugPrint("❌ No feature hit — maybe wrong layer id?");
+                final g = f["geometry"]["coordinates"];
+                await mapPr.mapController!.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: LatLng(g[1], g[0]),
+                      zoom: 20.0,
+                      tilt: 0.0,
+                      bearing: 30.0,
+                    ),
+                  ),
+                );
+                mapPr.setScroll(false);
+                widget.addWindow(context, edited: f["id"]);
               }
-            } catch (e, st) {
-              debugPrint('❌ Error in tap handler: $e\n$st');
-            }
+            } catch (e) {}
           },
           child: MapLibreMap(
             key: _mapKey,
@@ -108,7 +116,6 @@ class MapVisualizerState extends State<MapVisualizer> {
                   ),
                 ),
               );
-              //mapPr.scrollEnabled = false;
               mapPr.setScroll(false);
               mapPr.addPoint(coordinates);
               widget.addWindow(context);
