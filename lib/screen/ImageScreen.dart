@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ImageVisualizer extends StatelessWidget {
+class ImageScreen extends StatelessWidget {
   final ImageProvider image;
 
-  const ImageVisualizer({super.key, required this.image});
+  const ImageScreen({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {

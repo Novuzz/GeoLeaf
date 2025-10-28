@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geo_leaf/functions/EaseFunctions.dart';
 
+
+//Descrição: A logo que aparece no começo
 class SplashWidget extends StatefulWidget {
   const SplashWidget({super.key});
 

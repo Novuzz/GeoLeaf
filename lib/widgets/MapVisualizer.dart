@@ -8,6 +8,8 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:geo_leaf/functions/numberF.dart';
 import 'package:provider/provider.dart';
 
+//Descrição: Classe encarregada de mostrar o mapa
+
 class MapVisualizer extends StatefulWidget {
   static const CameraPosition _nullIsland = CameraPosition(
     target: LatLng(-33.852, 151.211),

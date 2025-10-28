@@ -44,7 +44,7 @@ class _ImagepickerState extends State<Imagepicker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ImageVisualizer(image: image.image),
+                  builder: (_) => ImageScreen(image: image.image),
                 ),
               );
             },
