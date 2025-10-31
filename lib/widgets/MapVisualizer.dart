@@ -124,7 +124,7 @@ class MapVisualizerState extends State<MapVisualizer> {
             },
             onStyleLoadedCallback: () async {
               if (mapPr.mapController != null) {
-                await addGJson(mapPr.mapController);
+                await addGJson(mapPr.mapController, mapPr);
               }
             },
             onMapCreated: (controller) async {
@@ -136,7 +136,7 @@ class MapVisualizerState extends State<MapVisualizer> {
     );
   }
 
-  Future<void> addGJson(MapLibreMapController? controller) async {
+  Future<void> addGJson(MapLibreMapController? controller, MapProvider? mapr) async {
     String js = await rootBundle.loadString("assets/json/mapRuas.geojson");
     String ln = await rootBundle.loadString("assets/json/lines.json");
 
@@ -251,6 +251,7 @@ class MapVisualizerState extends State<MapVisualizer> {
       minzoom: 0,
       enableInteraction: true,
     );
+    
 
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(

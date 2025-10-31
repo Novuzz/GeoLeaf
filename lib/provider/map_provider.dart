@@ -8,7 +8,9 @@ class MapProvider with ChangeNotifier {
   bool scrollEnabled = true;
   MapLibreMapController? mapController;
   BuildContext? context;
+  LatLng userPosition = LatLng(0, 0);
   CameraPosition? lastPosition;
+  Circle? userPoint;
 
   int selectedId = 0;
 
@@ -19,6 +21,38 @@ class MapProvider with ChangeNotifier {
 
   void setScroll(bool scroll) {
     scrollEnabled = scroll;
+    notifyListeners();
+  }
+
+  void changePosition(LatLng pos) async {
+    await mapController!.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: pos, zoom: 20.0, tilt: 0.0, bearing: 30.0),
+      ),
+    );
+    notifyListeners();
+  }
+
+  void setUserPosition(LatLng coords) async {
+    if (userPoint == null) {
+      userPoint = await mapController!.addCircle(
+        CircleOptions(
+          circleColor: '#1671c4',
+          circleRadius: 5,
+          circleStrokeColor: '#ffffff',
+          circleStrokeWidth: 4,
+          geometry: coords,
+        ),
+      );
+    } else {
+      await mapController!.updateCircle(userPoint!, CircleOptions(
+        circleColor: '#1671c4',
+          circleRadius: 5,
+          circleStrokeColor: '#ffffff',
+          circleStrokeWidth: 4,
+          geometry: coords,
+      ));
+    }
     notifyListeners();
   }
 
@@ -41,8 +75,8 @@ class MapProvider with ChangeNotifier {
   void savePoint(Plant plant) async {
     final features = plantsSource['features'] as List;
     final json = plant.toProperties();
-    features[selectedId]['properties'] = json;//['name'] = plant.name;
-    features[selectedId]['id'] = json['id'];//['name'] = plant.name;
+    features[selectedId]['properties'] = json; //['name'] = plant.name;
+    features[selectedId]['id'] = json['id']; //['name'] = plant.name;
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
     print("test");
   }
