@@ -24,8 +24,12 @@ class MapVisualizer extends StatefulWidget {
 
   void addWindow(BuildContext context, {String? edited}) {
     entry = OverlayEntry(
-      builder: (ctx) =>
-          Positioned(left: 40, right: 30, top: 50, child: Addsymbol(map: this, id: edited,)),
+      builder: (ctx) => Positioned(
+        left: 40,
+        right: 30,
+        top: 50,
+        child: Addsymbol(map: this, id: edited),
+      ),
     );
     final overlay = Overlay.of(context);
     overlay.insert(entry!);
@@ -136,7 +140,10 @@ class MapVisualizerState extends State<MapVisualizer> {
     );
   }
 
-  Future<void> addGJson(MapLibreMapController? controller, MapProvider? mapr) async {
+  Future<void> addGJson(
+    MapLibreMapController? controller,
+    MapProvider? mapr,
+  ) async {
     String js = await rootBundle.loadString("assets/json/mapRuas.geojson");
     String ln = await rootBundle.loadString("assets/json/lines.json");
 
@@ -145,6 +152,10 @@ class MapVisualizerState extends State<MapVisualizer> {
 
     await controller!.addGeoJsonSource("buildings-source", jsD);
     await controller.addGeoJsonSource("lines-source", lines);
+    await controller.addGeoJsonSource("user-source", {
+      'type': 'FeatureCollection',
+      'features': [],
+    });
 
     await controller.addGeoJsonSource("plants-source", {
       'type': 'FeatureCollection',
@@ -251,7 +262,19 @@ class MapVisualizerState extends State<MapVisualizer> {
       minzoom: 0,
       enableInteraction: true,
     );
-    
+
+    await controller.addCircleLayer(
+      "user-source",
+      "user-layer",
+      CircleLayerProperties(
+        circleColor: '#1671c4',
+        circleRadius: 5,
+        circleStrokeColor: '#ffffff',
+        circleStrokeWidth: 4,
+      ),
+      minzoom: 0,
+      enableInteraction: true,
+    );
 
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(

@@ -34,25 +34,18 @@ class MapProvider with ChangeNotifier {
   }
 
   void setUserPosition(LatLng coords) async {
-    if (userPoint == null) {
-      userPoint = await mapController!.addCircle(
-        CircleOptions(
-          circleColor: '#1671c4',
-          circleRadius: 5,
-          circleStrokeColor: '#ffffff',
-          circleStrokeWidth: 4,
-          geometry: coords,
-        ),
-      );
-    } else {
-      await mapController!.updateCircle(userPoint!, CircleOptions(
-        circleColor: '#1671c4',
-          circleRadius: 5,
-          circleStrokeColor: '#ffffff',
-          circleStrokeWidth: 4,
-          geometry: coords,
-      ));
-    }
+    await mapController!.setGeoJsonSource("user-source", {
+      'type': 'FeatureCollection',
+      'features': [
+        {
+          "type": "Feature",
+          "geometry": {
+            "coordinates": [coords.longitude, coords.latitude],
+            "type": "Point",
+          },
+        },
+      ],
+    });
     notifyListeners();
   }
 
