@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:math';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/utils/MapRender.dart';
 import 'package:geo_leaf/widgets/AddSymbol.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
-import 'package:geo_leaf/functions/numberF.dart';
 import 'package:provider/provider.dart';
 
 //Descrição: Classe encarregada de mostrar o mapa
@@ -22,6 +21,7 @@ class MapVisualizer extends StatefulWidget {
   State<MapVisualizer> createState() => MapVisualizerState();
   OverlayEntry? entry;
 
+  //Adiciona o "Cartão" de cima
   void addWindow(BuildContext context, {String? edited}) {
     entry = OverlayEntry(
       builder: (ctx) => Positioned(
@@ -35,6 +35,7 @@ class MapVisualizer extends StatefulWidget {
     overlay.insert(entry!);
   }
 
+  //Remove esse cartão
   void removeWindow() {
     entry?.remove();
     entry = null;
@@ -43,6 +44,7 @@ class MapVisualizer extends StatefulWidget {
 
 class MapVisualizerState extends State<MapVisualizer> {
   bool canInteractWithMap = false;
+  bool isLoaded = false;
 
   final GlobalKey _mapKey = GlobalKey();
   @override
@@ -50,6 +52,8 @@ class MapVisualizerState extends State<MapVisualizer> {
     var mapPr = Provider.of<MapProvider>(context);
 
     mapPr.context = context;
+
+    //Carrega o mapa
     return LayoutBuilder(
       builder: (context, constraints) {
         return Listener(
@@ -92,19 +96,26 @@ class MapVisualizerState extends State<MapVisualizer> {
                   ),
                 );
                 mapPr.setScroll(false);
-                widget.addWindow(context, edited: f["id"]);
+                if (context.mounted) {
+                  widget.addWindow(context, edited: f["id"]);
+                }
               }
             } catch (e) {}
           },
-          child: MapLibreMap(
-            key: _mapKey,
-            compassEnabled: false,
+          child: Stack(
+            children: [
+              MapLibreMap(
+                key: _mapKey,
+                compassEnabled: false,
 
-            scrollGesturesEnabled: mapPr.scrollEnabled,
+                scrollGesturesEnabled: mapPr.scrollEnabled,
 
-            initialCameraPosition: MapVisualizer._nullIsland,
-            styleString: mapPr.style,
+                initialCameraPosition: MapVisualizer._nullIsland,
+                styleString: mapPr.style,
 
+                //Sistema de colocar ponto antigo, ainda não deletei pois
+                //pode servir para futuros testes
+                /*
             onMapLongClick: (point, coordinates) async {
               mapPr.lastPosition = CameraPosition(
                 target: LatLng(-23.548177519867036, -46.65227339052233),
@@ -112,6 +123,7 @@ class MapVisualizerState extends State<MapVisualizer> {
                 tilt: 60.0, // pitch to see the extrusion
                 bearing: 30.0, // rotate a bit
               );
+
               await mapPr.mapController!.animateCamera(
                 CameraUpdate.newCameraPosition(
                   CameraPosition(
@@ -122,169 +134,47 @@ class MapVisualizerState extends State<MapVisualizer> {
                   ),
                 ),
               );
-              mapPr.setScroll(false);
               mapPr.addPoint(coordinates);
-              widget.addWindow(context);
-            },
-            onStyleLoadedCallback: () async {
-              if (mapPr.mapController != null) {
-                await addGJson(mapPr.mapController, mapPr);
+              if (mounted) {
+                widget.addWindow(context);
               }
             },
-            onMapCreated: (controller) async {
-              mapPr.mapController = controller;
-            },
+              */
+                onStyleLoadedCallback: () async {
+                  if (mapPr.mapController != null) {
+                    isLoaded = await addGJson(mapPr.mapController, mapPr);
+                    mapPr.update();
+                  }
+                },
+                onMapCreated: (controller) async {
+                  mapPr.mapController = controller;
+                },
+              ),
+
+              if (!isLoaded) ModalBarrier(dismissible: false),
+
+              if (!isLoaded)
+                Center(
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        width: 1000,
+                        height: 1000,
+                        child: ColoredBox(color: Colors.white),
+                      ),
+                      Center(
+                        child: LoadingAnimationWidget.waveDots(
+                          color: Colors.green,
+                          size: 100,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
           ),
         );
       },
-    );
-  }
-
-  Future<void> addGJson(
-    MapLibreMapController? controller,
-    MapProvider? mapr,
-  ) async {
-    String js = await rootBundle.loadString("assets/json/mapRuas.geojson");
-    String ln = await rootBundle.loadString("assets/json/lines.json");
-
-    Map<String, dynamic> jsD = await json.decode(js);
-    Map<String, dynamic> lines = await json.decode(ln);
-
-    await controller!.addGeoJsonSource("buildings-source", jsD);
-    await controller.addGeoJsonSource("lines-source", lines);
-    await controller.addGeoJsonSource("user-source", {
-      'type': 'FeatureCollection',
-      'features': [],
-    });
-
-    await controller.addGeoJsonSource("plants-source", {
-      'type': 'FeatureCollection',
-      'features': [],
-    });
-    await controller.addFillExtrusionLayer(
-      "buildings-source",
-      "buildings-3d",
-      FillExtrusionLayerProperties(
-        fillExtrusionHeight: ['get', 'height'] ?? 0.1,
-        fillExtrusionBase: 0,
-        fillExtrusionColor: ['get', 'color'] ?? '#BFD738',
-        fillExtrusionOpacity: 0.9,
-        fillExtrusionVerticalGradient: true,
-      ),
-    );
-
-    await controller.addLineLayer(
-      "lines-source",
-      "lines",
-      LineLayerProperties(lineColor: '#F5F2F9', lineWidth: 12),
-      belowLayerId: 'buildings-3d',
-    );
-
-    Map<String, Object> data = {"type": "FeatureCollection", "features": [
-        
-      ],
-    };
-    /*
-
- */
-    for (var points in jsD['features']) {
-      var properties = points['properties'];
-      if (properties['exclude'] != null) continue;
-      var localPoints = points['geometry']['coordinates'][0];
-      final center = getCenter(localPoints);
-      (data["features"] as List).add({
-        "type": "Feature",
-        "properties": {
-          "name": properties['name'],
-          "color": properties['color'],
-        },
-        "geometry": {"coordinates": center, "type": "Point"},
-      });
-    }
-    await controller.addGeoJsonSource("marker-source", data);
-    await controller.addCircleLayer(
-      "marker-source",
-      "marker-layer",
-      CircleLayerProperties(
-        circleColor: ['get', 'color'] ?? "#ff0000",
-        circleRadius: 8.0,
-        circleStrokeWidth: 2.0,
-        circleStrokeColor: "#ffffff",
-      ),
-      minzoom: 18,
-    );
-
-    await controller.addSymbolLayer(
-      "marker-source",
-      "points_layer",
-      SymbolLayerProperties(
-        textField: ['get', 'name'],
-
-        textSize: 14,
-        textColor: '#ffffff',
-        textHaloColor: ['get', 'color'],
-        textHaloWidth: 1.5,
-        textAnchor: 'top',
-        textOffset: [0, 1.5],
-        textAllowOverlap: true,
-        textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
-      ),
-      minzoom: 18,
-    );
-
-    await controller.addCircleLayer(
-      "plants-source",
-      "plants-layer",
-      CircleLayerProperties(
-        circleColor: "#50C878",
-        circleRadius: 8.0,
-        circleStrokeWidth: 2.0,
-        circleStrokeColor: "#ffffff",
-      ),
-      minzoom: 0,
-      enableInteraction: true,
-    );
-    await controller.addSymbolLayer(
-      "plants-source",
-      "plants-text",
-      SymbolLayerProperties(
-        textField: ['get', 'name'],
-
-        textSize: 14,
-        textColor: '#ffffff',
-        textHaloColor: ['get', 'color'],
-        textHaloWidth: 1.5,
-        textAnchor: 'top',
-        textOffset: [0, 1.5],
-        textAllowOverlap: true,
-        textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
-      ),
-      minzoom: 0,
-      enableInteraction: true,
-    );
-
-    await controller.addCircleLayer(
-      "user-source",
-      "user-layer",
-      CircleLayerProperties(
-        circleColor: '#1671c4',
-        circleRadius: 5,
-        circleStrokeColor: '#ffffff',
-        circleStrokeWidth: 4,
-      ),
-      minzoom: 0,
-      enableInteraction: true,
-    );
-
-    await controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(-23.548177519867036, -46.65227339052233),
-          zoom: 17.0,
-          tilt: 60.0, // pitch to see the extrusion
-          bearing: 30.0, // rotate a bit
-        ),
-      ),
     );
   }
 }

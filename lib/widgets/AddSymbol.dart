@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/widgets/MapVisualizer.dart';
-import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:provider/provider.dart';
 
 class Addsymbol extends StatefulWidget {
   final MapVisualizer map;
+  final Function? onExit;
   final String? id;
-  Addsymbol({super.key, required this.map, this.id});
+  Addsymbol({super.key, required this.map, this.onExit, this.id});
   @override
   State<Addsymbol> createState() => _AddsymbolState();
 }
@@ -16,13 +16,6 @@ class Addsymbol extends StatefulWidget {
 class _AddsymbolState extends State<Addsymbol> {
   String name = "";
 
-  Future<void> _exit(MapProvider mapPr) async {
-    widget.map.removeWindow();
-    await mapPr.mapController!.animateCamera(
-      CameraUpdate.newCameraPosition(mapPr.lastPosition!),
-    );
-    mapPr.setScroll(true);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +30,7 @@ class _AddsymbolState extends State<Addsymbol> {
                 if (widget.id == null) {
                   mapPr.removePoint();
                 }
-                await _exit(mapPr);
+                widget.onExit!();
               },
             ),
             const Text("Flower"),
@@ -65,7 +58,8 @@ class _AddsymbolState extends State<Addsymbol> {
                     i++;
                   }
                 }
-                await _exit(mapPr);
+                widget.onExit!();
+                //await _exit(mapPr);
               },
             ),
           ],

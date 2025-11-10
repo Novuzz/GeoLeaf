@@ -9,6 +9,12 @@ class ImageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(child: Image(image: image)),
+      bottomNavigationBar: FloatingActionButton(
+        onPressed: () async {
+          Navigator.pop(context, true);
+        },
+        child: Text("Confirm"),
+      ),
 
       appBar: AppBar(backgroundColor: Colors.green),
     );

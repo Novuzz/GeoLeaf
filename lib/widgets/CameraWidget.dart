@@ -16,14 +16,12 @@ class _CameraWidgetState extends State<CameraWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _setup();
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller?.dispose();
     super.dispose();
   }
@@ -47,13 +45,18 @@ class _CameraWidgetState extends State<CameraWidget> {
           IconButton(
             onPressed: () async {
               XFile? file = await controller?.takePicture();
-              Image image = Image(image: XFileImage(file!));
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ImageScreen(image: image.image),
-                ),
-              );
+              if (mounted) {
+                Image image = Image(image: XFileImage(file!));
+                final confirm = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ImageScreen(image: image.image),
+                  ),
+                );
+                if (confirm && mounted) {
+                  Navigator.pop(context, image);
+                }
+              }
             },
             icon: Icon(size: 64, Icons.camera),
           ),

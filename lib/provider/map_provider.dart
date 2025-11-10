@@ -9,7 +9,12 @@ class MapProvider with ChangeNotifier {
   MapLibreMapController? mapController;
   BuildContext? context;
   LatLng userPosition = LatLng(0, 0);
-  CameraPosition? lastPosition;
+  CameraPosition? lastPosition = CameraPosition(
+    target: LatLng(-23.548177519867036, -46.65227339052233),
+    zoom: 17.0,
+    tilt: 60.0, // pitch to see the extrusion
+    bearing: 30.0,
+  );
   Circle? userPoint;
 
   int selectedId = 0;
@@ -18,12 +23,12 @@ class MapProvider with ChangeNotifier {
     'type': 'FeatureCollection',
     'features': [],
   };
-
+  //Se falso o usuário não pode mover a camera, se verdadeiro pode
   void setScroll(bool scroll) {
     scrollEnabled = scroll;
     notifyListeners();
   }
-
+  //muda a posição da camera
   void changePosition(LatLng pos) async {
     await mapController!.animateCamera(
       CameraUpdate.newCameraPosition(
@@ -32,7 +37,7 @@ class MapProvider with ChangeNotifier {
     );
     notifyListeners();
   }
-
+  //Muda a posição do usuário no mapa
   void setUserPosition(LatLng coords) async {
     await mapController!.setGeoJsonSource("user-source", {
       'type': 'FeatureCollection',
@@ -48,7 +53,14 @@ class MapProvider with ChangeNotifier {
     });
     notifyListeners();
   }
+  //Atualiza o os pontos, use depois que adicionar ou quando quiser mostrar os pontos
+  void update() async
+  {
+    await mapController!.setGeoJsonSource("plants-source", plantsSource);
+    notifyListeners();
 
+  }
+  //Adiciona um ponto de planta no mapa dada as coordenadas
   void addPoint(LatLng coords) async {
     final template = {
       "type": "Feature",
@@ -61,25 +73,25 @@ class MapProvider with ChangeNotifier {
     final features = (plantsSource['features'] as List);
     features.add(template);
     selectedId = features.length - 1;
-    await mapController!.setGeoJsonSource("plants-source", plantsSource);
-    notifyListeners();
+    update();
   }
-
+  //O Adiciona o ponto apenas a primeiro momento adiciona o ponto mas não salva
+  //E o savePoint salva dada o objeto
   void savePoint(Plant plant) async {
     final features = plantsSource['features'] as List;
     final json = plant.toProperties();
-    features[selectedId]['properties'] = json; //['name'] = plant.name;
-    features[selectedId]['id'] = json['id']; //['name'] = plant.name;
+    features[selectedId]['properties'] = json; 
+    features[selectedId]['id'] = json['id']; 
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
     print("test");
   }
-
+  //apenas remove o último ponto
   void removePoint() async {
     final features = plantsSource['features'] as List;
     features.removeLast();
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
   }
-
+  //Muda de estilo simples para detalhado
   void changeStyle(bool? toggle) {
     styleEnabled = toggle;
     styleEnabled!

@@ -19,7 +19,16 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(),
             Text("Senha"),
             TextField(),
-            FloatingActionButton(onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder:  (_) => HomeScreen())))
+            FloatingActionButton(
+              onPressed: () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (bl) {
+                    return HomeScreen();
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
