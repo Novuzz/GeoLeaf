@@ -33,8 +33,8 @@ Future<bool> addGJson(
       fillExtrusionHeight: ['get', 'height'] ?? 0.1,
       fillExtrusionBase: 0,
       fillExtrusionColor: ['get', 'color'] ?? '#BFD738',
-      fillExtrusionOpacity: 0.9,
       fillExtrusionVerticalGradient: true,
+      fillExtrusionOpacity: 0.9,
     ),
   );
 
