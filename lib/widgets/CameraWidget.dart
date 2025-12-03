@@ -53,7 +53,8 @@ class _CameraWidgetState extends State<CameraWidget> {
                     builder: (_) => ImageScreen(image: image.image),
                   ),
                 );
-                if (confirm && mounted) {
+                if (confirm[0] && mounted) {
+                  print(confirm[1]);
                   Navigator.pop(context, image);
                 }
               }

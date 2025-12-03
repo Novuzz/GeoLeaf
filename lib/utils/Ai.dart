@@ -1,8 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pytorch_lite/flutter_pytorch_lite.dart';
 
@@ -10,9 +10,10 @@ class Ai {
   static const modelPath = 'assets/models/my_optimized_model.ptl';
   static const labelsPath = 'assets/json/new_names.json';
 
-  final Int64List inputShape = Int64List.fromList([1, 3, 224, 224]);
+  final Int64List inputShape = Int64List.fromList([1, 3, 256, 256]);
   final Int64List outputShape = Int64List.fromList([1, 1000]);
-  late final List<String> labels;
+  Map<String, dynamic>? labels;
+  List<String>? labelsList;
   Module? mModule;
 
   // Load model
@@ -34,8 +35,12 @@ class Ai {
 
   // Load labels from assets
   Future<void> _loadLabels() async {
-    final labelTxt = await rootBundle.loadString(labelsPath);
-    labels = labelTxt.split('\n');
+    if (labels == null) {
+      final path = await rootBundle.loadString(labelsPath);
+      final labelTxt = await jsonDecode(path) as Map<String, dynamic>;
+      labels = labelTxt;
+      labelsList = labels!.entries.map((entry) => entry.key).toList();
+    }
   }
 
   Future<void> initHelper() async {
@@ -51,7 +56,6 @@ class Ai {
       width: inputShape[3],
       height: inputShape[2],
     );
-
     // Forward
     IValue input = IValue.from(inputTensor);
     IValue output = await mModule!.forward([input]);
@@ -67,10 +71,11 @@ class Ai {
 
     // Set classification map {label: points}
     var classification = <String, double>{};
-    for (var i = 0; i < prob.length; i++) {
+    //print("Prob: ${prob.length}, Labels: ${labelsList.length}");
+    for (var i = 0; i < labelsList!.length; i++) {
       if (prob[i] != 0) {
         // Set label: points
-        classification[labels[i]] = prob[i];
+        classification[labelsList![i]] = prob[i];
       }
     }
 

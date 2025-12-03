@@ -17,30 +17,16 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  static const assetImage = AssetImage('assets/images/lotus.jpg');
+  final assetImage = AssetImage('assets/images/dahlias.jpg');
 
-  Ai helper = Ai();
   Map<String, double>? classification;
 
   @override
   void initState() {
-    ();
-    super.initState();
-    helper.initHelper().then((_) {
-      classified();
-      print(classification);
-    });
     super.initState();
     _controller = AnimationController(vsync: this);
   }
-  
-  Future<void> classified() async {
-    ui.Image image = await TensorImageUtils.imageProviderToImage(assetImage);
-    classification = await helper.inferenceImage(image);
 
-    if (!mounted) return;
-    setState(() {});
-  }
 
   @override
   void dispose() {
