@@ -1,21 +1,33 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class Addsymbol extends StatefulWidget {
   final MapVisualizer map;
   final Function? onExit;
   final String? id;
+  late List<DropdownMenuEntry> entries = [];
   Addsymbol({super.key, required this.map, this.onExit, this.id});
+
+  void changeDDM(List<dynamic> name)
+  {
+    entries = UnmodifiableListView(
+      name.map((e) => DropdownMenuEntry(value: e, label: e),)
+    );
+
+  }
+
   @override
   State<Addsymbol> createState() => _AddsymbolState();
 }
 
 class _AddsymbolState extends State<Addsymbol> {
-  String name = "";
-
+  String value = "";
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +46,16 @@ class _AddsymbolState extends State<Addsymbol> {
               },
             ),
             const Text("Flower"),
-            TextField(onChanged: (value) => name = value),
+            DropdownMenu<dynamic>(
+              dropdownMenuEntries: widget.entries,
+              onSelected: (value) => this.value = value,
+            ),
             FloatingActionButton(
               onPressed: () async {
                 if (widget.id == null) {
                   mapPr.savePoint(
                     Plant(
-                      name: name,
+                      name: value,
                       createdTime: DateTime(2025),
                       editedTime: DateTime(2025),
                       author: null,
@@ -50,9 +65,13 @@ class _AddsymbolState extends State<Addsymbol> {
                   int i = 0;
                   for (var element in mapPr.plantsSource["features"] as List) {
                     if (element["id"] == widget.id) {
-                      mapPr.plantsSource["features"][i]["properties"]["name"] = name;
-                      
-                      await mapPr.mapController!.setGeoJsonSource("plants-source", mapPr.plantsSource);
+                      mapPr.plantsSource["features"][i]["properties"]["name"] =
+                          value;
+
+                      await mapPr.mapController!.setGeoJsonSource(
+                        "plants-source",
+                        mapPr.plantsSource,
+                      );
                       break;
                     }
                     i++;

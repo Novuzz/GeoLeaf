@@ -104,7 +104,15 @@ class Ai {
     return probabilities;
   }
 
+  Future<List<dynamic>> getNames(ui.Image image) async
+  {
+    final result = await inferenceImage(image);
+    final possibilities = result.entries.map((e) => e.key);
+    return labels?[ possibilities.first ]["nomes_populares"];
+  }
+
   Future<void> close() async {
     await mModule?.destroy();
   }
+
 }

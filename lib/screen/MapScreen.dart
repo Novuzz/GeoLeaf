@@ -44,6 +44,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   final map = MapVisualizer();
+  Addsymbol get symbol => Addsymbol(
+              map: map,
+              onExit: () {
+                setState(() {
+                  _locked = false;
+                });
+              },
+            );
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +70,12 @@ class _MapScreenState extends State<MapScreen> {
                     context,
                     MaterialPageRoute(builder: (_) => CameraScreen()),
                   );
-                  if (result != null) {
+                  if (result[0] != null) {
                     final pos = await determinePosition();
 
                     if (context.mounted) {
                       _locked = true;
+                      symbol.changeDDM( (result[1]));
                       mapPr.addPoint(LatLng(pos.latitude, pos.longitude));
                     }
                   }
@@ -94,14 +103,7 @@ class _MapScreenState extends State<MapScreen> {
             left: 40,
             right: 30,
             top: 50,
-            child: Addsymbol(
-              map: map,
-              onExit: () {
-                setState(() {
-                  _locked = false;
-                });
-              },
-            ),
+            child: symbol 
           ),
       ],
     );

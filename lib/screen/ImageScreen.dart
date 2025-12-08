@@ -22,7 +22,7 @@ class ImageScreen extends StatelessWidget {
 
   Future<Map<String, dynamic>> classified() async {
     
-    ui.Image img = await TensorImageUtils.imageProviderToImage(image);
+    ui.Image img = await TensorImageUtils.imageProviderToImage(AssetImage("assets/images/lotus.jpg"));
     return await helper.inferenceImage(img);
   }
 
@@ -35,9 +35,18 @@ class ImageScreen extends StatelessWidget {
       bottomNavigationBar: FloatingActionButton(
         onPressed: () async {
           await helper.initHelper();
-          final result = await classified();
+          //final result = await classified();
+           ui.Image img = await TensorImageUtils.imageProviderToImage(AssetImage("assets/images/lotus.jpg"));
+           final result = await helper.getNames(img);
           if(context.mounted)
           {
+
+           print("Plants $result");
+            /*
+
+            print("Plants: ${result.entries.map((e) => e.key)}");
+            print("Names: ${result.entries.map((e) => e.value)}");
+            */
             Navigator.pop(context, [true, result]);
           }
         },

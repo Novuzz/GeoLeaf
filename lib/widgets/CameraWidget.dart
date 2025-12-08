@@ -54,8 +54,8 @@ class _CameraWidgetState extends State<CameraWidget> {
                   ),
                 );
                 if (confirm[0] && mounted) {
-                  print(confirm[1]);
-                  Navigator.pop(context, image);
+                  //print(confirm[1]);
+                  Navigator.pop(context, [image, confirm[1]]);
                 }
               }
             },
