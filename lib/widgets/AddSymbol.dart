@@ -11,16 +11,8 @@ class Addsymbol extends StatefulWidget {
   final MapVisualizer map;
   final Function? onExit;
   final String? id;
-  late List<DropdownMenuEntry> entries = [];
-  Addsymbol({super.key, required this.map, this.onExit, this.id});
-
-  void changeDDM(List<dynamic> name)
-  {
-    entries = UnmodifiableListView(
-      name.map((e) => DropdownMenuEntry(value: e, label: e),)
-    );
-
-  }
+  final List<dynamic>? name;
+  Addsymbol({super.key, required this.map, this.onExit, this.id, this.name});
 
   @override
   State<Addsymbol> createState() => _AddsymbolState();
@@ -28,6 +20,12 @@ class Addsymbol extends StatefulWidget {
 
 class _AddsymbolState extends State<Addsymbol> {
   String value = "";
+
+  UnmodifiableListView<DropdownMenuEntry<dynamic>>  _changeDDM(List<dynamic> name) {
+    return UnmodifiableListView(
+      name.map((e) => DropdownMenuEntry(value: e, label: e)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,8 @@ class _AddsymbolState extends State<Addsymbol> {
             ),
             const Text("Flower"),
             DropdownMenu<dynamic>(
-              dropdownMenuEntries: widget.entries,
+              initialSelection: widget.name!.first,
+              dropdownMenuEntries: _changeDDM(widget.name!),
               onSelected: (value) => this.value = value,
             ),
             FloatingActionButton(

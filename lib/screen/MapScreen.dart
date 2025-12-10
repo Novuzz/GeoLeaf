@@ -44,14 +44,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   final map = MapVisualizer();
-  Addsymbol get symbol => Addsymbol(
-              map: map,
-              onExit: () {
-                setState(() {
-                  _locked = false;
-                });
-              },
-            );
+  late Addsymbol symbol = Addsymbol(
+    map: map,
+    onExit: () {
+      setState(() {
+        _locked = false;
+      });
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,15 @@ class _MapScreenState extends State<MapScreen> {
 
                     if (context.mounted) {
                       _locked = true;
-                      symbol.changeDDM( (result[1]));
+                      symbol = Addsymbol(
+                        map: map,
+                        name: result[1],
+                        onExit: () {
+                          setState(() {
+                            _locked = false;
+                          });
+                        },
+                      );
                       mapPr.addPoint(LatLng(pos.latitude, pos.longitude));
                     }
                   }
@@ -98,13 +106,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ),
         if (_locked) ModalBarrier(dismissible: false),
-        if (_locked)
-          Positioned(
-            left: 40,
-            right: 30,
-            top: 50,
-            child: symbol 
-          ),
+        if (_locked) Positioned(left: 40, right: 30, top: 50, child: symbol),
       ],
     );
   }
