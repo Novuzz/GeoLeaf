@@ -106,9 +106,14 @@ class Ai {
 
   Future<List<dynamic>> getNames(ui.Image image) async
   {
+    List<dynamic> pos = List<dynamic>.empty(growable: true);
     final result = await inferenceImage(image);
-    final possibilities = result.entries.map((e) => e.key);
-    return labels?[ possibilities.first ]["nomes_populares"];
+    result.forEach((key, value) 
+    {
+      List<dynamic> pos0 = labels?[key]["nomes_populares"];
+      pos.addAll(pos0);
+      });
+    return pos;
   }
 
   Future<void> close() async {
