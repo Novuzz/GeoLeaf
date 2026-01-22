@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
@@ -18,9 +19,10 @@ void main() {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
+    //print(Platform.isAndroid);
     return MaterialApp(home: SplashScreen());
   }
 }

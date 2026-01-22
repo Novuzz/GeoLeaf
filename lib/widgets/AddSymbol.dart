@@ -2,7 +2,11 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
+import 'package:geo_leaf/utils/Gps.dart';
+import 'package:geo_leaf/utils/HttpRequest.dart';
+import 'package:geo_leaf/utils/MapRender.dart';
 import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:provider/provider.dart';
 
@@ -10,9 +14,17 @@ import 'package:provider/provider.dart';
 class Addsymbol extends StatefulWidget {
   final MapVisualizer map;
   final Function? onExit;
+  final Function? onConfirm;
   final String? id;
   final List<dynamic>? name;
-  Addsymbol({super.key, required this.map, this.onExit, this.id, this.name});
+  Addsymbol({
+    super.key,
+    required this.map,
+    this.onExit,
+    this.onConfirm,
+    this.id,
+    this.name,
+  });
 
   @override
   State<Addsymbol> createState() => _AddsymbolState();
@@ -21,15 +33,10 @@ class Addsymbol extends StatefulWidget {
 class _AddsymbolState extends State<Addsymbol> {
   String value = "";
 
-  UnmodifiableListView<DropdownMenuEntry<dynamic>>  _changeDDM(List<dynamic> name) {
-    return UnmodifiableListView(
-      name.map((e) => DropdownMenuEntry(value: e, label: e)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var mapPr = Provider.of<MapProvider>(context);
+    var loginPr = Provider.of<LoginProvider>(context);
 
     return Card(
       child: SizedBox(
@@ -37,45 +44,22 @@ class _AddsymbolState extends State<Addsymbol> {
           children: [
             BackButton(
               onPressed: () async {
-                if (widget.id == null) {
-                  mapPr.removePoint();
-                }
                 widget.onExit!();
               },
             ),
-            const Text("Flower"),
-            DropdownMenu<dynamic>(
-              initialSelection: widget.name!.first,
-              dropdownMenuEntries: _changeDDM(widget.name!),
-              onSelected: (value) => this.value = value,
-            ),
+            Text(widget.name!.first),
             FloatingActionButton(
               onPressed: () async {
-                if (widget.id == null) {
-                  mapPr.savePoint(
-                    Plant(
-                      name: value,
-                      createdTime: DateTime(2025),
-                      editedTime: DateTime(2025),
-                      author: null,
-                    ),
-                  );
-                } else {
-                  int i = 0;
-                  for (var element in mapPr.plantsSource["features"] as List) {
-                    if (element["id"] == widget.id) {
-                      mapPr.plantsSource["features"][i]["properties"]["name"] =
-                          value;
-
-                      await mapPr.mapController!.setGeoJsonSource(
-                        "plants-source",
-                        mapPr.plantsSource,
-                      );
-                      break;
-                    }
-                    i++;
-                  }
-                }
+                final pos = await determinePosition();
+                print(await postPlant(
+                  Plant(
+                    name: widget.name!.first,
+                    longitude: pos.longitude,
+                    latitude: pos.latitude,
+                    author: loginPr.logged,
+                  ),
+                ));
+                await updatePlants(mapPr.mapController);
                 widget.onExit!();
                 //await _exit(mapPr);
               },

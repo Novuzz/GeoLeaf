@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/screen/CameraScreen.dart';
+import 'package:geo_leaf/utils/MapRender.dart';
 import 'package:geo_leaf/widgets/AddSymbol.dart';
 import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
@@ -71,7 +72,6 @@ class _MapScreenState extends State<MapScreen> {
                     MaterialPageRoute(builder: (_) => CameraScreen()),
                   );
                   if (result[0] != null) {
-                    final pos = await determinePosition();
 
                     if (context.mounted) {
                       _locked = true;
@@ -84,7 +84,7 @@ class _MapScreenState extends State<MapScreen> {
                           });
                         },
                       );
-                      mapPr.addPoint(LatLng(pos.latitude, pos.longitude));
+
                     }
                   }
                 },

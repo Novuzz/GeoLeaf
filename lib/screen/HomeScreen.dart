@@ -1,10 +1,14 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_pytorch_lite/utils.dart';
+import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/provider/login_provider.dart';
+//import 'package:flutter_pytorch_lite/utils.dart';
 import 'package:geo_leaf/screen/MapScreen.dart';
 import 'package:geo_leaf/utils/Ai.dart';
+import 'package:geo_leaf/utils/HttpRequest.dart';
 import 'package:geo_leaf/widgets/ImagePicker.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen>
     _controller = AnimationController(vsync: this);
   }
 
-
   @override
   void dispose() {
     _controller.dispose();
@@ -36,9 +39,19 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    var logPr = Provider.of<LoginProvider>(context);
     return Scaffold(
       body: Center(
-        child: Builder(builder: (context) => Column(children: [Imagepicker()])),
+        child: Builder(
+          builder: (context) => Column(
+            children: [
+              Imagepicker(),
+              FloatingActionButton(child: Text("Post Data"),onPressed: (){
+                postPlant(Plant(name: "test", longitude: -46.6524433, latitude: -23.5474283, author: logPr.logged));
+              })
+            ],
+          ),
+        ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.green,

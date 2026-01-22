@@ -9,7 +9,8 @@ class ImageScreen extends StatelessWidget {
   static final Ai helper = Ai();
 
   const ImageScreen({super.key, required this.image});
-  
+  /*
+  */
   @override
   StatelessElement createElement() {
     // TODO: implement createElement
@@ -36,18 +37,18 @@ class ImageScreen extends StatelessWidget {
         onPressed: () async {
           await helper.initHelper();
           //final result = await classified();
-           ui.Image img = await TensorImageUtils.imageProviderToImage(image);
-           final result = await helper.getNames(img);
+          ui.Image img = await TensorImageUtils.imageProviderToImage(image);
+          final result = await helper.getNames(img);
           if(context.mounted)
           {
 
            print("Plants $result");
-            /*
 
-            print("Plants: ${result.entries.map((e) => e.key)}");
-            print("Names: ${result.entries.map((e) => e.value)}");
+            //print("Plants: ${result.entries.map((e) => e.key)}");
+            //print("Names: ${result.entries.map((e) => e.value)}");
+            /*
             */
-            Navigator.pop(context, [true, result]);
+           Navigator.pop(context, [true, result]);
           }
         },
         child: Text("Confirm"),

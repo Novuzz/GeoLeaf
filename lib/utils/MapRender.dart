@@ -3,7 +3,24 @@ import 'package:flutter/services.dart';
 import 'package:geo_leaf/functions/numberF.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/utils/Gps.dart';
+import 'package:geo_leaf/utils/HttpRequest.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+
+Future<void> updatePlants(MapLibreMapController? controller) async {
+  final plantGeojson = {'type': 'FeatureCollection', 'features': []};
+  final plants = await getPlants();
+  for (var plant in plants) {
+    (plantGeojson["features"] as List).add({
+      "type": "Feature",
+      "properties": {"name": plant.name},
+      "geometry": {
+        "coordinates": [plant.longitude, plant.latitude],
+        "type": "Point",
+      },
+    });
+  }
+  await controller!.setGeoJsonSource("plants-source", plantGeojson);
+}
 
 Future<bool> addGJson(
   MapLibreMapController? controller,
@@ -22,10 +39,10 @@ Future<bool> addGJson(
     'features': [],
   });
 
-  await controller.addGeoJsonSource("plants-source", {
-    'type': 'FeatureCollection',
-    'features': [],
-  });
+  await controller.addGeoJsonSource("plants-source", {'type': 'FeatureCollection', 'features': []});
+
+  await updatePlants(controller);
+
   await controller.addFillExtrusionLayer(
     "buildings-source",
     "buildings-3d",
@@ -93,7 +110,7 @@ Future<bool> addGJson(
     ),
     minzoom: 18,
   );
-
+  //Adiciona a camda de pontos das plantas
   await controller.addCircleLayer(
     "plants-source",
     "plants-layer",
@@ -106,6 +123,8 @@ Future<bool> addGJson(
     minzoom: 0,
     enableInteraction: true,
   );
+
+  //Adiciona a camada de plantas de textos das plantas
   await controller.addSymbolLayer(
     "plants-source",
     "plants-text",

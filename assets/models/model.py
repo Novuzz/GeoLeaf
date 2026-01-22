@@ -60,5 +60,5 @@ optimized_scripted_module = optimize_for_mobile(scripted_module)
 
 # 4. Save the final optimized model file
 # The .ptl extension is recommended for the lite interpreter
-optimized_scripted_module._save_for_lite_interpreter("my_optimized_model.ptl")
+optimized_scripted_module._save_for_lite_interpreter("model.ptl")
 # ...existing code...

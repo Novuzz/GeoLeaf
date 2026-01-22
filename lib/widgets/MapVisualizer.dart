@@ -112,38 +112,10 @@ class MapVisualizerState extends State<MapVisualizer> {
 
                 initialCameraPosition: MapVisualizer._nullIsland,
                 styleString: mapPr.style,
-
-                //Sistema de colocar ponto antigo, ainda não deletei pois
-                //pode servir para futuros testes
-                /*
-            onMapLongClick: (point, coordinates) async {
-              mapPr.lastPosition = CameraPosition(
-                target: LatLng(-23.548177519867036, -46.65227339052233),
-                zoom: 17.0,
-                tilt: 60.0, // pitch to see the extrusion
-                bearing: 30.0, // rotate a bit
-              );
-
-              await mapPr.mapController!.animateCamera(
-                CameraUpdate.newCameraPosition(
-                  CameraPosition(
-                    target: coordinates,
-                    zoom: 20.0,
-                    tilt: 0.0,
-                    bearing: 30.0,
-                  ),
-                ),
-              );
-              mapPr.addPoint(coordinates);
-              if (mounted) {
-                widget.addWindow(context);
-              }
-            },
-              */
                 onStyleLoadedCallback: () async {
                   if (mapPr.mapController != null) {
                     isLoaded = await addGJson(mapPr.mapController, mapPr);
-                    mapPr.update();
+                    //mapPr.update();
                   }
                 },
                 onMapCreated: (controller) async {

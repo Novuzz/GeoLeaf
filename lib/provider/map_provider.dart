@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
-import 'package:maplibre_gl/maplibre_gl.dart';
+import 'package:maplibre_gl/maplibre_gl.dart' as gl;
 
 class MapProvider with ChangeNotifier {
   String style = "https://demotiles.maplibre.org/style.json";
   bool? styleEnabled = false;
   bool scrollEnabled = true;
-  MapLibreMapController? mapController;
+  gl.MapLibreMapController? mapController;
   BuildContext? context;
-  LatLng userPosition = LatLng(0, 0);
-  CameraPosition? lastPosition = CameraPosition(
-    target: LatLng(-23.548177519867036, -46.65227339052233),
+  gl.LatLng userPosition = gl.LatLng(0, 0);
+  gl.CameraPosition? lastPosition = gl.CameraPosition(
+    target: gl.LatLng(-23.548177519867036, -46.65227339052233),
     zoom: 17.0,
     tilt: 60.0, // pitch to see the extrusion
     bearing: 30.0,
   );
-  Circle? userPoint;
+  gl.Circle? userPoint;
 
   int selectedId = 0;
 
@@ -29,16 +29,16 @@ class MapProvider with ChangeNotifier {
     notifyListeners();
   }
   //muda a posição da camera
-  void changePosition(LatLng pos) async {
+  void changePosition(gl.LatLng pos) async {
     await mapController!.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: pos, zoom: 20.0, tilt: 0.0, bearing: 30.0),
+      gl.CameraUpdate.newCameraPosition(
+        gl.CameraPosition(target: pos, zoom: 20.0, tilt: 0.0, bearing: 30.0),
       ),
     );
     notifyListeners();
   }
   //Muda a posição do usuário no mapa
-  void setUserPosition(LatLng coords) async {
+  void setUserPosition(gl.LatLng coords) async {
     await mapController!.setGeoJsonSource("user-source", {
       'type': 'FeatureCollection',
       'features': [
@@ -61,7 +61,7 @@ class MapProvider with ChangeNotifier {
 
   }
   //Adiciona um ponto de planta no mapa dada as coordenadas
-  void addPoint(LatLng coords) async {
+  void addPoint(gl.LatLng coords) async {
     final template = {
       "type": "Feature",
       "properties": {},
