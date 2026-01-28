@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -21,14 +22,21 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  final assetImage = AssetImage('assets/images/dahlias.jpg');
-
-  Map<String, double>? classification;
+  List<Plant>? plants;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+    _getPlants();
+    //plants = await getPlants();
+  }
+
+  void _getPlants() async {
+    final result = await getPlants();
+    setState(() {
+      plants = result;
+    });
   }
 
   @override
@@ -45,10 +53,62 @@ class _HomeScreenState extends State<HomeScreen>
         child: Builder(
           builder: (context) => Column(
             children: [
-              Imagepicker(),
-              FloatingActionButton(child: Text("Post Data"),onPressed: (){
-                postPlant(Plant(name: "test", longitude: -46.6524433, latitude: -23.5474283, author: logPr.logged));
-              })
+              SizedBox(
+                height: 64,
+
+                child: Text(
+                  "Seja bem vindo(a) ${logPr.logged!.username} 👋",
+                  style: TextStyle(
+                    color: ui.Color.fromARGB(255, 11, 133, 58),
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 20);
+                  },
+                  itemCount: plants == null ? 0 : plants!.length,
+                  addAutomaticKeepAlives: false,
+                  itemBuilder: (context, index) {
+                    final currentPlant = plants![index];
+                    return Container(
+                      height: 128,
+                      padding: EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        color: ui.Color.fromARGB(255, 70, 201, 37),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              currentPlant.name,
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            Text(
+                              currentPlant.author == null
+                                  ? "nouser"
+                                  : currentPlant.author!.username,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),

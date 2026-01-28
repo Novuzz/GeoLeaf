@@ -11,9 +11,21 @@ Future<List<User>> getUsers() async {
   return List<User>.from(json.map((e) => User.fromJson(e)));
 }
 
+Future<User?> getUsersById(String id) async {
+  final response = await http.Client().get(url(url: "users?=$id"));
+  if(response.statusCode == 200)
+  {
+    print(response.body);
+    final json = jsonDecode(response.body);
+    return User.fromJson(json[0]);
+  }
+  return null;
+  //print(json);
+}
+
 Future<User?> loginUser(String email, String password) async {
   final response = await http.Client().post(
-    url(url: "users/login"),  
+    url(url: "users/login"),
     body: {"email": email, "password": password},
   );
   if (response.statusCode == 200) {
@@ -26,15 +38,28 @@ Future<User?> loginUser(String email, String password) async {
 
 Future<List<Plant>> getPlants() async {
   final response = await http.Client().get(url(url: "plants"));
-  if(response.statusCode == 200)
-  {
+  if (response.statusCode == 200) {
     final json = jsonDecode(response.body);
-    return List<Plant>.from(json.map((e) =>  Plant.fromJson(e)));
+
+    for(final plant in json)
+    {
+      final user =  plant['user'];
+      plant['user'] = await getUsersById(user);
+    }
+
+    return List<Plant>.from(
+      json.map((e) {
+        return Plant.fromJson(e);
+      }),
+    );
   }
   return [];
 }
 
 Future<int> postPlant(Plant plant) async {
-  final response = await http.Client().post(url(url: "plants"), body: plant.toJson());
+  final response = await http.Client().post(
+    url(url: "plants"),
+    body: plant.toJson(),
+  );
   return response.statusCode;
 }

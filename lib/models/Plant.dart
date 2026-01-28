@@ -1,4 +1,5 @@
 import 'package:geo_leaf/models/User.dart';
+import 'package:geo_leaf/utils/HttpRequest.dart';
 
 class Plant {
   final String? id;
@@ -21,7 +22,7 @@ class Plant {
       name: json['name'],
       longitude: json['long'],
       latitude: json['lat'],
-      author: null,
+      author: json['author'],
     );
   }
 

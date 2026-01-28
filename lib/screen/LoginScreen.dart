@@ -37,18 +37,22 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             FloatingActionButton(
               onPressed: () async {
-                final user = await loginUser(email, password);
+                final user = await loginUser("te22t@hotmail.com", "12ewews");
                 if (user != null && mounted) {
                   setState(() {
                     login.logged = user;
+                    print(login.logged!.username);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (bl) {
                           return HomeScreen();
+                          
                         },
                       ),
                     );
+                    /*
+                    */
                   });
                 }
               },
