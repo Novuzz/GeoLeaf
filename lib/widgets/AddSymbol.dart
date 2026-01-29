@@ -57,6 +57,7 @@ class _AddsymbolState extends State<Addsymbol> {
                     longitude: pos.longitude,
                     latitude: pos.latitude,
                     author: loginPr.logged,
+                    image: null
                   ),
                 ));
                 await updatePlants(mapPr.mapController);

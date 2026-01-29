@@ -12,12 +12,11 @@ Future<List<User>> getUsers() async {
 }
 
 Future<User?> getUsersById(String id) async {
-  final response = await http.Client().get(url(url: "users?=$id"));
-  if(response.statusCode == 200)
-  {
+  final response = await http.Client().get(url(url: "users/$id"));
+  if (response.statusCode == 200) {
     print(response.body);
     final json = jsonDecode(response.body);
-    return User.fromJson(json[0]);
+    return User.fromJson(json);
   }
   return null;
   //print(json);
@@ -41,17 +40,18 @@ Future<List<Plant>> getPlants() async {
   if (response.statusCode == 200) {
     final json = jsonDecode(response.body);
 
-    for(final plant in json)
-    {
-      final user =  plant['user'];
-      plant['user'] = await getUsersById(user);
-    }
+    List<Plant> plants = List.empty(growable: true);
 
-    return List<Plant>.from(
-      json.map((e) {
-        return Plant.fromJson(e);
-      }),
-    );
+    for (final plant in json) {
+      final user = plant['user'];
+      if (user != null) {
+        plant['user'] = await getUsersById(user);
+      } else {
+        continue;
+      }
+      plants.add(Plant.fromJson(plant));
+    }
+    return plants;
   }
   return [];
 }

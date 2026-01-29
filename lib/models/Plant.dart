@@ -1,5 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/User.dart';
-import 'package:geo_leaf/utils/HttpRequest.dart';
 
 class Plant {
   final String? id;
@@ -7,6 +9,7 @@ class Plant {
   final double longitude;
   final double latitude;
   final User? author;
+  final Image? image;
 
   Plant({
     this.id,
@@ -14,6 +17,7 @@ class Plant {
     required this.longitude,
     required this.latitude,
     required this.author,
+    required this.image
   });
 
   factory Plant.fromJson(Map<String, dynamic> json) {
@@ -23,6 +27,7 @@ class Plant {
       longitude: json['long'],
       latitude: json['lat'],
       author: json['author'],
+      image: Image.memory( Uint8List.fromList((json['image'] as List<dynamic>).cast<int>()))
     );
   }
 

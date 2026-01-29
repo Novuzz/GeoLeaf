@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 //import 'package:flutter_pytorch_lite/utils.dart';
@@ -23,19 +24,25 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController _controller;
 
   List<Plant>? plants;
+  Uint8List? image;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+
     _getPlants();
     //plants = await getPlants();
   }
 
   void _getPlants() async {
+    final img = await rootBundle.load("assets/NoImage.png");
+    final u8 = img.buffer.asUint8List();
+    print(u8);
     final result = await getPlants();
     setState(() {
       plants = result;
+      image = u8;
     });
   }
 
@@ -87,21 +94,26 @@ class _HomeScreenState extends State<HomeScreen>
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text(
-                              currentPlant.name,
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  currentPlant.name,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                Text(
+                                  currentPlant.author == null
+                                      ? "nouser"
+                                      : currentPlant.author!.username,
+                                ),
+                              ],
                             ),
-                            Text(
-                              currentPlant.author == null
-                                  ? "nouser"
-                                  : currentPlant.author!.username,
-                            ),
+                            Image(image: currentPlant.image!.image),
                           ],
                         ),
                       ),
@@ -114,6 +126,14 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              _getPlants();
+            },
+            icon: Icon(Icons.refresh),
+          ),
+        ],
         backgroundColor: Colors.green,
         title: Center(
           child: Text(
