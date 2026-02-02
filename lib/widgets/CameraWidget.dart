@@ -45,6 +45,7 @@ class _CameraWidgetState extends State<CameraWidget> {
           IconButton(
             onPressed: () async {
               XFile? file = await controller?.takePicture();
+              
               if (mounted) {
                 Image image = Image(image: XFileImage(file!));
                 final confirm = await Navigator.push(

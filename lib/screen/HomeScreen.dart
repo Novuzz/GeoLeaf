@@ -7,9 +7,7 @@ import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 //import 'package:flutter_pytorch_lite/utils.dart';
 import 'package:geo_leaf/screen/MapScreen.dart';
-import 'package:geo_leaf/utils/Ai.dart';
 import 'package:geo_leaf/utils/HttpRequest.dart';
-import 'package:geo_leaf/widgets/ImagePicker.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,13 +34,9 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _getPlants() async {
-    final img = await rootBundle.load("assets/NoImage.png");
-    final u8 = img.buffer.asUint8List();
-    print(u8);
     final result = await getPlants();
     setState(() {
       plants = result;
-      image = u8;
     });
   }
 
@@ -72,6 +66,11 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
+              FloatingActionButton(
+                child: Text("Post Plant"),
+                onPressed: () async {
+                await postPlant(Plant(name: "Rosa", longitude: 0.5, latitude: 0.5, author: logPr.logged, image: null));
+              }),
               Expanded(
                 child: ListView.separated(
                   separatorBuilder: (context, index) {
@@ -113,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                               ],
                             ),
+                            if(currentPlant.image != null)
                             Image(image: currentPlant.image!.image),
                           ],
                         ),

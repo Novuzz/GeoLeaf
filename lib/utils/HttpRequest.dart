@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/models/User.dart';
 import 'dart:convert';
@@ -59,7 +62,7 @@ Future<List<Plant>> getPlants() async {
 Future<int> postPlant(Plant plant) async {
   final response = await http.Client().post(
     url(url: "plants"),
-    body: plant.toJson(),
+    body: ({"data": jsonEncode(await plant.toJson())})
   );
   return response.statusCode;
 }
