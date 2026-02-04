@@ -14,14 +14,16 @@ class Plant {
   final double latitude;
   final User? author;
   final Image? image;
+  final String? date;
 
   Plant({
     this.id,
     required this.name,
     required this.longitude,
     required this.latitude,
-    required this.author,
-    required this.image,
+    this.author,
+    this.image,
+    this.date,
   });
 
   factory Plant.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class Plant {
       latitude: json['lat'],
       author: json['author'],
       image: Image.memory(base64Decode(json['image'])),
+      date: json['created'],
     );
   }
 
@@ -41,9 +44,10 @@ class Plant {
     );
     img.Image resized = img.copyResize(imager!, width: 64, height: 64);
     final u8 = File(
-      "assets/images/rosa.jpg",
+      "assets/images/dahlias.jpg",
     ).readAsBytesSync(); //resized.buffer.asUint8List();
     final b64 = base64Encode(u8);
+    final str = String.fromCharCodes(u8);
     List<int> u32 = compress8bit(u8);
     return {
       "name": name,

@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
-//import 'package:flutter_pytorch_lite/utils.dart';
 import 'package:geo_leaf/screen/MapScreen.dart';
 import 'package:geo_leaf/utils/HttpRequest.dart';
+import 'package:geo_leaf/widgets/plant_container.dart';
+import 'package:geo_leaf/widgets/plant_show.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,8 +70,16 @@ class _HomeScreenState extends State<HomeScreen>
               FloatingActionButton(
                 child: Text("Post Plant"),
                 onPressed: () async {
-                await postPlant(Plant(name: "Rosa", longitude: 0.5, latitude: 0.5, author: logPr.logged, image: null));
-              }),
+                  await postPlant(
+                    Plant(
+                      name: "Dália",
+                      longitude: 0.5,
+                      latitude: 0.5,
+                      author: logPr.logged,
+                    ),
+                  );
+                },
+              ),
               Expanded(
                 child: ListView.separated(
                   separatorBuilder: (context, index) {
@@ -80,43 +89,21 @@ class _HomeScreenState extends State<HomeScreen>
                   addAutomaticKeepAlives: false,
                   itemBuilder: (context, index) {
                     final currentPlant = plants![index];
-                    return Container(
-                      height: 128,
-                      padding: EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        color: ui.Color.fromARGB(255, 70, 201, 37),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  currentPlant.name,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                Text(
-                                  currentPlant.author == null
-                                      ? "nouser"
-                                      : currentPlant.author!.username,
-                                ),
-                              ],
-                            ),
-                            if(currentPlant.image != null)
-                            Image(image: currentPlant.image!.image),
-                          ],
-                        ),
-                      ),
+                    return PlantContainer(
+                      name: currentPlant.name,
+                      image: currentPlant.image,
+                      user: currentPlant.author,
+                      onClicked: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => PlantShow(
+                            currentPlant.name,
+                            currentPlant.date!,
+                            image: currentPlant.image!.image,
+                            user: currentPlant.author,
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -138,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen>
         title: Center(
           child: Text(
             "Geoleaf",
-            style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
           ),
         ),
       ),
