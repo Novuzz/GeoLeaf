@@ -8,11 +8,12 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 
 Future<void> updatePlants(MapLibreMapController? controller) async {
   final plantGeojson = {'type': 'FeatureCollection', 'features': []};
-  final plants = await getPlants();
+  final plants = await getPlants(onlyData: true);
   for (var plant in plants) {
+    print(plant.name);
     (plantGeojson["features"] as List).add({
       "type": "Feature",
-      "properties": {"name": plant.name},
+      "properties": {"name": plant.name, "id": plant.id},
       "geometry": {
         "coordinates": [plant.longitude, plant.latitude],
         "type": "Point",
@@ -39,7 +40,10 @@ Future<bool> addGJson(
     'features': [],
   });
 
-  await controller.addGeoJsonSource("plants-source", {'type': 'FeatureCollection', 'features': []});
+  await controller.addGeoJsonSource("plants-source", {
+    'type': 'FeatureCollection',
+    'features': [],
+  });
 
   await updatePlants(controller);
 
@@ -129,7 +133,7 @@ Future<bool> addGJson(
     "plants-source",
     "plants-text",
     SymbolLayerProperties(
-      textField: ['get', 'name'],
+      textField: "test",
 
       textSize: 14,
       textColor: '#ffffff',
@@ -140,7 +144,7 @@ Future<bool> addGJson(
       textAllowOverlap: true,
       textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
     ),
-    minzoom: 0,
+    minzoom: 18,
     enableInteraction: true,
   );
 
@@ -157,10 +161,10 @@ Future<bool> addGJson(
     enableInteraction: true,
   );
 
-  await controller.animateCamera(
+  await controller.moveCamera(
     CameraUpdate.newCameraPosition(
       CameraPosition(
-        target: await determineLatLng(),
+        target: LatLng(-23.548674724964076, -46.652320940886455),
         zoom: 17.0,
         tilt: 60.0, // pitch to see the extrusion
         bearing: 30.0, // rotate a bit

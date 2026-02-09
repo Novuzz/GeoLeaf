@@ -50,6 +50,7 @@ class Ai {
 
   // inference still image
   Future<Map<String, double>> inferenceImage(ui.Image image) async {
+    print(image);
     // input tensor
     Tensor inputTensor = await TensorImageUtils.imageToFloat32Tensor(
       image,
@@ -104,20 +105,17 @@ class Ai {
     return probabilities;
   }
 
-  Future<List<dynamic>> getNames(ui.Image image) async
-  {
+  Future<List<dynamic>> getNames(ui.Image image) async {
     List<dynamic> pos = List<dynamic>.empty(growable: true);
     final result = await inferenceImage(image);
-    result.forEach((key, value) 
-    {
+    result.forEach((key, value) {
       List<dynamic> pos0 = labels?[key]["nomes_populares"];
       pos.addAll(pos0);
-      });
+    });
     return pos;
   }
 
   Future<void> close() async {
     await mModule?.destroy();
   }
-
 }

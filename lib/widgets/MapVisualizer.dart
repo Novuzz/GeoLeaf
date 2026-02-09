@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/utils/HttpRequest.dart';
 import 'package:geo_leaf/utils/MapRender.dart';
-import 'package:geo_leaf/widgets/AddSymbol.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
+import 'package:geo_leaf/widgets/plant_show.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:provider/provider.dart';
@@ -19,27 +21,6 @@ class MapVisualizer extends StatefulWidget {
 
   @override
   State<MapVisualizer> createState() => MapVisualizerState();
-  OverlayEntry? entry;
-
-  //Adiciona o "Cartão" de cima
-  void addWindow(BuildContext context, {String? edited}) {
-    entry = OverlayEntry(
-      builder: (ctx) => Positioned(
-        left: 40,
-        right: 30,
-        top: 50,
-        child: Addsymbol(map: this, id: edited),
-      ),
-    );
-    final overlay = Overlay.of(context);
-    overlay.insert(entry!);
-  }
-
-  //Remove esse cartão
-  void removeWindow() {
-    entry?.remove();
-    entry = null;
-  }
 }
 
 class MapVisualizerState extends State<MapVisualizer> {
@@ -84,20 +65,13 @@ class MapVisualizerState extends State<MapVisualizer> {
 
               if (features.isNotEmpty) {
                 final f = features.first;
-                final g = f["geometry"]["coordinates"];
-                await mapPr.mapController!.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: LatLng(g[1], g[0]),
-                      zoom: 20.0,
-                      tilt: 0.0,
-                      bearing: 30.0,
-                    ),
-                  ),
-                );
-                mapPr.setScroll(false);
+
+                Plant? plant = await getPlantById(f["properties"]["id"]);
                 if (context.mounted) {
-                  widget.addWindow(context, edited: f["id"]);
+                  showDialog(
+                    context: context,
+                    builder: (context) => PlantShow(plant!),
+                  );
                 }
               }
             } catch (e) {}

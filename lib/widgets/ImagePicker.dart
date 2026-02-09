@@ -43,9 +43,7 @@ class _ImagepickerState extends State<Imagepicker> {
               print("tap");
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => ImageScreen(image: image.image),
-                ),
+                MaterialPageRoute(builder: (_) => ImageScreen(image: image)),
               );
             },
             child: image,

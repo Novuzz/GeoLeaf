@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/User.dart';

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/screen/CameraScreen.dart';
 import 'package:geo_leaf/utils/MapRender.dart';
-import 'package:geo_leaf/widgets/AddSymbol.dart';
 import 'package:geo_leaf/widgets/MapVisualizer.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
@@ -33,7 +32,6 @@ class _MapScreenState extends State<MapScreen> {
           context,
           listen: false,
         ).setUserPosition(LatLng(pos.latitude, pos.longitude));
-        print("Pos: ${pos.latitude}, ${pos.longitude}");
       });
     });
   }
@@ -45,14 +43,6 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   final map = MapVisualizer();
-  late Addsymbol symbol = Addsymbol(
-    map: map,
-    onExit: () {
-      setState(() {
-        _locked = false;
-      });
-    },
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -67,26 +57,11 @@ class _MapScreenState extends State<MapScreen> {
             children: [
               IconButton(
                 onPressed: () async {
-                  final result = await Navigator.push(
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => CameraScreen()),
                   );
-                  if (result[0] != null) {
-
-                    if (context.mounted) {
-                      _locked = true;
-                      symbol = Addsymbol(
-                        map: map,
-                        name: result[1],
-                        onExit: () {
-                          setState(() {
-                            _locked = false;
-                          });
-                        },
-                      );
-
-                    }
-                  }
+                  await updatePlants(mapPr.mapController);
                 },
                 icon: Icon(size: 64, Icons.camera_alt),
               ),
@@ -106,7 +81,6 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ),
         if (_locked) ModalBarrier(dismissible: false),
-        if (_locked) Positioned(left: 40, right: 30, top: 50, child: symbol),
       ],
     );
   }

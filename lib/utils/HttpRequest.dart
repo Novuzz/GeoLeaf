@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/models/User.dart';
 import 'dart:convert';
@@ -38,8 +35,10 @@ Future<User?> loginUser(String email, String password) async {
   }
 }
 
-Future<List<Plant>> getPlants() async {
-  final response = await http.Client().get(url(url: "plants"));
+Future<List<Plant>> getPlants({bool onlyData = false}) async {
+  final response = await http.Client().get(
+    url(url: "plants${onlyData ? "/data" : ""}"),
+  );
   if (response.statusCode == 200) {
     final json = jsonDecode(response.body);
 
@@ -59,10 +58,20 @@ Future<List<Plant>> getPlants() async {
   return [];
 }
 
+Future<Plant?> getPlantById(String id) async {
+  final response = await http.Client().get(url(url: "plants/$id"));
+  if (response.statusCode == 200) {
+    print(response.body);
+    final json = jsonDecode(response.body);
+    return Plant.fromJson(json);
+  }
+  return null;
+}
+
 Future<int> postPlant(Plant plant) async {
   final response = await http.Client().post(
     url(url: "plants"),
-    body: ({"data": jsonEncode(await plant.toJson())})
+    body: ({"data": jsonEncode(await plant.toJson())}),
   );
   return response.statusCode;
 }

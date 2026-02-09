@@ -45,18 +45,18 @@ class _CameraWidgetState extends State<CameraWidget> {
           IconButton(
             onPressed: () async {
               XFile? file = await controller?.takePicture();
-              
+              final u8 = await file!.readAsBytes();
               if (mounted) {
                 Image image = Image(image: XFileImage(file!));
                 final confirm = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ImageScreen(image: image.image),
+                    builder: (_) => ImageScreen(image: image, rawImage: u8),
                   ),
                 );
                 if (confirm[0] && mounted) {
                   //print(confirm[1]);
-                  Navigator.pop(context, [image, confirm[1]]);
+                  Navigator.pop(context, [image]);
                 }
               }
             },
@@ -68,9 +68,9 @@ class _CameraWidgetState extends State<CameraWidget> {
   }
 
   Future<void> _setup() async {
-    List<CameraDescription> _cameras = await availableCameras();
+    List<CameraDescription> cameras = await availableCameras();
     setState(() {
-      cameras = _cameras;
+      cameras = cameras;
       controller = CameraController(cameras.last, ResolutionPreset.high);
     });
     controller?.initialize().then((_) {

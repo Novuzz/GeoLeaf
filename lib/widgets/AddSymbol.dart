@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/Plant.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
@@ -51,15 +49,17 @@ class _AddsymbolState extends State<Addsymbol> {
             FloatingActionButton(
               onPressed: () async {
                 final pos = await determinePosition();
-                print(await postPlant(
-                  Plant(
-                    name: widget.name!.first,
-                    longitude: pos.longitude,
-                    latitude: pos.latitude,
-                    author: loginPr.logged,
-                    image: null
+                print(
+                  await postPlant(
+                    Plant(
+                      name: widget.name!.first,
+                      longitude: pos.longitude,
+                      latitude: pos.latitude,
+                      author: loginPr.logged,
+                      image: null,
+                    ),
                   ),
-                ));
+                );
                 await updatePlants(mapPr.mapController);
                 widget.onExit!();
                 //await _exit(mapPr);

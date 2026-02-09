@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -96,12 +95,7 @@ class _HomeScreenState extends State<HomeScreen>
                       onClicked: () {
                         showDialog(
                           context: context,
-                          builder: (context) => PlantShow(
-                            currentPlant.name,
-                            currentPlant.date!,
-                            image: currentPlant.image!.image,
-                            user: currentPlant.author,
-                          ),
+                          builder: (context) => PlantShow(currentPlant),
                         );
                       },
                     );

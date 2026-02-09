@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Counter extends StatefulWidget {
-
   final String name = "";
 
   const Counter({super.key});
@@ -13,9 +12,8 @@ class Counter extends StatefulWidget {
 class _CounterState extends State<Counter> {
   int i = 0;
 
-  void _increment()
-  {
-    setState(() {   
+  void _increment() {
+    setState(() {
       i++;
     });
   }
@@ -25,9 +23,8 @@ class _CounterState extends State<Counter> {
     return Column(
       children: [
         ElevatedButton(onPressed: _increment, child: const Text("+")),
-        Text(i.toString())
-      ]
-    )
-    ;
+        Text(i.toString()),
+      ],
+    );
   }
 }
