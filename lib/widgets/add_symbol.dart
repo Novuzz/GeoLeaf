@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
-import 'package:geo_leaf/utils/Gps.dart';
-import 'package:geo_leaf/utils/HttpRequest.dart';
-import 'package:geo_leaf/utils/MapRender.dart';
-import 'package:geo_leaf/widgets/MapVisualizer.dart';
+import 'package:geo_leaf/utils/gps.dart';
+import 'package:geo_leaf/utils/http_request.dart';
+import 'package:geo_leaf/utils/map_render.dart';
+import 'package:geo_leaf/widgets/map_visualizer.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable

@@ -2,15 +2,23 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:geo_leaf/functions/numberF.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
-import 'package:geo_leaf/utils/Gps.dart';
-import 'package:geo_leaf/utils/HttpRequest.dart';
+import 'package:geo_leaf/utils/http_request.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+
+Future<void> addImageFromAsset(
+  MapLibreMapController controller,
+  String name,
+  String assetName,
+) async {
+  final bytes = await rootBundle.load(assetName);
+  final list = bytes.buffer.asUint8List();
+  return controller.addImage(name, list);
+}
 
 Future<void> updatePlants(MapLibreMapController? controller) async {
   final plantGeojson = {'type': 'FeatureCollection', 'features': []};
   final plants = await getPlants(onlyData: true);
   for (var plant in plants) {
-    print(plant.name);
     (plantGeojson["features"] as List).add({
       "type": "Feature",
       "properties": {"name": plant.name, "id": plant.id},
@@ -114,25 +122,21 @@ Future<bool> addGJson(
     ),
     minzoom: 18,
   );
-  //Adiciona a camda de pontos das plantas
-  await controller.addCircleLayer(
-    "plants-source",
-    "plants-layer",
-    CircleLayerProperties(
-      circleColor: "#50C878",
-      circleRadius: 8.0,
-      circleStrokeWidth: 2.0,
-      circleStrokeColor: "#ffffff",
-    ),
-    minzoom: 0,
-    enableInteraction: true,
+
+  await addImageFromAsset(
+    controller,
+    'plant-marker',
+    'assets/images/icons/geoleaf-marker.png',
   );
 
   //Adiciona a camada de plantas de textos das plantas
   await controller.addSymbolLayer(
     "plants-source",
-    "plants-text",
+    "plants-layer",
     SymbolLayerProperties(
+      iconImage: "plant-marker",
+      iconSize: 0.05,
+
       textField: "test",
 
       textSize: 14,
@@ -140,7 +144,7 @@ Future<bool> addGJson(
       textHaloColor: ['get', 'color'],
       textHaloWidth: 1.5,
       textAnchor: 'top',
-      textOffset: [0, 1.5],
+      textOffset: [0, 2.5],
       textAllowOverlap: true,
       textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
     ),

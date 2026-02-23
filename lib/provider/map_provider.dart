@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/models/plant_model.dart';
 import 'package:maplibre_gl/maplibre_gl.dart' as gl;
 
 class MapProvider with ChangeNotifier {
@@ -28,6 +28,7 @@ class MapProvider with ChangeNotifier {
     scrollEnabled = scroll;
     notifyListeners();
   }
+
   //muda a posição da camera
   void changePosition(gl.LatLng pos) async {
     await mapController!.animateCamera(
@@ -37,6 +38,7 @@ class MapProvider with ChangeNotifier {
     );
     notifyListeners();
   }
+
   //Muda a posição do usuário no mapa
   void setUserPosition(gl.LatLng coords) async {
     await mapController!.setGeoJsonSource("user-source", {
@@ -53,13 +55,13 @@ class MapProvider with ChangeNotifier {
     });
     notifyListeners();
   }
+
   //Atualiza o os pontos, use depois que adicionar ou quando quiser mostrar os pontos
-  void update() async
-  {
+  void update() async {
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
     notifyListeners();
-
   }
+
   //Adiciona um ponto de planta no mapa dada as coordenadas
   void addPoint(gl.LatLng coords) async {
     final template = {
@@ -75,22 +77,25 @@ class MapProvider with ChangeNotifier {
     selectedId = features.length - 1;
     update();
   }
+
   //O Adiciona o ponto apenas a primeiro momento adiciona o ponto mas não salva
   //E o savePoint salva dada o objeto
   void savePoint(Plant plant) async {
     final features = plantsSource['features'] as List;
     final json = plant.toProperties();
-    features[selectedId]['properties'] = json; 
-    features[selectedId]['id'] = json['id']; 
+    features[selectedId]['properties'] = json;
+    features[selectedId]['id'] = json['id'];
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
     print("test");
   }
+
   //apenas remove o último ponto
   void removePoint() async {
     final features = plantsSource['features'] as List;
     features.removeLast();
     await mapController!.setGeoJsonSource("plants-source", plantsSource);
   }
+
   //Muda de estilo simples para detalhado
   void changeStyle(bool? toggle) {
     styleEnabled = toggle;

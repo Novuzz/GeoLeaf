@@ -2,10 +2,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
-import 'package:geo_leaf/screen/MapScreen.dart';
-import 'package:geo_leaf/utils/HttpRequest.dart';
+import 'package:geo_leaf/screen/map_screen.dart';
+import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/plant_container.dart';
 import 'package:geo_leaf/widgets/plant_show.dart';
 import 'package:provider/provider.dart';
@@ -66,19 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
-              FloatingActionButton(
-                child: Text("Post Plant"),
-                onPressed: () async {
-                  await postPlant(
-                    Plant(
-                      name: "Dália",
-                      longitude: 0.5,
-                      latitude: 0.5,
-                      author: logPr.logged,
-                    ),
-                  );
-                },
-              ),
+
               Expanded(
                 child: ListView.separated(
                   separatorBuilder: (context, index) {
@@ -88,15 +76,17 @@ class _HomeScreenState extends State<HomeScreen>
                   addAutomaticKeepAlives: false,
                   itemBuilder: (context, index) {
                     final currentPlant = plants![index];
+                    //print(currentPlant.author);
                     return PlantContainer(
                       name: currentPlant.name,
                       image: currentPlant.image,
                       user: currentPlant.author,
-                      onClicked: () {
-                        showDialog(
+                      onClicked: () async {
+                        await showDialog(
                           context: context,
                           builder: (context) => PlantShow(currentPlant),
                         );
+                        _getPlants();
                       },
                     );
                   },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/widgets/CameraWidget.dart';
+import 'package:geo_leaf/widgets/camera_widget.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -11,6 +11,6 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: CameraWidget(),);
+    return Scaffold(appBar: AppBar(), body: CameraWidget());
   }
 }

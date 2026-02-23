@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
-import 'package:geo_leaf/screen/HomeScreen.dart';
-import 'package:geo_leaf/screen/LoginScreen.dart';
-import 'package:geo_leaf/widgets/SplashWidget.dart';
+import 'package:geo_leaf/screen/home_screen.dart';
+import 'package:geo_leaf/screen/login_screen.dart';
+import 'package:geo_leaf/widgets/splash_widget.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -42,9 +42,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SplashWidget(),
-      backgroundColor: Colors.white,
-    );
+    return Scaffold(body: SplashWidget(), backgroundColor: Colors.white);
   }
 }

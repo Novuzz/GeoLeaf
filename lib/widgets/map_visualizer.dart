@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/models/Plant.dart';
-import 'package:geo_leaf/utils/HttpRequest.dart';
-import 'package:geo_leaf/utils/MapRender.dart';
+import 'package:geo_leaf/models/plant_model.dart';
+import 'package:geo_leaf/utils/http_request.dart';
+import 'package:geo_leaf/utils/map_render.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/widgets/plant_show.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

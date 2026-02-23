@@ -3,11 +3,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pytorch_lite/utils.dart';
-import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
-import 'package:geo_leaf/utils/Ai.dart';
-import 'package:geo_leaf/utils/Gps.dart';
-import 'package:geo_leaf/utils/HttpRequest.dart';
+import 'package:geo_leaf/utils/ai.dart';
+import 'package:geo_leaf/utils/gps.dart';
+import 'package:geo_leaf/utils/http_request.dart';
 import 'package:provider/provider.dart';
 
 class ImageScreen extends StatefulWidget {
@@ -48,7 +48,7 @@ class _ImageScreenState extends State<ImageScreen> {
             rawImage: widget.rawImage,
             author: logPr.logged,
           );
-          postPlant(plant);
+          await postPlant(plant);
           if (context.mounted) {
             Navigator.pop(context, [true]);
           }

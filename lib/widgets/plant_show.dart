@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/models/Plant.dart';
+import 'package:geo_leaf/models/plant_model.dart';
+import 'package:geo_leaf/provider/login_provider.dart';
+import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
+import 'package:geo_leaf/widgets/plant_edit.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
-class PlantShow extends StatelessWidget {
+class PlantShow extends StatefulWidget {
   final Plant plant;
 
   const PlantShow(this.plant, {super.key});
 
   @override
+  State<StatefulWidget> createState() => _PlantShow();
+}
+
+class _PlantShow extends State<PlantShow> {
+  @override
   Widget build(BuildContext context) {
-    final List datef = plant.date!.split("T")[0].split("-");
+    final logPr = Provider.of<LoginProvider>(context);
+    final List datef = widget.plant.date!.split("T")[0].split("-");
     final String formattedDate = "${datef[2]}/${datef[1]}/${datef[0]}";
 
     return PlantBox(
@@ -19,7 +30,7 @@ class PlantShow extends StatelessWidget {
           Align(
             alignment: AlignmentGeometry.topCenter,
             child: Text(
-              plant.name,
+              widget.plant.name,
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
             ),
           ),
@@ -27,7 +38,7 @@ class PlantShow extends StatelessWidget {
             alignment: AlignmentGeometry.center,
             child: Image(
               image: ResizeImage(
-                plant.image!.image,
+                widget.plant.image!.image,
                 height: 400,
                 allowUpscaling: true,
               ),
@@ -47,12 +58,43 @@ class PlantShow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Postado por: ${plant.author != null ? plant.author!.username : "nouser"}",
+                  "Postado por: ${widget.plant.author != null ? widget.plant.author!.username : "nouser"}",
                 ),
                 Text("Postado em $formattedDate"),
               ],
             ),
           ),
+          if (widget.plant.author!.id == logPr.logged!.id)
+            Align(
+              alignment: AlignmentGeometry.bottomRight,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    child: Text("Deletar"),
+                    onPressed: () {
+                      deletePlant(widget.plant.id!, logPr.logged!.id);
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TextButton(
+                    child: Text("Atualizar"),
+                    onPressed: () async {
+                      String? name = await showDialog(
+                        context: context,
+                        builder: (context) => PlantEdit(id: widget.plant.id!),
+                      );
+                      setState(() {
+                        if (name != null) {
+                          widget.plant.name = name;
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

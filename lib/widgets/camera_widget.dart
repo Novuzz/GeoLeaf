@@ -1,7 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/screen/ImageScreen.dart';
+import 'package:geo_leaf/screen/image_screen.dart';
+import 'package:geo_leaf/utils/map_render.dart';
 
 class CameraWidget extends StatefulWidget {
   const CameraWidget({super.key});

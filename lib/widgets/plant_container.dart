@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/models/User.dart';
+import 'package:geo_leaf/models/user_model.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
 
 class PlantContainer extends StatelessWidget {

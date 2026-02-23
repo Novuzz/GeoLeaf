@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/screen/CameraScreen.dart';
-import 'package:geo_leaf/utils/MapRender.dart';
-import 'package:geo_leaf/widgets/MapVisualizer.dart';
+import 'package:geo_leaf/screen/camera_screen.dart';
+import 'package:geo_leaf/utils/map_render.dart';
+import 'package:geo_leaf/widgets/map_visualizer.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:provider/provider.dart';
-import 'package:geo_leaf/utils/Gps.dart';
+import 'package:geo_leaf/utils/gps.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});

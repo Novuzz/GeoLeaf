@@ -4,11 +4,11 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_pytorch_lite/utils.dart';
-import 'package:geo_leaf/models/User.dart';
+import 'package:geo_leaf/models/user_model.dart';
 
 class Plant {
   final String? id;
-  final String name;
+  String name;
   final double longitude;
   final double latitude;
   final User? author;
@@ -33,7 +33,7 @@ class Plant {
       name: json['name'],
       longitude: json['long'],
       latitude: json['lat'],
-      author: json['author'],
+      author: json['user'],
       image: json['image'] != null
           ? Image.memory(base64Decode(json['image']))
           : null,

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/screen/ImageScreen.dart';
+import 'package:geo_leaf/screen/image_screen.dart';
 
 class Imagepicker extends StatefulWidget {
   const Imagepicker({super.key});
