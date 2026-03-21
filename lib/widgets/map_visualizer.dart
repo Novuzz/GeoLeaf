@@ -4,8 +4,7 @@ import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/utils/map_render.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
-import 'package:geo_leaf/widgets/plant_show.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:geo_leaf/widgets/plants/plant_show.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +25,7 @@ class MapVisualizer extends StatefulWidget {
 class MapVisualizerState extends State<MapVisualizer> {
   bool canInteractWithMap = false;
   bool isLoaded = false;
+  MapLibreMapController? _controller;
 
   final GlobalKey _mapKey = GlobalKey();
   @override
@@ -62,15 +62,21 @@ class MapVisualizerState extends State<MapVisualizer> {
                 ["plants-layer"],
                 null,
               );
+              print("Features: ${features}");
+              print(features.isNotEmpty);
 
               if (features.isNotEmpty) {
                 final f = features.first;
 
                 Plant? plant = await getPlantById(f["properties"]["id"]);
+                print(plant);
                 if (context.mounted) {
-                  showDialog(
+                  await showDialog(
                     context: context,
-                    builder: (context) => PlantShow(plant!),
+                    builder: (context) => PlantShow(
+                      plant!,
+                      onClose: updatePlants(mapPr.mapController),
+                    ),
                   );
                 }
               }
@@ -81,7 +87,7 @@ class MapVisualizerState extends State<MapVisualizer> {
               MapLibreMap(
                 key: _mapKey,
                 compassEnabled: false,
-
+                myLocationEnabled: true,
                 scrollGesturesEnabled: mapPr.scrollEnabled,
 
                 initialCameraPosition: MapVisualizer._nullIsland,
@@ -94,33 +100,19 @@ class MapVisualizerState extends State<MapVisualizer> {
                 },
                 onMapCreated: (controller) async {
                   mapPr.mapController = controller;
+                  _controller = controller;
                 },
               ),
-
-              if (!isLoaded) ModalBarrier(dismissible: false),
-
-              if (!isLoaded)
-                Center(
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        width: 1000,
-                        height: 1000,
-                        child: ColoredBox(color: Colors.white),
-                      ),
-                      Center(
-                        child: LoadingAnimationWidget.waveDots(
-                          color: Colors.green,
-                          size: 100,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
             ],
           ),
         );
       },
     );
+  }
+
+  Future<void> changeCamera(LatLng position) async {
+    if (_controller != null) {
+      _controller!.animateCamera(CameraUpdate.newLatLng(position));
+    }
   }
 }

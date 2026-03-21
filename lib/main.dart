@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/screen/splash_screen.dart';
+import 'package:geo_leaf/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -10,6 +11,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => MapProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: MyApp(),
     ),
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //print(Platform.isAndroid);
-    return MaterialApp(home: SplashScreen());
+    final theme = Provider.of<ThemeProvider>(context);
+    return MaterialApp(home: SplashScreen(), theme: theme.theme);
   }
 }

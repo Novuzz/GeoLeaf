@@ -32,7 +32,7 @@ class PlantBox extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(30),
         ),
         child: child,

@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/screen/account_screen.dart';
 import 'package:geo_leaf/screen/camera_screen.dart';
 import 'package:geo_leaf/utils/map_render.dart';
+import 'package:geo_leaf/widgets/logo_widget.dart';
 import 'package:geo_leaf/widgets/map_visualizer.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
+import 'package:geo_leaf/widgets/plants/plant_drawer.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:provider/provider.dart';
-import 'package:geo_leaf/utils/gps.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -23,17 +25,6 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      takePos(context);
-      _timer = Timer.periodic(Duration(milliseconds: 500), (timer) async {
-        final pos = await determinePosition();
-        if (!mounted) return;
-        Provider.of<MapProvider>(
-          context,
-          listen: false,
-        ).setUserPosition(LatLng(pos.latitude, pos.longitude));
-      });
-    });
   }
 
   @override
@@ -46,8 +37,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var mapPr = Provider.of<MapProvider>(context);
-
+    final mapPr = Provider.of<MapProvider>(context);
     return Stack(
       children: [
         Scaffold(
@@ -65,33 +55,61 @@ class _MapScreenState extends State<MapScreen> {
                 },
                 icon: Icon(size: 64, Icons.camera_alt),
               ),
+              Builder(
+                builder: (context) => IconButton(
+                  iconSize: 64,
+                  onPressed: () => _clickMenu(mapPr.mapController!, context),
+                  icon: Icon(Icons.yard),
+                ),
+              ),
             ],
           ),
-          floatingActionButton: Checkbox(
-            value: mapPr.styleEnabled,
-            onChanged: mapPr.changeStyle,
-          ),
           appBar: AppBar(
-            leading: BackButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+            title: Stack(
+              alignment: AlignmentGeometry.center,
+              children: [
+                Align(alignment: Alignment.bottomCenter, child: LogoWidget()),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton.outlined(
+                    icon: Icon(Icons.person),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => AccountScreen()),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-            backgroundColor: Colors.green,
+            centerTitle: true,
+            automaticallyImplyLeading: true,
           ),
         ),
+
         if (_locked) ModalBarrier(dismissible: false),
       ],
     );
   }
 
-  Future<void> takePos(BuildContext mapPr) async {
-    final pos = await determinePosition();
-    if (!mounted) return;
-    Provider.of<MapProvider>(
-      context,
-      listen: false,
-    ).changePosition(LatLng(pos.latitude, pos.longitude));
-    //print("Pos: ${pos.latitude}, ${pos.longitude}");
+  void _clickMenu(MapLibreMapController mapController, BuildContext context) {
+    if (!Navigator.canPop(context)) {
+      Scaffold.of(context).showBottomSheet(
+        (context) => PlantDrawer(
+          onClick: (plant) {
+            Navigator.pop(context);
+            mapController.animateCamera(
+              CameraUpdate.newLatLngZoom(
+                LatLng(plant.latitude, plant.longitude),
+                20,
+              ),
+            );
+          },
+        ),
+      );
+    } else {
+      Navigator.pop(context);
+    }
   }
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/screen/home_screen.dart';
+import 'package:geo_leaf/screen/login_screen.dart';
+import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
+import 'package:geo_leaf/widgets/input/password_box.dart';
+import 'package:geo_leaf/widgets/logo_widget.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -21,60 +26,72 @@ class _SignupScreenState extends State<SignupScreen> {
     String name = "";
     String email = "";
     String password = "";
+    String confirmPassword = "";
 
     return Scaffold(
       appBar: AppBar(),
       body: PlantBox(
-        margin: EdgeInsets.all(64),
+        margin: EdgeInsets.all(16),
         child: Stack(
           children: [
             Column(
               children: [
+                LogoWidget(inBottom: true, width: 128, height: 128),
+
                 Text(
                   "Crie sua conta",
                   style: TextStyle(fontWeight: FontWeight.w800, fontSize: 32),
                 ),
                 TextField(
-                  onChanged: (value) => name = value,
+                  onChanged: (value) {
+                    name = value;
+                  },
                   decoration: InputDecoration(labelText: "Nome"),
                 ),
                 TextField(
-                  onChanged: (value) => email = value,
+                  onChanged: (value) {
+                    email = value;
+                  },
                   decoration: InputDecoration(labelText: "Email"),
                 ),
-                Stack(
+                PasswordBox(
+                  text: "Senha",
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                PasswordBox(
+                  text: "Confirme sua senha",
+                  onChanged: (value) {
+                    confirmPassword = value;
+                  },
+                ),
+
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextField(
-                      onChanged: (value) => password = value,
-                      obscureText: hidePassword,
-                      decoration: InputDecoration(labelText: "Senha"),
-                    ),
-                    Align(
-                      alignment: AlignmentGeometry.bottomRight,
-                      child: IconButton(
-                        onPressed: () => setState(() {
-                          hidePassword = !hidePassword;
-                        }),
-                        icon: Icon(
-                          hidePassword
-                              ? Icons.remove_red_eye_rounded
-                              : Icons.remove_red_eye_outlined,
-                        ),
+                    FilledButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(Colors.green),
                       ),
+                      onPressed: () {
+                        if (password == confirmPassword) {
+                          _criarConta(context, {
+                            "_id": Uuid().v4(),
+                            "username": name,
+                            "email": email,
+                            "password": password,
+                          }, logPr);
+                        }
+                      },
+                      child: Text("Criar conta"),
+                    ),
+                    OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("Cancelar"),
                     ),
                   ],
-                ),
-                SizedBox(height: 50),
-                FilledButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.green),
-                  ),
-                  onPressed: () => _criarConta(context, {
-                    "username": name,
-                    "email": email,
-                    "password": password,
-                  }, logPr),
-                  child: Text("Criar conta"),
                 ),
               ],
             ),
@@ -89,6 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
     Map<String, String> data,
     LoginProvider logPr,
   ) async {
+    print(data);
     final user = await signupUser(data);
     if (user == null && context.mounted) {
       showDialog(
@@ -123,7 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
         context,
         MaterialPageRoute(
           builder: (bl) {
-            return HomeScreen();
+            return LoginScreen();
           },
         ),
       );

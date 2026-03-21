@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:geo_leaf/models/plant_model.dart';
+import 'package:geo_leaf/widgets/plants/plant_container.dart';
+import 'package:geo_leaf/widgets/plants/plant_show.dart';
+
+class PlantList extends StatefulWidget {
+  final List<Plant>? plants;
+  final Function(Plant)? onClick;
+  final Function? reload;
+  const PlantList({super.key, this.plants, this.onClick, this.reload});
+  @override
+  State<PlantList> createState() => _PlantListState();
+}
+
+class _PlantListState extends State<PlantList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      separatorBuilder: (context, index) {
+        return const SizedBox(height: 20);
+      },
+      itemCount: widget.plants == null ? 0 : widget.plants!.length,
+      addAutomaticKeepAlives: false,
+      itemBuilder: (context, index) {
+        final currentPlant = widget.plants![index];
+        return PlantContainer(
+          name: currentPlant.name,
+          image: currentPlant.image,
+          user: currentPlant.author,
+          onClicked: () async {
+            if (widget.onClick == null) {
+              await showDialog(
+                context: context,
+                builder: (context) => PlantShow(currentPlant),
+              );
+            } else {
+              widget.onClick!(currentPlant);
+            }
+            if (widget.reload != null) {
+              widget.reload!();
+            }
+          },
+        );
+      },
+    );
+  }
+}

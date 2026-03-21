@@ -38,6 +38,7 @@ flutter:
   assets:
     - assets/
     - assets/json/
+    - assets/json/data/
     - assets/images/splash/
     - assets/images/
     - assets/images/icons/

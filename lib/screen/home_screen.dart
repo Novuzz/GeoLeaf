@@ -2,12 +2,13 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
-import 'package:geo_leaf/widgets/plant_container.dart';
-import 'package:geo_leaf/widgets/plant_show.dart';
+import 'package:geo_leaf/widgets/logo_widget.dart';
+import 'package:geo_leaf/widgets/plants/plant_list.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,17 +28,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+    _getPlants();
     _controller = AnimationController(vsync: this);
 
-    _getPlants();
     //plants = await getPlants();
-  }
-
-  void _getPlants() async {
-    final result = await getPlants();
-    setState(() {
-      plants = result;
-    });
   }
 
   @override
@@ -54,43 +48,10 @@ class _HomeScreenState extends State<HomeScreen>
         child: Builder(
           builder: (context) => Column(
             children: [
-              SizedBox(
-                height: 64,
-
-                child: Text(
-                  "Seja bem vindo(a) ${logPr.logged!.username} 👋",
-                  style: TextStyle(
-                    color: ui.Color.fromARGB(255, 11, 133, 58),
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              SizedBox(height: 64),
 
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 20);
-                  },
-                  itemCount: plants == null ? 0 : plants!.length,
-                  addAutomaticKeepAlives: false,
-                  itemBuilder: (context, index) {
-                    final currentPlant = plants![index];
-                    //print(currentPlant.author);
-                    return PlantContainer(
-                      name: currentPlant.name,
-                      image: currentPlant.image,
-                      user: currentPlant.author,
-                      onClicked: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (context) => PlantShow(currentPlant),
-                        );
-                        _getPlants();
-                      },
-                    );
-                  },
-                ),
+                child: PlantList(plants: plants, reload: () => _getPlants()),
               ),
             ],
           ),
@@ -105,13 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
             icon: Icon(Icons.refresh),
           ),
         ],
-        backgroundColor: Colors.green,
-        title: Center(
-          child: Text(
-            "Geoleaf",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-          ),
-        ),
+        title: LogoWidget(),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -131,5 +86,12 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ),
     );
+  }
+
+  void _getPlants() async {
+    final result = await getPlants();
+    setState(() {
+      plants = result;
+    });
   }
 }

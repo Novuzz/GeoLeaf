@@ -1,9 +1,31 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/models/user_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
-Uri url({String url = ""}) => Uri.parse('http://10.0.2.2:3000/$url');
+Uri url({String url = ""}) => Uri.parse('http://localhost:3000/$url');
+
+Future<String> get path async {
+  return (await getApplicationDocumentsDirectory()).path;
+}
+
+Future<File> file(String f) async {
+  final p = await path;
+  return File('$p/$f');
+}
+
+Future<List<dynamic>> _openData(String f) async {
+  List<dynamic> arr = [];
+  if (await (await file(f)).exists()) {
+    final content = await (await file(f)).readAsString();
+    arr = jsonDecode(content) as List<dynamic>;
+  }
+  return arr;
+}
 
 Future<List<User>> getUsers() async {
   final response = await http.Client().get(url(url: "users"));
@@ -23,34 +45,19 @@ Future<User?> getUsersById(String id) async {
 }
 
 Future<User?> signupUser(Map<String, dynamic> user) async {
-  print(
-    "${{"email": user['email'], "username": user['username'], "password": user['password']}}",
-  );
-  final response = await http.Client().post(
-    url(url: "users/signup"),
-    body: {
-      "email": user['email'],
-      "username": user['username'],
-      "password": user['password'],
-    },
-  );
-  if (response.statusCode == 201) {
-    final json = jsonDecode(response.body);
-    return User.fromJson(json);
-  } else {
-    return null;
-  }
+  List<dynamic> arr = await _openData("users.json");
+  arr.add(user);
+  (await file("users.json")).writeAsString(jsonEncode(arr));
+  return User.fromJson(user);
 }
 
 Future<User?> loginUser(String email, String password) async {
-  final response = await http.Client().post(
-    url(url: "users/login"),
-    body: {"email": email, "password": password},
-  );
-  if (response.statusCode == 200) {
-    final json = jsonDecode(response.body);
-    return User.fromJson(json);
-  } else {
+  try {
+    Map<String, dynamic> user = (await _openData(
+      "users.json",
+    )).firstWhere((u) => u['email'] == email);
+    return User.fromJson(user);
+  } catch (e) {
     return null;
   }
 }
@@ -72,44 +79,24 @@ Future<void> deletePlant(String id, String userId) async {
 }
 
 Future<List<Plant>> getPlants({bool onlyData = false}) async {
-  final response = await http.Client().get(
-    url(url: "plants${onlyData ? "/data" : ""}"),
-  );
-  if (response.statusCode == 200) {
-    final json = jsonDecode(response.body);
-    List<Plant> plants = List.empty(growable: true);
-    for (final plant in json) {
-      final user = plant['user'];
-      if (user != null) {
-        plant['user'] = await getUsersById(user);
-      } else {
-        continue;
-      }
-      plants.add(Plant.fromJson(plant));
-    }
-    return plants;
+  List<Plant> plants = List.empty(growable: true);
+  for (final plant in await _openData("plants.json")) {
+    Plant plantModel = Plant.fromJson(plant);
+    print(plantModel.name);
+    plants.add(plantModel);
   }
-  return [];
+  return plants;
 }
 
 Future<Plant?> getPlantById(String id) async {
-  final response = await http.Client().get(url(url: "plants/$id"));
-  if (response.statusCode == 200) {
-    print(response.body);
-    final json = jsonDecode(response.body);
-    final user = json['user'];
-
-    json['user'] = await getUsersById(user);
-
-    return Plant.fromJson(json);
-  }
-  return null;
+  final data = await _openData("plants.json");
+  final result = data.firstWhere((u) => u["_id"] == id);
+  return Plant.fromJson(result);
 }
 
 Future<int> postPlant(Plant plant) async {
-  final response = await http.Client().post(
-    url(url: "plants"),
-    body: ({"data": jsonEncode(await plant.toJson())}),
-  );
-  return response.statusCode;
+  final arr = await _openData("plants.json");
+  arr.add(await plant.toJson());
+  (await file("plants.json")).writeAsString(jsonEncode(arr));
+  return 201;
 }

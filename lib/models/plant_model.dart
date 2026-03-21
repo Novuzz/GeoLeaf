@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_pytorch_lite/utils.dart';
 import 'package:geo_leaf/models/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class Plant {
   final String? id;
@@ -24,20 +24,20 @@ class Plant {
     this.rawImage,
     this.author,
     this.image,
-    this.date,
+    this.date = "2026-02-04T20:51:14.141Z",
   });
 
   factory Plant.fromJson(Map<String, dynamic> json) {
     return Plant(
       id: json["_id"],
       name: json['name'],
-      longitude: json['long'],
-      latitude: json['lat'],
-      author: json['user'],
+      longitude: double.parse(json['long']),
+      latitude: double.parse(json['lat']),
+      author: json['user'] is String ? null : json['user'],
       image: json['image'] != null
           ? Image.memory(base64Decode(json['image']))
           : null,
-      date: json['created'],
+      //date: json['created'],
     );
   }
 
@@ -52,6 +52,7 @@ class Plant {
     b64 = base64Encode(rawImage!);
 
     return {
+      "_id": Uuid().v4(),
       "name": name,
       "long": longitude.toString(),
       "lat": latitude.toString(),

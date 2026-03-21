@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/models/plant_model.dart';
-import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
 

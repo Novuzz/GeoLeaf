@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:geo_leaf/screen/image_screen.dart';
 
 class Imagepicker extends StatefulWidget {
   const Imagepicker({super.key});
@@ -37,16 +36,6 @@ class _ImagepickerState extends State<Imagepicker> {
             onPressed: _open,
             style: ButtonStyle(),
             child: Text("Add File"),
-          ),
-          GestureDetector(
-            onTap: () {
-              print("tap");
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => ImageScreen(image: image)),
-              );
-            },
-            child: image,
           ),
         ],
       ),

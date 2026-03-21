@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:geo_leaf/functions/numberF.dart';
+import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
@@ -15,9 +16,18 @@ Future<void> addImageFromAsset(
   return controller.addImage(name, list);
 }
 
-Future<void> updatePlants(MapLibreMapController? controller) async {
+Future<void> updatePlants(
+  MapLibreMapController? controller, {
+  Plant? id,
+  bool delete = false,
+}) async {
+  print(delete);
+  if (delete) {
+    print("delete");
+    await deletePlant(id!.id!, id.author!.id);
+  }
   final plantGeojson = {'type': 'FeatureCollection', 'features': []};
-  final plants = await getPlants(onlyData: true);
+  final plants = await getPlants();
   for (var plant in plants) {
     (plantGeojson["features"] as List).add({
       "type": "Feature",
@@ -59,9 +69,9 @@ Future<bool> addGJson(
     "buildings-source",
     "buildings-3d",
     FillExtrusionLayerProperties(
-      fillExtrusionHeight: ['get', 'height'] ?? 0.1,
+      fillExtrusionHeight: ['get', 'height'],
       fillExtrusionBase: 0,
-      fillExtrusionColor: ['get', 'color'] ?? '#BFD738',
+      fillExtrusionColor: ['get', 'color'],
       fillExtrusionVerticalGradient: true,
       fillExtrusionOpacity: 0.9,
     ),
@@ -97,7 +107,7 @@ Future<bool> addGJson(
     "marker-source",
     "marker-layer",
     CircleLayerProperties(
-      circleColor: ['get', 'color'] ?? "#ff0000",
+      circleColor: ['get', 'color'],
       circleRadius: 8.0,
       circleStrokeWidth: 2.0,
       circleStrokeColor: "#ffffff",
@@ -135,9 +145,9 @@ Future<bool> addGJson(
     "plants-layer",
     SymbolLayerProperties(
       iconImage: "plant-marker",
-      iconSize: 0.05,
+      iconSize: 0.1,
 
-      textField: "test",
+      textField: ['get', 'name'],
 
       textSize: 14,
       textColor: '#ffffff',
