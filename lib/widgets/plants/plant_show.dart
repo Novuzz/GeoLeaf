@@ -38,6 +38,7 @@ class _PlantShow extends State<PlantShow> {
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
             ),
           ),
+          if(widget.plant.image != null)
           Align(
             alignment: AlignmentGeometry.center,
             child: Image(

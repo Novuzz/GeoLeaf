@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/screen/image_screen.dart';
-import 'package:geo_leaf/utils/map_render.dart';
 
 class CameraWidget extends StatefulWidget {
   const CameraWidget({super.key});
@@ -48,7 +47,7 @@ class _CameraWidgetState extends State<CameraWidget> {
               XFile? file = await controller?.takePicture();
               final u8 = await file!.readAsBytes();
               if (mounted) {
-                Image image = Image(image: XFileImage(file!));
+                Image image = Image(image: XFileImage(file));
                 final confirm = await Navigator.push(
                   context,
                   MaterialPageRoute(

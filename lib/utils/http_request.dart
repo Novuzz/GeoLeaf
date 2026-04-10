@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/models/user_model.dart';
 import 'dart:convert';
@@ -60,6 +59,17 @@ Future<User?> loginUser(String email, String password) async {
   } catch (e) {
     return null;
   }
+}
+
+Future<List<Plant>> getUserPosts(String id) async {
+  List<Plant> plants = List.empty(growable: true);
+  for (final plant in await _openData("plants.json")) {
+    Plant plantModel = Plant.fromJson(plant);
+    if (plant["user"] == id) {
+      plants.add(plantModel);
+    }
+  }
+  return plants;
 }
 
 Future<void> updatePlant(String id, Map<String, String> obj) async {

@@ -5,14 +5,14 @@ import 'package:geo_leaf/widgets/plant_box.dart';
 class PlantContainer extends StatelessWidget {
   final String name;
   final User? user;
-  final Image? image;
+  final Widget? center;
   final Function? onClicked;
 
   const PlantContainer({
     super.key,
     required this.name,
     this.user,
-    this.image,
+    this.center,
     this.onClicked,
   });
 
@@ -35,7 +35,7 @@ class PlantContainer extends StatelessWidget {
                 Text(user == null ? "nouser" : user!.username),
               ],
             ),
-            if (image != null) Image(image: image!.image),
+            ?center,
           ],
         ),
       ),

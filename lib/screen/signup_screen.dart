@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
-import 'package:geo_leaf/screen/home_screen.dart';
 import 'package:geo_leaf/screen/login_screen.dart';
-import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/input/password_box.dart';
 import 'package:geo_leaf/widgets/logo_widget.dart';
@@ -40,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 Text(
                   "Crie sua conta",
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 32),
+                  style: TextStyle( fontSize: 25),
                 ),
                 TextField(
                   onChanged: (value) {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/screen/signup_screen.dart';
-import 'package:geo_leaf/provider/theme_provider.dart';
 import 'package:geo_leaf/utils/http_request.dart';
+import 'package:geo_leaf/widgets/input/password_box.dart';
 import 'package:geo_leaf/widgets/logo_widget.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
 import 'package:provider/provider.dart';
@@ -45,12 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     decoration: InputDecoration(labelText: "Email"),
                   ),
-                  TextField(
+                  PasswordBox(
                     onChanged: (value) {
                       password = value;
                     },
-
-                    decoration: InputDecoration(labelText: "Senha"),
+                    text: "Senha",
                   ),
                   const SizedBox(height: 15),
                   FilledButton(

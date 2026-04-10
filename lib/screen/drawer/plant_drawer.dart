@@ -24,13 +24,9 @@ class _PlantDrawerState extends State<PlantDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return PlantBox(
       padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(3),
-      ),
-      child: PlantList(plants: plant, onClick: widget.onClick),
+      child: PlantList(plants: plant),
     );
   }
 

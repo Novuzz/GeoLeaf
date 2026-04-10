@@ -5,14 +5,14 @@ class ThemeProvider with ChangeNotifier {
   ThemeData theme = ThemeData(
     colorScheme: ColorScheme(
       brightness: Brightness.light,
-      primary: Colors.green,
-      onPrimary: Colors.black,
+      primary: const Color(0xFF2BAD31),
+      onPrimary: Colors.white,
       secondary: Colors.lightGreen,
       onSecondary: Colors.greenAccent,
       error: Colors.greenAccent,
       onError: Colors.greenAccent,
-      surface: Colors.black,
-      onSurface: Colors.green,
+      surface: Colors.white,
+      onSurface: const Color(0xFF2BAD31),
     ),
   );
 
@@ -21,14 +21,14 @@ class ThemeProvider with ChangeNotifier {
     theme = ThemeData(
       colorScheme: ColorScheme(
         brightness: Brightness.light,
-        primary: Colors.green,
+        primary: const Color(0xFF2BAD31),
         onPrimary: value ? Colors.black : Colors.white,
         secondary: Colors.lightGreen,
         onSecondary: Colors.greenAccent,
         error: Colors.greenAccent,
         onError: Colors.greenAccent,
         surface: value ? Colors.black : Colors.white,
-        onSurface: Colors.green,
+        onSurface: const Color(0xFF2BAD31),
       ),
     );
     notifyListeners();

@@ -1,15 +1,10 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geo_leaf/models/plant_model.dart';
-import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/logo_widget.dart';
 import 'package:geo_leaf/widgets/plants/plant_list.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    var logPr = Provider.of<LoginProvider>(context);
     return Scaffold(
       body: Center(
         child: Builder(

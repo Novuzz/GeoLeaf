@@ -14,7 +14,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeProvider>(context);
-
+    setState(() {
+      ch = theme.darkTheme;
+    });
     return Scaffold(
       appBar: AppBar(title: Text("Configurações"), centerTitle: true),
       body: Center(

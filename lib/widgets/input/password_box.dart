@@ -22,16 +22,18 @@ class _PasswordBoxState extends State<PasswordBox> {
           obscureText: hidePassword,
           decoration: InputDecoration(labelText: widget.text),
         ),
-        Align(
-          alignment: AlignmentGeometry.bottomRight,
-          child: IconButton(
-            onPressed: () => setState(() {
-              hidePassword = !hidePassword;
-            }),
-            icon: Icon(
-              hidePassword
-                  ? Icons.remove_red_eye_rounded
-                  : Icons.remove_red_eye_outlined,
+        Expanded(
+          child: Align(
+            alignment: AlignmentGeometry.bottomRight,
+            child: IconButton(
+              onPressed: () => setState(() {
+                hidePassword = !hidePassword;
+              }),
+              icon: Icon(
+                hidePassword
+                    ? Icons.remove_red_eye_rounded
+                    : Icons.remove_red_eye_outlined,
+              ),
             ),
           ),
         ),

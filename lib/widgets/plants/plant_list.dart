@@ -5,9 +5,10 @@ import 'package:geo_leaf/widgets/plants/plant_show.dart';
 
 class PlantList extends StatefulWidget {
   final List<Plant>? plants;
+  final Widget? center;
   final Function(Plant)? onClick;
   final Function? reload;
-  const PlantList({super.key, this.plants, this.onClick, this.reload});
+  const PlantList({super.key, this.plants, this.onClick, this.reload, this.center});
   @override
   State<PlantList> createState() => _PlantListState();
 }
@@ -25,7 +26,7 @@ class _PlantListState extends State<PlantList> {
         final currentPlant = widget.plants![index];
         return PlantContainer(
           name: currentPlant.name,
-          image: currentPlant.image,
+          center: widget.center,
           user: currentPlant.author,
           onClicked: () async {
             if (widget.onClick == null) {
