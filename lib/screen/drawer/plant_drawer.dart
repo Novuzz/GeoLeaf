@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/models/plant_map_model.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
@@ -14,7 +15,7 @@ class PlantDrawer extends StatefulWidget {
 }
 
 class _PlantDrawerState extends State<PlantDrawer> {
-  List<Plant>? plant;
+  List<PlantMap>? plant;
 
   @override
   void initState() {

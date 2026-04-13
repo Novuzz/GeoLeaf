@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geo_leaf/models/plant_model.dart';
+import 'package:geo_leaf/models/plant_map_model.dart';
 import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/logo_widget.dart';
@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  List<Plant>? plants;
+  List<PlantMap>? plants;
   Uint8List? image;
 
   @override

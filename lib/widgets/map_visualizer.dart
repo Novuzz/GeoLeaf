@@ -41,6 +41,7 @@ class MapVisualizerState extends State<MapVisualizer> {
           behavior: HitTestBehavior.translucent,
           onPointerUp: (PointerUpEvent event) async {
             if (mapPr.mapController == null) return;
+/*
 
             try {
               final mapContext = _mapKey.currentContext;
@@ -67,7 +68,6 @@ class MapVisualizerState extends State<MapVisualizer> {
 
               if (features.isNotEmpty) {
                 final f = features.first;
-
                 Plant? plant = await getPlantById(f["properties"]["id"]);
                 print(plant);
                 if (context.mounted) {
@@ -81,6 +81,7 @@ class MapVisualizerState extends State<MapVisualizer> {
                 }
               }
             } catch (e) {}
+*/
           },
           child: Stack(
             children: [

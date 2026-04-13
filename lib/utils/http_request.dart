@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:geo_leaf/models/plant_map_model.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/models/user_model.dart';
 import 'dart:convert';
@@ -88,11 +89,10 @@ Future<void> deletePlant(String id, String userId) async {
   print(response.statusCode);
 }
 
-Future<List<Plant>> getPlants({bool onlyData = false}) async {
-  List<Plant> plants = List.empty(growable: true);
+Future<List<PlantMap>> getPlants({bool onlyData = false}) async {
+  List<PlantMap> plants = List.empty(growable: true);
   for (final plant in await _openData("plants.json")) {
-    Plant plantModel = Plant.fromJson(plant);
-    print(plantModel.name);
+    PlantMap plantModel = PlantMap.fromJson(plant);
     plants.add(plantModel);
   }
   return plants;
@@ -106,7 +106,8 @@ Future<Plant?> getPlantById(String id) async {
 
 Future<int> postPlant(Plant plant) async {
   final arr = await _openData("plants.json");
-  arr.add(await plant.toJson());
+  final result = arr.firstWhere((u) => u["name"] == plant.name);
+  result["plants"].add(await plant.toJson());
   (await file("plants.json")).writeAsString(jsonEncode(arr));
   return 201;
 }

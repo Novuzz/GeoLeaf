@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:geo_leaf/models/plant_map_model.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/widgets/plants/plant_container.dart';
+import 'package:geo_leaf/widgets/plants/plant_grid.dart';
 import 'package:geo_leaf/widgets/plants/plant_show.dart';
 
 class PlantList extends StatefulWidget {
-  final List<Plant>? plants;
+  final List<PlantMap>? plants;
   final Widget? center;
-  final Function(Plant)? onClick;
+  final Function(PlantMap)? onClick;
   final Function? reload;
-  const PlantList({super.key, this.plants, this.onClick, this.reload, this.center});
+  const PlantList({
+    super.key,
+    this.plants,
+    this.onClick,
+    this.reload,
+    this.center,
+  });
   @override
   State<PlantList> createState() => _PlantListState();
 }
@@ -26,13 +34,17 @@ class _PlantListState extends State<PlantList> {
         final currentPlant = widget.plants![index];
         return PlantContainer(
           name: currentPlant.name,
-          center: widget.center,
-          user: currentPlant.author,
           onClicked: () async {
             if (widget.onClick == null) {
               await showDialog(
                 context: context,
-                builder: (context) => PlantShow(currentPlant),
+                builder: (context) => PlantShow(
+                  currentPlant,
+                  center: PlantGrid(
+                    name: currentPlant.name,
+                    plants: currentPlant.registeredPlants!,
+                  ),
+                ),
               );
             } else {
               widget.onClick!(currentPlant);

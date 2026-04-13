@@ -74,9 +74,6 @@ class _MapScreenState extends State<MapScreen> {
           ),
           appBar: AppBar(
             title: LogoWidget(),
-                
-              
-            
             centerTitle: true,
             automaticallyImplyLeading: true,
           ),

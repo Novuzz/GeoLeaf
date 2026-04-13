@@ -28,15 +28,17 @@ Future<void> updatePlants(
   }
   final plantGeojson = {'type': 'FeatureCollection', 'features': []};
   final plants = await getPlants();
-  for (var plant in plants) {
-    (plantGeojson["features"] as List).add({
-      "type": "Feature",
-      "properties": {"name": plant.name, "id": plant.id},
-      "geometry": {
-        "coordinates": [plant.longitude, plant.latitude],
-        "type": "Point",
-      },
-    });
+  for (var plantMap in plants) {
+    for (var plant in plantMap.registeredPlants!) {
+      (plantGeojson["features"] as List).add({
+        "type": "Feature",
+        "properties": {"name": plant.name, "id": plant.id},
+        "geometry": {
+          "coordinates": [plant.longitude, plant.latitude],
+          "type": "Point",
+        },
+      });
+    }
   }
   await controller!.setGeoJsonSource("plants-source", plantGeojson);
 }

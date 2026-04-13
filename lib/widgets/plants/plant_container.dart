@@ -4,14 +4,12 @@ import 'package:geo_leaf/widgets/plant_box.dart';
 
 class PlantContainer extends StatelessWidget {
   final String name;
-  final User? user;
   final Widget? center;
   final Function? onClicked;
 
   const PlantContainer({
     super.key,
     required this.name,
-    this.user,
     this.center,
     this.onClicked,
   });
@@ -32,7 +30,6 @@ class PlantContainer extends StatelessWidget {
                   name,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
                 ),
-                Text(user == null ? "nouser" : user!.username),
               ],
             ),
             ?center,

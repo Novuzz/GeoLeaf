@@ -59,7 +59,6 @@ class _AccountDrawerState extends State<AccountDrawer> {
                 ],
               ),
             ),
-            Expanded(child: PlantList(plants: plant)),
           ],
         ),
       ),
