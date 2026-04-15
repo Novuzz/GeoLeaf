@@ -4,7 +4,6 @@ import 'package:geo_leaf/models/plant_map_model.dart';
 import 'package:geo_leaf/screen/map_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/logo_widget.dart';
-import 'package:geo_leaf/widgets/plants/plant_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,10 +42,11 @@ class _HomeScreenState extends State<HomeScreen>
           builder: (context) => Column(
             children: [
               SizedBox(height: 64),
-
+/*
               Expanded(
                 child: PlantList(plants: plants, reload: () => _getPlants()),
               ),
+ */
             ],
           ),
         ),
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _getPlants() async {
-    final result = await getPlants();
+    final result = await getPlantsByLocation("predio");
     setState(() {
       plants = result;
     });

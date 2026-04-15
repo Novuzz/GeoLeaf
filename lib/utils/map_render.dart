@@ -48,9 +48,9 @@ Future<bool> addGJson(
   MapProvider? mapr,
 ) async {
   String js = await rootBundle.loadString("assets/json/mapRuas.geojson");
-  String ln = await rootBundle.loadString("assets/json/lines.json");
-
   Map<String, dynamic> jsD = await json.decode(js);
+
+  String ln = await rootBundle.loadString("assets/json/lines.json");
   Map<String, dynamic> lines = await json.decode(ln);
 
   await controller!.addGeoJsonSource("buildings-source", jsD);

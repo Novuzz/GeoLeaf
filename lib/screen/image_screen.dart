@@ -8,6 +8,7 @@ import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/utils/ai.dart';
 import 'package:geo_leaf/utils/gps.dart';
 import 'package:geo_leaf/utils/http_request.dart';
+import 'package:maplibre_gl_platform_interface/maplibre_gl_platform_interface.dart';
 import 'package:provider/provider.dart';
 
 class ImageScreen extends StatefulWidget {
@@ -41,11 +42,13 @@ class _ImageScreenState extends State<ImageScreen> {
           //await ImageScreen.helper.initHelper();
           //final result = await classified();
           final point = await determinePosition();
+          final closest = await getClosestLocation(LatLng(point.latitude, point.longitude));
           final plant = Plant(
             name: name,
             longitude: point.longitude,
             latitude: point.latitude,
             rawImage: widget.rawImage,
+            location: closest,
             author: logPr.logged,
           );
           await postPlant(plant);

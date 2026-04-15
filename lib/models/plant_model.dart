@@ -11,6 +11,7 @@ class Plant {
   String name;
   final double longitude;
   final double latitude;
+  final String location;
   final User? author;
   final Image? image;
   final Uint8List? rawImage;
@@ -21,6 +22,7 @@ class Plant {
     required this.name,
     required this.longitude,
     required this.latitude,
+    required this.location,
     this.rawImage,
     this.author,
     this.image,
@@ -33,6 +35,7 @@ class Plant {
       name: json['name'],
       longitude: double.parse(json['long']),
       latitude: double.parse(json['lat']),
+      location: json["location"] ?? "",
       author: json['user'] is String ? null : json['user'],
       image: json['image'] != null
           ? Image.memory(base64Decode(json['image']))

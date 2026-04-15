@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
-import 'package:geo_leaf/widgets/plants/plant_show.dart';
 
 class PlantGrid extends StatefulWidget {
   final String name;
@@ -58,7 +57,7 @@ class _PlantGridState extends State<PlantGrid> {
                         children: [
                           Align(
                             alignment: AlignmentGeometry.bottomCenter,
-                            child: Text(widget.plants[index].name),
+                            child: Text(widget.plants[index].location),
                           ),
                           Align(
                             alignment: AlignmentGeometry.topCenter,

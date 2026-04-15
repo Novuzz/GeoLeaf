@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/plant_map_model.dart';
-import 'package:geo_leaf/models/plant_model.dart';
-import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/provider/map_provider.dart';
-import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/utils/map_render.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
-import 'package:geo_leaf/widgets/plants/plant_list.dart';
 import 'package:provider/provider.dart';
 
 class PlantShow extends StatefulWidget {

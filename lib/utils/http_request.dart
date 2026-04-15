@@ -98,6 +98,29 @@ Future<List<PlantMap>> getPlants({bool onlyData = false}) async {
   return plants;
 }
 
+Future<List<PlantMap>> getPlantsByLocation(String location) async {
+  List<PlantMap> plants = List.empty(growable: true);
+  for (final plantMap in await _openData("plants.json")) {
+    final PlantMap map = PlantMap(
+      name: plantMap["name"],
+      scientificName: plantMap["scientificName"],
+      registeredPlants: List.empty(growable: true),
+    );
+
+    for (final plant in plantMap["plants"]) {
+      print(plant["location"]);
+      if (plant["location"] == location) {
+        Plant plantModel = Plant.fromJson(plant);
+        map.registeredPlants!.add(plantModel);
+      }
+    }
+    if (map.registeredPlants!.isNotEmpty) {
+      plants.add(map);
+    }
+  }
+  return plants;
+}
+
 Future<Plant?> getPlantById(String id) async {
   final data = await _openData("plants.json");
   final result = data.firstWhere((u) => u["_id"] == id);
