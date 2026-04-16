@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/plant_map_model.dart';
 
-class PlantList extends StatefulWidget {
-  final List<PlantMap>? plants;
+class PlantList<T> extends StatefulWidget {
+  final List<T>? plants;
   final Widget Function(BuildContext, int) element;
   final Function(PlantMap)? onClick;
   final Function? reload;

@@ -16,7 +16,7 @@ class PlantContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onClicked!(),
+      onTap: (){if(onClicked != null) onClicked!();},
 
       child: PlantBox(
         height: 128,

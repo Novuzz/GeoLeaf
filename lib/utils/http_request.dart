@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:geo_leaf/models/location_model.dart';
 import 'package:geo_leaf/models/plant_map_model.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/models/user_model.dart';
@@ -96,6 +97,45 @@ Future<List<PlantMap>> getPlants({bool onlyData = false}) async {
     plants.add(plantModel);
   }
   return plants;
+}
+
+Future<List<Location>> getLocations() async {
+  final Map<String, Map<String, PlantMap>> locationMap = {};
+  
+  for (final plantMap in await _openData("plants.json")) {
+    for (final plant in plantMap["plants"]) {
+      final String location = plant["location"] as String;
+      final String plantName = plantMap["name"];
+      
+      // Create location entry if it doesn't exist
+      if (!locationMap.containsKey(location)) {
+        locationMap[location] = {};
+      }
+      
+      // Create PlantMap entry for this plant name if it doesn't exist
+      if (!locationMap[location]!.containsKey(plantName)) {
+        locationMap[location]![plantName] = PlantMap(
+          name: plantMap["name"],
+          scientificName: plantMap["scientificName"],
+          registeredPlants: List.empty(growable: true),
+        );
+      }
+      
+      Plant plantModel = Plant.fromJson(plant);
+      locationMap[location]![plantName]!.registeredPlants!.add(plantModel);
+    }
+  }
+  
+  // Convert to Location objects
+  List<Location> locations = [];
+  locationMap.forEach((locationName, plantMaps) {
+    locations.add(Location(
+      name: locationName,
+      plant: plantMaps.values.toList(),
+    ));
+  });
+  
+  return locations;
 }
 
 Future<List<PlantMap>> getPlantsByLocation(String location) async {

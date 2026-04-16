@@ -6,13 +6,13 @@ import 'package:geo_leaf/widgets/plant_box.dart';
 import 'package:provider/provider.dart';
 
 class PlantShow extends StatefulWidget {
-  final PlantMap plant;
+  final PlantMap? plant;
 
   final Widget? center;
 
   final Future<void>? onClose;
 
-  const PlantShow(this.plant, {super.key, this.onClose, this.center});
+  const PlantShow({super.key, this.plant, this.onClose, this.center});
 
   @override
   State<StatefulWidget> createState() => _PlantShow();
@@ -30,7 +30,7 @@ class _PlantShow extends State<PlantShow> {
           Align(
             alignment: AlignmentGeometry.topCenter,
             child: Text(
-              widget.plant.name,
+              widget.plant == null ? "": widget.plant!.name,
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
             ),
           ),
