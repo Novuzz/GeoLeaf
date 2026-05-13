@@ -4,21 +4,34 @@ import 'package:geo_leaf/provider/login_provider.dart';
 import 'package:geo_leaf/screen/settings_screen.dart';
 import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/widgets/plant_box.dart';
+import 'package:geo_leaf/widgets/plants/plant_list.dart';
 import 'package:provider/provider.dart';
 
 class AccountDrawer extends StatefulWidget {
-  const AccountDrawer({super.key});
+  final Function(Plant)? onTap;
 
+  const AccountDrawer({super.key, this.onTap});
   @override
   State<AccountDrawer> createState() => _AccountDrawerState();
+
 }
 
 class _AccountDrawerState extends State<AccountDrawer> {
   List<Plant>? plant;
+  String name = "";
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final logPr = Provider.of<LoginProvider>(context, listen: false);
+      name = logPr.logged!.username;
+      _getPlants(logPr);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var logPr = Provider.of<LoginProvider>(context);
-    _getPlants(logPr);
     return PlantBox(
       child: Center(
         child: Column(
@@ -31,10 +44,10 @@ class _AccountDrawerState extends State<AccountDrawer> {
                     alignment: AlignmentGeometry.topEnd,
                     child: IconButton(
                       onPressed: () {
-                         Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => SettingsScreen()),
-                );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => SettingsScreen()),
+                        );
                       },
                       icon: Icon(Icons.settings),
                     ),
@@ -48,14 +61,23 @@ class _AccountDrawerState extends State<AccountDrawer> {
                           color: Theme.of(context).colorScheme.primary,
                           size: 64,
                         ),
-                        Text(
-                          logPr.logged!.username,
-                          style: TextStyle(fontSize: 32),
-                        ),
+                        Text(name, style: TextStyle(fontSize: 32)),
                       ],
                     ),
                   ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: PlantList(
+                plants: plant,
+                element: (build, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      widget.onTap?.call(plant![index]);
+                    },
+                    child: PlantBox(height: 64, child: Text(plant![index].name)));
+                },
               ),
             ),
           ],

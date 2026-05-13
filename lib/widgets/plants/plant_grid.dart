@@ -28,7 +28,6 @@ class _PlantGridState extends State<PlantGrid> {
                 children: List.generate(widget.plants.length, (index) {
                   return GestureDetector(
                     onTap: () async {
-                      final currentPlant = widget.plants[index];
                       await showDialog(
                         context: context,
                         builder: (context) => PlantBox(
@@ -36,7 +35,7 @@ class _PlantGridState extends State<PlantGrid> {
                             children: [
                               Align(
                                 alignment: AlignmentGeometry.center,
-                                child: Image.asset("assets/images/lotus.jpg"),
+                                child: widget.plants[index].image ??  Image.asset("assets/images/lotus.jpg"),
                               ),
                               Align(
                                 alignment: AlignmentGeometry.topEnd,
@@ -61,7 +60,7 @@ class _PlantGridState extends State<PlantGrid> {
                           ),
                           Align(
                             alignment: AlignmentGeometry.topCenter,
-                            child: Image.asset("assets/images/lotus.jpg"),
+                            child: Image(image: widget.plants[index].image!.image, height: 90,) ??  Image.asset("assets/images/lotus.jpg"),
                           ),
                         ],
                       ),

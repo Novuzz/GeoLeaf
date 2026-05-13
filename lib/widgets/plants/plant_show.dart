@@ -8,11 +8,19 @@ import 'package:provider/provider.dart';
 class PlantShow extends StatefulWidget {
   final PlantMap? plant;
 
-  final Widget? center;
+  final String? title;
+
+  final Widget center;
 
   final Future<void>? onClose;
 
-  const PlantShow({super.key, this.plant, this.onClose, this.center});
+  const PlantShow({
+    super.key,
+    required this.center,
+    this.plant,
+    this.onClose,
+    this.title,
+  });
 
   @override
   State<StatefulWidget> createState() => _PlantShow();
@@ -27,17 +35,29 @@ class _PlantShow extends State<PlantShow> {
       margin: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
       child: Stack(
         children: [
-          Align(
-            alignment: AlignmentGeometry.topCenter,
-            child: Text(
-              widget.plant == null ? "": widget.plant!.name,
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+          
+            Align(
+              alignment: AlignmentGeometry.topCenter,
+              child:
+              
+               Column(
+                children: [
+                  if (widget.title != null)
+                  SizedBox(
+                    height: 64,
+                    child: Text(
+                      widget.title ?? "",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                  Expanded(child: widget.center),
+                ],
+              ),
             ),
-          ),
-          Align(
-            alignment: AlignmentGeometry.center,
-            child: widget.center,
-          ),
+          
           Align(
             alignment: AlignmentGeometry.topRight,
             child: IconButton(

@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/utils/http_request.dart';
@@ -41,7 +42,6 @@ class MapVisualizerState extends State<MapVisualizer> {
           behavior: HitTestBehavior.translucent,
           onPointerUp: (PointerUpEvent event) async {
             if (mapPr.mapController == null) return;
-/*
 
             try {
               final mapContext = _mapKey.currentContext;
@@ -74,13 +74,14 @@ class MapVisualizerState extends State<MapVisualizer> {
                   await showDialog(
                     context: context,
                     builder: (context) => PlantShow(
-                      plant!,
+                      center: plant!.image!,
                       onClose: updatePlants(mapPr.mapController),
                     ),
                   );
                 }
               }
             } catch (e) {}
+/*
 */
           },
           child: Stack(
@@ -96,11 +97,13 @@ class MapVisualizerState extends State<MapVisualizer> {
                 onStyleLoadedCallback: () async {
                   if (mapPr.mapController != null) {
                     isLoaded = await addGJson(mapPr.mapController, mapPr);
-                    //mapPr.update();
+                    mapPr.update();
                   }
                 },
                 onMapCreated: (controller) async {
                   mapPr.mapController = controller;
+                  
+                  await updatePlants(mapPr.mapController);
                   _controller = controller;
                 },
               ),

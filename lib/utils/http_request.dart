@@ -65,12 +65,21 @@ Future<User?> loginUser(String email, String password) async {
 
 Future<List<Plant>> getUserPosts(String id) async {
   List<Plant> plants = List.empty(growable: true);
-  for (final plant in await _openData("plants.json")) {
-    Plant plantModel = Plant.fromJson(plant);
-    if (plant["user"] == id) {
-      plants.add(plantModel);
+  try {
+    for (final plantMap in await _openData("plants.json")) {
+      final plantsList = plantMap["plants"] as List?;
+      if (plantsList != null) {
+        for (final plant in plantsList) {
+          if (plant["user"] == id) {
+            plants.add(Plant.fromJson(plant));
+          }
+        }
+      }
     }
+  } catch (e) {
+    print("Error fetching user posts: $e");
   }
+  print(plants);
   return plants;
 }
 
@@ -102,28 +111,35 @@ Future<List<PlantMap>> getPlants({bool onlyData = false}) async {
 Future<List<Location>> getLocations() async {
   final Map<String, Map<String, PlantMap>> locationMap = {};
   
-  for (final plantMap in await _openData("plants.json")) {
-    for (final plant in plantMap["plants"]) {
-      final String location = plant["location"] as String;
-      final String plantName = plantMap["name"];
-      
-      // Create location entry if it doesn't exist
-      if (!locationMap.containsKey(location)) {
-        locationMap[location] = {};
+  try {
+    for (final plantMap in await _openData("plants.json")) {
+      final plantsList = plantMap["plants"] as List?;
+      if (plantsList != null) {
+        for (final plant in plantsList) {
+          final String location = plant["location"] as String;
+          final String plantName = plantMap["name"];
+          
+          // Create location entry if it doesn't exist
+          if (!locationMap.containsKey(location)) {
+            locationMap[location] = {};
+          }
+          
+          // Create PlantMap entry for this plant name if it doesn't exist
+          if (!locationMap[location]!.containsKey(plantName)) {
+            locationMap[location]![plantName] = PlantMap(
+              name: plantMap["name"],
+              scientificName: plantMap["scientificName"],
+              registeredPlants: List.empty(growable: true),
+            );
+          }
+          
+          Plant plantModel = Plant.fromJson(plant);
+          locationMap[location]![plantName]!.registeredPlants!.add(plantModel);
+        }
       }
-      
-      // Create PlantMap entry for this plant name if it doesn't exist
-      if (!locationMap[location]!.containsKey(plantName)) {
-        locationMap[location]![plantName] = PlantMap(
-          name: plantMap["name"],
-          scientificName: plantMap["scientificName"],
-          registeredPlants: List.empty(growable: true),
-        );
-      }
-      
-      Plant plantModel = Plant.fromJson(plant);
-      locationMap[location]![plantName]!.registeredPlants!.add(plantModel);
     }
+  } catch (e) {
+    print("Error fetching locations: $e");
   }
   
   // Convert to Location objects
@@ -162,15 +178,37 @@ Future<List<PlantMap>> getPlantsByLocation(String location) async {
 }
 
 Future<Plant?> getPlantById(String id) async {
-  final data = await _openData("plants.json");
-  final result = data.firstWhere((u) => u["_id"] == id);
-  return Plant.fromJson(result);
+  try {
+    for (final plantMap in await _openData("plants.json")) {
+      final plantsList = plantMap["plants"] as List?;
+      if (plantsList != null) {
+        for (final plant in plantsList) {
+          if (plant["_id"] == id) {
+            return Plant.fromJson(plant);
+          }
+        }
+      }
+    }
+  } catch (e) {
+    print("Error fetching plant by id: $e");
+  }
+  return null;
 }
 
 Future<int> postPlant(Plant plant) async {
   final arr = await _openData("plants.json");
-  final result = arr.firstWhere((u) => u["name"] == plant.name);
-  result["plants"].add(await plant.toJson());
+  var result = arr.firstWhere((u) => u["name"] == plant.name, orElse: () => null);
+  if(result != null)
+  {
+    result["plants"].add(await plant.toJson());
+  }
+  else
+  {
+    print("Author: ${plant.author!.id}");
+    final PlantMap plantMap = PlantMap(name: plant.name, scientificName: "", registeredPlants: [plant]);
+    result = await plantMap.toJson();
+    arr.add(result);
+  }
   (await file("plants.json")).writeAsString(jsonEncode(arr));
   return 201;
 }

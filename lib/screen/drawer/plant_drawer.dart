@@ -45,6 +45,7 @@ class _PlantDrawerState extends State<PlantDrawer>
             await showDialog(
               context: context,
               builder: (context) => PlantShow(
+                title: current.name,
                 center: 
                     _plantList(current.plant),
               ),
@@ -84,16 +85,21 @@ class _PlantDrawerState extends State<PlantDrawer>
   }
 
   PlantList<PlantMap> _plantList(List<PlantMap>? list) {
-    return PlantList<PlantMap>(
+    
+    return 
+    
+    PlantList<PlantMap>(
       plants: list,
       element: (context, index) {
         final currentPlant = list![index];
         return PlantContainer(
           name: currentPlant.name,
+
           onClicked: () async {
             await showDialog(
               context: context,
               builder: (context) => PlantShow(
+                title: currentPlant.name,
                 plant: currentPlant,
                 center: PlantGrid(
                   name: currentPlant.name,

@@ -138,7 +138,7 @@ Future<bool> addGJson(
   await addImageFromAsset(
     controller,
     'plant-marker',
-    'assets/images/icons/geoleaf-marker.png',
+    'assets/images/icons/geo-marker.png',
   );
 
   //Adiciona a camada de plantas de textos das plantas
@@ -147,7 +147,7 @@ Future<bool> addGJson(
     "plants-layer",
     SymbolLayerProperties(
       iconImage: "plant-marker",
-      iconSize: 0.1,
+      iconSize: 0.25,
 
       textField: ['get', 'name'],
 
@@ -156,11 +156,12 @@ Future<bool> addGJson(
       textHaloColor: ['get', 'color'],
       textHaloWidth: 1.5,
       textAnchor: 'top',
-      textOffset: [0, 2.5],
+      textOffset: [0, 0],
+      iconOffset: [0, -45],
+      
       textAllowOverlap: true,
       textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
     ),
-    minzoom: 18,
     enableInteraction: true,
   );
 

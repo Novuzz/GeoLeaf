@@ -27,6 +27,10 @@ dependencies:
   maplibre_gl_web: ^0.25.0
   http: ^1.6.0
   image: ^4.7.2
+  opencv_dart: ^2.2.1+4
+  blur: ^4.0.2
+  flutter_core_image_filters: ^0.0.26
+  flutter_image_converter: ^0.4.1
 
 dev_dependencies:
   flutter_test:

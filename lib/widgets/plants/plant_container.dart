@@ -19,7 +19,7 @@ class PlantContainer extends StatelessWidget {
       onTap: (){if(onClicked != null) onClicked!();},
 
       child: PlantBox(
-        height: 128,
+        height: 64,
         child: Row(
           children: [
             Column(

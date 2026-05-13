@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.0"
+  blur:
+    dependency: "direct main"
+    description:
+      name: blur
+      sha256: "1318cf79c735784eda8dffc77b1085b757373d233c1c8d94dc0cfd81530a3574"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -73,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.5+3"
+  change_case:
+    dependency: transitive
+    description:
+      name: change_case
+      sha256: e41ef3df58521194ef8d7649928954805aeb08061917cf658322305e61568003
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   characters:
     dependency: transitive
     description:
@@ -129,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.7"
+  dartcv4:
+    dependency: transitive
+    description:
+      name: dartcv4
+      sha256: "5764d13550055da3bb35ca28e6866b837579dfb4b594582b7a7753785ca5dfef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1+4"
   dbus:
     dependency: transitive
     description:
@@ -190,6 +214,30 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_core_image_filters:
+    dependency: "direct main"
+    description:
+      name: flutter_core_image_filters
+      sha256: "2a10cd07d871b9f19d3ed368f0b96e64db7f79b4cda90d8bee9b9cf3c8547537"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.26"
+  flutter_gpu_filters_interface:
+    dependency: transitive
+    description:
+      name: flutter_gpu_filters_interface
+      sha256: "5729d6f3c5c6034c698100ceab48ef745c7ed1c88d4250861f0fcf7bca347d0e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.18"
+  flutter_image_converter:
+    dependency: "direct main"
+    description:
+      name: flutter_image_converter
+      sha256: d175554baeec90bc34a68ea3665a197fef509e9f921ae7679ac99be754d3ee70
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -456,6 +504,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.4"
+  native_toolchain_cmake:
+    dependency: transitive
+    description:
+      name: native_toolchain_cmake
+      sha256: cd4865568c57f03c7ab1f138cc5032c5f77825d27083d6f5a3e9bbb3e8014a87
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.5"
   nested:
     dependency: transitive
     description:
@@ -472,6 +528,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.3.0"
+  opencv_dart:
+    dependency: "direct main"
+    description:
+      name: opencv_dart
+      sha256: b50ea4788e6d61df6369874e0244445d98ef9210dbb90b8d3c1df198b4ee2333
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1+4"
   package_info_plus:
     dependency: transitive
     description:

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:flutter/services.dart';
 //ignore_for_file:
 import 'package:flutter_pytorch_lite/flutter_pytorch_lite.dart';
@@ -11,7 +12,7 @@ class Ai {
   static const modelPath = 'assets/models/my_optimized_model.ptl';
   static const labelsPath = 'assets/json/new_names.json';
 
-  final Int64List inputShape = Int64List.fromList([1, 3, 256, 256]);
+  final Int64List inputShape = Int64List.fromList([1, 3, 224, 224]);
   final Int64List outputShape = Int64List.fromList([1, 1000]);
   Map<String, dynamic>? labels;
   List<String>? labelsList;
@@ -51,10 +52,10 @@ class Ai {
 
   // inference still image
   Future<Map<String, double>> inferenceImage(ui.Image image) async {
-    print(image);
     // input tensor
+    
     Tensor inputTensor = await TensorImageUtils.imageToFloat32Tensor(
-      image,
+      image!,
       width: inputShape[3],
       height: inputShape[2],
     );

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:geo_leaf/models/plant_model.dart';
 import 'package:geo_leaf/screen/drawer/account_drawer.dart';
 import 'package:geo_leaf/screen/camera_screen.dart';
+import 'package:geo_leaf/screen/drawer/statistic_drawer.dart';
+import 'package:geo_leaf/utils/http_request.dart';
 import 'package:geo_leaf/utils/map_render.dart';
 import 'package:geo_leaf/widgets/logo_widget.dart';
 import 'package:geo_leaf/widgets/map_visualizer.dart';
@@ -26,6 +28,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -39,6 +42,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final mapPr = Provider.of<MapProvider>(context);
+
     return Stack(
       children: [
         Scaffold(
@@ -65,9 +69,17 @@ class _MapScreenState extends State<MapScreen> {
               ),
               Builder(
                 builder: (context) => IconButton(
+                  
                   iconSize: 64,
                   onPressed: () => _clickAccount(mapPr.mapController, context),
                   icon: Icon(Icons.person),
+                ),
+              ),
+              Builder(
+                builder: (context) => IconButton(
+                  iconSize: 64,
+                  onPressed: () => _clickStatistic(mapPr.mapController, context),
+                  icon: Icon(Icons.auto_graph),
                 ),
               ),
             ],
@@ -99,8 +111,28 @@ class _MapScreenState extends State<MapScreen> {
 
     if (!Navigator.canPop(context)) {
       Scaffold.of(context).showBottomSheet(
-        (context) => AccountDrawer(),
+        (context) => AccountDrawer(onTap: (plant) => _clickPlant(mapController!, context, plant)),
       );
+    } else {
+      Navigator.pop(context);
+    }
+  }
+
+  void _clickStatistic(
+    MapLibreMapController? mapController,
+    BuildContext context,
+  ) async
+  {
+    if (!Navigator.canPop(context)) {
+
+      final loc = await getLocations();
+      if(mounted)
+      {
+
+      Scaffold.of(context).showBottomSheet(
+        (context) => StatisticDrawer(locations: loc, onClick: (plant) => _clickPlant(mapController!, context, plant),),
+      );
+      }
     } else {
       Navigator.pop(context);
     }

@@ -71,7 +71,7 @@ class _CameraWidgetState extends State<CameraWidget> {
     List<CameraDescription> cameras = await availableCameras();
     setState(() {
       cameras = cameras;
-      controller = CameraController(cameras.last, ResolutionPreset.high);
+      controller = CameraController(cameras.first, ResolutionPreset.high);
     });
     controller?.initialize().then((_) {
       setState(() {});

@@ -27,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
     String confirmPassword = "";
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: PlantBox(
         margin: EdgeInsets.all(16),

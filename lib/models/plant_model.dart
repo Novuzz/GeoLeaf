@@ -33,8 +33,8 @@ class Plant {
     return Plant(
       id: json["_id"],
       name: json['name'],
-      longitude: double.parse(json['long']),
-      latitude: double.parse(json['lat']),
+      longitude: json['long'] != null ? double.parse(json['long']) : 4,
+      latitude: json['lat'] != null ? double.parse(json['lat']) : 4,
       location: json["location"] ?? "",
       author: json['user'] is String ? null : json['user'],
       image: json['image'] != null
@@ -52,13 +52,17 @@ class Plant {
       Uint8List uint8list = u8!.buffer.asUint8List();
       b64 = base64Encode(uint8list);
     }
+    else
+    {
     b64 = base64Encode(rawImage!);
+    }
 
     return {
       "_id": Uuid().v4(),
       "name": name,
       "long": longitude.toString(),
       "lat": latitude.toString(),
+      "location": location,
       "user": author!.id,
       "image": b64,
     };

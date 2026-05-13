@@ -22,12 +22,18 @@ class PlantMap {
       registeredPlants: plants,
     );
   }
-  Map<String, dynamic> toJson()
+  Future<Map<String, dynamic>> toJson() async
   {
+    List<Map<String, dynamic>> plantsList = [];
+    if (registeredPlants != null) {
+      for (var plant in registeredPlants!) {
+        plantsList.add(await plant.toJson());
+      }
+    }
     return {
       "name": name,
       "scientificName": scientificName,
-      "plants": registeredPlants
+      "plants": plantsList
     };
   }
 }

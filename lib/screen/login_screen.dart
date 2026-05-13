@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var login = Provider.of<LoginProvider>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PlantBox(
         margin: EdgeInsets.all(16),
 
