@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/isaac/OneDrive/Documentos/programming/flutter/GeoLeaf/linux"
+    "cmake.sourceDirectory": "C:/Users/isaac/OneDrive/Documentos/programming/flutter/GeoLeaf/linux",
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }

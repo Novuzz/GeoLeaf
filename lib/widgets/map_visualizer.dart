@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MapVisualizer extends StatefulWidget {
 class MapVisualizerState extends State<MapVisualizer> {
   bool canInteractWithMap = false;
   bool isLoaded = false;
+  Map<Point, List> chunks = {};
   MapLibreMapController? _controller;
 
   final GlobalKey _mapKey = GlobalKey();
@@ -81,7 +83,7 @@ class MapVisualizerState extends State<MapVisualizer> {
                 }
               }
             } catch (e) {}
-/*
+            /*
 */
           },
           child: Stack(
@@ -90,19 +92,28 @@ class MapVisualizerState extends State<MapVisualizer> {
                 key: _mapKey,
                 compassEnabled: false,
                 myLocationEnabled: true,
+                myLocationRenderMode: MyLocationRenderMode.compass,
                 scrollGesturesEnabled: mapPr.scrollEnabled,
 
                 initialCameraPosition: MapVisualizer._nullIsland,
                 styleString: mapPr.style,
+                onUserLocationUpdated: (location) async {
+                  if (_controller != null) 
+                  {
+                    await _setRange(location);
+                  }
+                },
                 onStyleLoadedCallback: () async {
                   if (mapPr.mapController != null) {
                     isLoaded = await addGJson(mapPr.mapController, mapPr);
+                    // Provide a non-null timestamp to satisfy UserLocation constructor
+                    await _setRange(UserLocation(position: LatLng(0, 0), altitude: null, bearing: null, speed: null, horizontalAccuracy: null, verticalAccuracy: null, timestamp: DateTime.now(), heading: null ));
                     mapPr.update();
                   }
                 },
                 onMapCreated: (controller) async {
                   mapPr.mapController = controller;
-                  
+
                   await updatePlants(mapPr.mapController);
                   _controller = controller;
                 },
@@ -112,6 +123,25 @@ class MapVisualizerState extends State<MapVisualizer> {
         );
       },
     );
+  }
+
+  Future<void> _setRange(UserLocation location) async {
+    final userLat = location.position.latitude;
+    final userLng = location.position.longitude;
+    print("Position: ($userLng, $userLat)");
+
+    final filter = [
+      "lt",
+      [
+        "distance",
+        {
+          "type": "Point",
+          "coordinates": [userLng, userLat],
+        },
+      ],
+      25,
+    ];
+    await _controller?.setLayerFilter("plants-layer", jsonEncode(filter));
   }
 
   Future<void> changeCamera(LatLng position) async {

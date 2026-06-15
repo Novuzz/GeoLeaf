@@ -1,0 +1,6 @@
+torch
+torchvision
+onnx
+onnx-simplifier
+tensorflow
+tf2onnx

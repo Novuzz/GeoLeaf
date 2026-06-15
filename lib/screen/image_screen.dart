@@ -4,6 +4,8 @@ import 'dart:ui' as ui;
 
 import 'package:blur/blur.dart';
 import 'package:flutter_image_converter/flutter_image_converter.dart';
+import 'package:geo_leaf/functions/numberF.dart';
+import 'package:geo_leaf/utils/bilateral_filter.dart';
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -19,8 +21,9 @@ import 'package:provider/provider.dart';
 class ImageScreen extends StatefulWidget {
   final Image image;
   final Uint8List? rawImage;
+  final bool? disableFilter;
   static final Ai helper = Ai();
-  const ImageScreen({super.key, required this.image, this.rawImage});
+  const ImageScreen({super.key, required this.image, this.rawImage, this.disableFilter = false});
   @override
   State<ImageScreen> createState() => _ImageScreenState();
 }
@@ -28,18 +31,27 @@ class ImageScreen extends StatefulWidget {
 class _ImageScreenState extends State<ImageScreen> {
   String name = "...";
   bool ready = false;
+
   ImageProvider? image;  
   @override
   void initState() {
     super.initState();
-    _initializeImage();
+    // _initializeImage();
     _getNames();
   }
   
   Future<void> _initializeImage() async {
     /*
      */
-    final provider = await _filterImage();
+    final ImageProvider<Object> provider;
+    if(widget.disableFilter!)
+    {
+      provider = widget.image.image;
+    }
+    else
+    {
+      provider = await _filterImage();
+    }
     if (mounted) {
       setState(() {
         image = provider;
@@ -49,13 +61,15 @@ class _ImageScreenState extends State<ImageScreen> {
   
   Future<ImageProvider<Object>> _filterImage() async
   {
-
+    
     final imageImage = await widget.image.imageImage;
-    final gaussian =   img.gaussianBlur( imageImage, radius: 4);
+    //final bilateral = await BilateralProcessor.applyFilter(inputImage: await widget.image.uiImage, sigmaSpatial: 2.5, sigmaRange: 0.1);
+    final gaussian =   img.gaussianBlur( imageImage, radius: 3);
+    //final image = Image.memory(bilateral!);
     final contrast = img.contrast(gaussian, contrast: 120);
 
     final provider = await contrast.imageProvider;
-    return provider;
+    return provider;//await imageImage.imageProvider;//provider;
   }
 
   @override
@@ -100,7 +114,10 @@ class _ImageScreenState extends State<ImageScreen> {
     await ImageScreen.helper.initHelper();
     /*
      */
-    final provider = await _filterImage();
+    final provider = widget.disableFilter! ? widget.image.image : await _filterImage();
+    setState(() {
+      image = provider;
+    });
     ui.Image uiImage = await TensorImageUtils.imageProviderToImage(
       provider
     );

@@ -42,6 +42,7 @@ class _CameraWidgetState extends State<CameraWidget> {
             height: MediaQuery.sizeOf(context).height * 0.75,
             child: CameraPreview(controller!),
           ),
+
           IconButton(
             onPressed: () async {
               XFile? file = await controller?.takePicture();
@@ -51,7 +52,7 @@ class _CameraWidgetState extends State<CameraWidget> {
                 final confirm = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ImageScreen(image: image, rawImage: u8),
+                    builder: (_) => ImageScreen(image: image, rawImage: u8, disableFilter: false,),
                   ),
                 );
                 if (confirm[0] && mounted) {

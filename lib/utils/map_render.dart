@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:geo_leaf/functions/numberF.dart';
 import 'package:geo_leaf/models/plant_model.dart';
@@ -14,6 +15,44 @@ Future<void> addImageFromAsset(
   final bytes = await rootBundle.load(assetName);
   final list = bytes.buffer.asUint8List();
   return controller.addImage(name, list);
+}
+
+double _pos2index(double source, double position, {double amplifier = 10000}) {
+  return ((source - position) * amplifier).floorToDouble();
+}
+
+Future<void> setupPlants(
+  MapLibreMapController? controller,
+  Map<Point, List> chunks,
+) async {
+  final double sourcePointLat = -23.545198026081778 ;
+  final double sourcePointLong = -46.65400224024569;
+
+  final plants = await getPlants();
+  for (var plantMap in plants) {
+    for (var plant in plantMap.registeredPlants!) {
+      final lat = _pos2index(sourcePointLat, plant.latitude);
+      final long = _pos2index(sourcePointLong, plant.longitude);
+      final point = Point(long, lat);
+      if(chunks[point] == null)
+      {
+        chunks[point] = List.empty(growable: true);
+      }
+      (chunks[point])!.add({
+        "type": "Feature",
+        "properties": {"name": plant.name, "id": plant.id},
+        "geometry": {
+          "coordinates": [plant.longitude, plant.latitude],
+          "type": "Point",
+        },
+      });
+    }
+  }
+}
+
+Future<void> changeChunk() async
+{
+  
 }
 
 Future<void> updatePlants(
@@ -132,8 +171,10 @@ Future<bool> addGJson(
       textAllowOverlap: true,
       textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
     ),
+
     minzoom: 18,
   );
+
 
   await addImageFromAsset(
     controller,
@@ -158,7 +199,7 @@ Future<bool> addGJson(
       textAnchor: 'top',
       textOffset: [0, 0],
       iconOffset: [0, -45],
-      
+
       textAllowOverlap: true,
       textFont: ['Open Sans Regular', 'Arial Unicode MS Regular'],
     ),
